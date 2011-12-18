@@ -1,0 +1,541 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-18 14:13+0800\n"
+"PO-Revision-Date: 2011-12-18 16:32+0800\n"
+"Last-Translator: xiaomo <wxm4ever@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Manual.pod:9
+msgid "NAME"
+msgstr "NAME"
+
+#. type: textblock
+#: Manual.pod:11
+msgid "Moose::Manual - What is Moose, and how do I use it?"
+msgstr "Moose::Manual - 什么是 Moose？"
+
+#. type: =head1
+#: Manual.pod:13
+msgid "VERSION"
+msgstr "VERSION"
+
+#. type: textblock
+#: Manual.pod:15
+msgid "version 2.0401"
+msgstr "version 2.0401"
+
+#. type: =head1
+#: Manual.pod:17
+msgid "WHAT IS MOOSE?"
+msgstr "什么是 Moose?"
+
+#. type: textblock
+#: Manual.pod:19
+msgid "Moose is a I<complete> object system for Perl 5. Consider any modern object-oriented language (which Perl 5 definitely isn't). It provides keywords for attribute declaration, object construction, inheritance, and maybe more. These keywords are part of the language, and you don't care how they are implemented."
+msgstr "Moose 是 Perl 5 中的一个完整的对象系统。和大多数面向对象的语言相同（ Perl5 不是严格面向对象的)， Moose 提供关键字去声明属性、构造对象、继承等等。这些关键字可能是语言的一部分，不过你不需要关心它们是怎么实现的。"
+
+#. type: textblock
+#: Manual.pod:25
+msgid "Moose aims to do the same thing for Perl 5 OO. We can't actually create new keywords, but we do offer \"sugar\" that looks a lot like them. More importantly, with Moose, you I<define your class declaratively>, without needing to know about blessed hashrefs, accessor methods, and so on."
+msgstr "实际上我们不能随意创建新的关键字，但是我们可以提供类似于\"语法糖\"的方式来使它们用起来更像是关键字。使用 Moose，你便可以自如地进行面向对象的编程，而不需要知道 Perl 中复杂的绑定引用、访问方法等知识。"
+
+#. type: textblock
+#: Manual.pod:31
+msgid "With Moose, you can concentrate on the I<logical> structure of your classes, focusing on \"what\" rather than \"how\". A class definition with Moose reads like a list of very concise English sentences."
+msgstr "Moose 可以让你把更多的精力集中在结构的逻辑实现上，而不是语言实现上。Moose 式的类定义更像是非常简明的英语句子。"
+
+#. type: textblock
+#: Manual.pod:35
+msgid "Moose is built on top of C<Class::MOP>, a meta-object protocol (aka MOP). Using the MOP, Moose provides complete introspection for all Moose-using classes. This means you can ask classes about their attributes, parents, children, methods, etc., all using a well-defined API. The MOP abstracts away the symbol table, looking at C<@ISA> vars, and all the other crufty Perl tricks we know and love(?)."
+msgstr "Moose 是基于 C<Class::MOP> 构建的，MOP 是一种元对象协议。通过 MOP，我们可以通过一种简单明了的方式去访问对象的属性、父类、子类以及方法等。MOP 抽象了符号表，类似 C<@ISA>等符号，MOP 也抽象了我们所擅长的一些 Perl 的技巧。(The MOP abstracts away the symbol table, looking at C<@ISA> vars, and all the other crufty Perl tricks we know and love(?). 这里不会翻译。)"
+
+#. type: textblock
+#: Manual.pod:42
+msgid "Moose is based in large part on the Perl 6 object system, as well as drawing on the best ideas from CLOS, Smalltalk, and many other languages."
+msgstr "Moose 以 大部分 Perl 6 的面向对象为基础，并且借鉴了 CLOS、Smalltalk等许多面向对象的语言优秀想法。"
+
+#. type: =head1
+#: Manual.pod:46
+msgid "WHY MOOSE?"
+msgstr "为什么用 Moose?"
+
+#. type: textblock
+#: Manual.pod:48
+msgid "Moose makes Perl 5 OO both simpler and more powerful. It encapsulates Perl 5 power tools in high-level declarative APIs which are easy to use. Best of all, you don't need to be a wizard to use it."
+msgstr "Moose 使你在 Perl 5 既简单又强大的使用面向对象的技术。它封装了 Perl 5中复杂的高级 API，使得你可以方便的使用。"
+
+#. type: textblock
+#: Manual.pod:52
+msgid "But if you want to dig about in the guts, Moose lets you do that too, by using and extending its powerful introspection API."
+msgstr "如果你想要拓展 Moose 的话，它内置的强大的自省 API 和扩展供你使用。"
+
+#. type: =head1
+#: Manual.pod:55
+msgid "AN EXAMPLE"
+msgstr "一个例子"
+
+#. type: verbatim
+#: Manual.pod:57
+#, no-wrap
+msgid ""
+"  package Person;\n"
+"\n"
+msgstr ""
+"  package Person;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:59
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+"  use Moose;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:61
+#, no-wrap
+msgid ""
+"  has 'first_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'first_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:66
+#, no-wrap
+msgid ""
+"  has 'last_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'last_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:71
+#: Manual.pod:105
+#, no-wrap
+msgid ""
+"  no Moose;\n"
+"  __PACKAGE__->meta->make_immutable;\n"
+"\n"
+msgstr ""
+"  no Moose;\n"
+"  __PACKAGE__->meta->make_immutable;\n"
+"\n"
+
+#. type: textblock
+#: Manual.pod:74
+msgid "This is a I<complete and usable> class definition!"
+msgstr "这是一个完整的可用的类定义。"
+
+#. type: verbatim
+#: Manual.pod:76
+#, no-wrap
+msgid ""
+"  package User;\n"
+"\n"
+msgstr ""
+"  package User;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:78
+#, no-wrap
+msgid ""
+"  use DateTime;\n"
+"  use Moose;\n"
+"\n"
+msgstr ""
+"  use DateTime;\n"
+"  use Moose;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:81
+#, no-wrap
+msgid ""
+"  extends 'Person';\n"
+"\n"
+msgstr ""
+"  extends 'Person';\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:83
+#, no-wrap
+msgid ""
+"  has 'password' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'password' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:88
+#, no-wrap
+msgid ""
+"  has 'last_login' => (\n"
+"      is      => 'rw',\n"
+"      isa     => 'DateTime',\n"
+"      handles => { 'date_of_last_login' => 'date' },\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'last_login' => (\n"
+"      is      => 'rw',\n"
+"      isa     => 'DateTime',\n"
+"      handles => { 'date_of_last_login' => 'date' },\n"
+"  );\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:94
+#, no-wrap
+msgid ""
+"  sub login {\n"
+"      my $self = shift;\n"
+"      my $pw   = shift;\n"
+"\n"
+msgstr ""
+"  sub login {\n"
+"      my $self = shift;\n"
+"      my $pw   = shift;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:98
+#, no-wrap
+msgid ""
+"      return 0 if $pw ne $self->password;\n"
+"\n"
+msgstr ""
+"      return 0 if $pw ne $self->password;\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:100
+#, no-wrap
+msgid ""
+"      $self->last_login( DateTime->now() );\n"
+"\n"
+msgstr ""
+"      $self->last_login( DateTime->now() );\n"
+"\n"
+
+#. type: verbatim
+#: Manual.pod:102
+#, no-wrap
+msgid ""
+"      return 1;\n"
+"  }\n"
+"\n"
+msgstr ""
+"      return 1;\n"
+"  }\n"
+"\n"
+
+#. type: textblock
+#: Manual.pod:108
+msgid "We'll leave the line-by-line explanation of this code to other documentation, but you can see how Moose reduces common OO idioms to simple declarative constructs."
+msgstr "我们将在其他文档中看到具体的代码注释。通过上面的代码，我们可以初步领略到 Moose 面向对象编程的简单与强大。"
+
+#. type: =head1
+#: Manual.pod:112
+msgid "TABLE OF CONTENTS"
+msgstr "目录"
+
+#. type: textblock
+#: Manual.pod:114
+msgid "This manual consists of a number of documents."
+msgstr "本手册包含如下文档。"
+
+#. type: =item
+#: Manual.pod:118
+msgid "L<Moose::Manual::Concepts>"
+msgstr "L<Moose::Manual::Concepts>"
+
+#. type: textblock
+#: Manual.pod:120
+msgid "Introduces Moose concepts, and contrasts them against \"old school\" Perl 5 OO."
+msgstr "介绍 Moose 的一些概念，并且与旧式的 Perl 5 OO 进行了对比。"
+
+#. type: =item
+#: Manual.pod:123
+msgid "L<Moose::Manual::Unsweetened>"
+msgstr "L<Moose::Manual::Unsweetened>"
+
+#. type: textblock
+#: Manual.pod:125
+msgid "Shows two example classes, each written first with Moose and then with \"plain old Perl 5\"."
+msgstr "通过两个例子来对比 Perl 5 旧式 OO 的实现与 Moose 式实现。"
+
+#. type: =item
+#: Manual.pod:128
+msgid "L<Moose::Manual::Classes>"
+msgstr "L<Moose::Manual::Classes>"
+
+#. type: textblock
+#: Manual.pod:130
+msgid "How do you make use of Moose in your classes? Now that I'm a Moose, how do I subclass something?"
+msgstr "如何在自己的类中使用 Moose 以及如何继承 Moose 类。"
+
+#. type: =item
+#: Manual.pod:133
+msgid "L<Moose::Manual::Attributes>"
+msgstr "L<Moose::Manual::Attributes>"
+
+#. type: textblock
+#: Manual.pod:135
+msgid "Attributes are a core part of the Moose OO system. An attribute is a piece of data that an object has. Moose has a lot of attribute-related features!"
+msgstr "介绍 Moose 面向对象系统中的一个核心部分 -----属性，以及 Moose 中与属性相关的一些特性。"
+
+#. type: =item
+#: Manual.pod:139
+msgid "L<Moose::Manual::Delegation>"
+msgstr "L<Moose::Manual::Delegation>"
+
+#. type: textblock
+#: Manual.pod:141
+msgid "Delegation is a powerful way to make use of attributes which are themselves objects."
+msgstr "介绍委托属性以及如何使用委托属性。"
+
+#. type: =item
+#: Manual.pod:144
+msgid "L<Moose::Manual::Construction>"
+msgstr "L<Moose::Manual::Construction>"
+
+#. type: textblock
+#: Manual.pod:146
+msgid "Learn how objects are built in Moose, and in particular about the C<BUILD> and C<BUILDARGS> methods. Also covers object destruction with C<DEMOLISH>."
+msgstr "介绍如何在 Moose 中构造对象以及销毁对象。"
+
+#. type: =item
+#: Manual.pod:150
+msgid "L<Moose::Manual::MethodModifiers>"
+msgstr "L<Moose::Manual::MethodModifiers>"
+
+#. type: textblock
+#: Manual.pod:152
+msgid "A method modifier lets you say \"before calling method X, do this first\", or \"wrap method X in this code\". Method modifiers are particularly handy in roles and with attribute accessors."
+msgstr "介绍方法修饰符，可以让你在执行某个方法前先执行某段特定的代码，或者包装一个方法。"
+
+#. type: =item
+#: Manual.pod:156
+msgid "L<Moose::Manual::Roles>"
+msgstr "L<Moose::Manual::Roles>"
+
+#. type: textblock
+#: Manual.pod:158
+msgid "A role is something a class does (like \"Debuggable\" or \"Printable\"). Roles provide a way of adding behavior to classes that is orthogonal to inheritance."
+msgstr "介绍 Moose 中的角色。Moose 的角色是一种正交继承类的行为方式。"
+
+#. type: =item
+#: Manual.pod:162
+msgid "L<Moose::Manual::Types>"
+msgstr "L<Moose::Manual::Types>"
+
+#. type: textblock
+#: Manual.pod:164
+msgid "Moose's type system lets you strictly define what values an attribute can contain."
+msgstr "Moose 中的类型系统，让你严格的定义各个属性中可以包含什么类型的值。"
+
+#. type: =item
+#: Manual.pod:167
+msgid "L<Moose::Manual::MOP>"
+msgstr "L<Moose::Manual::MOP>"
+
+#. type: textblock
+#: Manual.pod:169
+msgid "Moose's meta API system lets you ask classes about their parents, children, methods, attributes, etc."
+msgstr "Moose 的元 API 系统，可以让你访问类的父类、子类、方法和属性等。"
+
+#. type: =item
+#: Manual.pod:172
+msgid "L<Moose::Manual::MooseX>"
+msgstr "L<Moose::Manual::MooseX>"
+
+#. type: textblock
+#: Manual.pod:174
+msgid "This document describes a few of the most useful Moose extensions on CPAN."
+msgstr "这个文档介绍几个很有用的 Moose 拓展。这些拓展可以在 CPAN 上得到。"
+
+#. type: =item
+#: Manual.pod:177
+msgid "L<Moose::Manual::BestPractices>"
+msgstr "L<Moose::Manual::BestPractices>"
+
+#. type: textblock
+#: Manual.pod:179
+msgid "Moose has a lot of features, and there's definitely more than one way to do it. However, we think that picking a subset of these features and using them consistently makes everyone's life easier."
+msgstr "Moose 有很多特性，并且每个事情不只只有一个实现方式。不过我们认为，选取一些简单的例子以帮助用户更好的学习和使用 Moose。"
+
+#. type: =item
+#: Manual.pod:183
+msgid "L<Moose::Manual::FAQ>"
+msgstr "L<Moose::Manual::FAQ>"
+
+#. type: textblock
+#: Manual.pod:185
+msgid "Frequently asked questions about Moose."
+msgstr "Moose 常见的问题与回答。"
+
+#. type: =item
+#: Manual.pod:187
+msgid "L<Moose::Manual::Contributing>"
+msgstr "L<Moose::Manual::Contributing>"
+
+#. type: textblock
+#: Manual.pod:189
+msgid "Interested in hacking on Moose? Read this."
+msgstr "Interested in hacking on Moose? Read this."
+
+#. type: =item
+#: Manual.pod:191
+msgid "L<Moose::Manual::Delta>"
+msgstr "L<Moose::Manual::Delta>"
+
+#. type: textblock
+#: Manual.pod:193
+msgid "This document details backwards-incompatibilities and other major changes to Moose."
+msgstr "这个文档详细的介绍了具体的向后不兼容性以及其他重要的变化。"
+
+#. type: =head1
+#: Manual.pod:198
+msgid "JUSTIFICATION"
+msgstr "还是不明白为什么要用 Moose？"
+
+#. type: textblock
+#: Manual.pod:200
+msgid "If you're still asking yourself \"Why do I need this?\", then this section is for you."
+msgstr "如果你仍然不明白“为什么我要用 Moose？“，那么这个章节是为你准备的。"
+
+#. type: =item
+#: Manual.pod:205
+msgid "Another object system!?!?"
+msgstr "另一个面向对象的系统？"
+
+#. type: textblock
+#: Manual.pod:207
+msgid "Yes, we know there are many, many ways to build objects in Perl 5, many of them based on inside-out objects and other such things. Moose is different because it is not a new object system for Perl 5, but instead an extension of the existing object system."
+msgstr "是的，我们知道有非常多非常多的方式在 Perl 5中实现面向对象的技术，它们有着各种各样的实现。Moose 与它们不同的是，Moose 不是 Perl 5 的新的一个面向对象系统，相反的，它拓展了现有的 Perl 5 面向对象系统。"
+
+#. type: textblock
+#: Manual.pod:212
+msgid "Moose is built on top of L<Class::MOP>, which is a metaclass system for Perl 5. This means that Moose not only makes building normal Perl 5 objects better, but it also provides the power of metaclass programming."
+msgstr "Moose 是以 Perl 5 的元类系统 L<Class::Mop>为基础构建的。这表明，Moose 不仅可以更好的实现面向对象，而且更能提供强大的元类编程。"
+
+#. type: =item
+#: Manual.pod:217
+msgid "Is this for real? Or is this just an experiment?"
+msgstr "这是认真的吗，还是只是一个实验用品？"
+
+#. type: textblock
+#: Manual.pod:219
+msgid "Moose is I<based> on the prototypes and experiments Stevan did for the Perl 6 meta-model. However, Moose is B<NOT> an experiment or prototype; it is for B<real>."
+msgstr "Moose 是B<基于> Stevan 的 Perl 6 meta-model 的实验测试，但是，MooseB<不是>一个实验用品，是可以供正常的生产使用的。"
+
+#. type: =item
+#: Manual.pod:223
+msgid "Is this ready for use in production?"
+msgstr "Moose 可以应用在生产环境中吗？"
+
+#. type: textblock
+#: Manual.pod:225
+msgid "Yes."
+msgstr "是的，完全没有问题。"
+
+#. type: textblock
+#: Manual.pod:227
+msgid "Moose has been used successfully in production environments by many people and companies. There are Moose applications which have been in production with little or no issue now for years. We consider it highly stable and we are committed to keeping it stable."
+msgstr "Moose 已经被很多人、很多公司应用在很多成功的案例中。Moose 在生产环境中很少出现或者根本不出现问题。我们认为 Moose 是高度稳定的而且我们会一直致力于保持它的稳定。"
+
+#. type: textblock
+#: Manual.pod:232
+msgid "Of course, in the end, you need to make this call yourself. If you have any questions or concerns, please feel free to email Stevan or the moose@perl.org list, or just stop by irc.perl.org#moose and ask away."
+msgstr "当然，这一切需要你来实现。如果你有任何问题或疑虑，欢迎发送邮件给 Stevan、moose@perl.org 邮件列表，或者到 irc.perl.org#moose 询问。"
+
+#. type: =item
+#: Manual.pod:237
+msgid "Is Moose just Perl 6 in Perl 5?"
+msgstr "Perl 5 中的 Moose 和 Perl 6 的面向对象是一样的吗？"
+
+#. type: textblock
+#: Manual.pod:239
+msgid "No. While Moose is very much inspired by Perl 6, it is not itself Perl 6. Instead, it is an OO system for Perl 5. Stevan built Moose because he was tired of writing the same old boring Perl 5 OO code, and drooling over Perl 6 OO. So instead of switching to Ruby, he wrote Moose :)"
+msgstr "不是。虽然 Moose 是收到 Perl 6 的启发，但是它本身并不在 Perl 6 中。相反，它是一个 Perl 5 中的面向对象的系统。Stevan 厌倦了在 Perl 5 中写枯燥复杂的旧式代码以及对 Perl 6 的面向对象非常感兴趣，所以他写了 Moose 而不是转向 Ruby 阵营。"
+
+#. type: =item
+#: Manual.pod:245
+msgid "Wait, I<post> modern, I thought it was just I<modern>?"
+msgstr "Wait, I<post> modern, I thought it was just I<modern>?"
+
+#. type: textblock
+#: Manual.pod:247
+msgid "Stevan read Larry Wall's talk from the 1999 Linux World entitled \"Perl, the first postmodern computer language\" in which he talks about how he picked the features for Perl because he thought they were cool and he threw out the ones that he thought sucked. This got him thinking about how we have done the same thing in Moose. For Moose, we have \"borrowed\" features from Perl 6, CLOS (LISP), Smalltalk, Java, BETA, OCaml, Ruby and more, and the bits we didn't like (cause they sucked) we tossed aside. So for this reason (and a few others) Stevan has re-dubbed Moose a I<postmodern> object system."
+msgstr "Larry Wall 1999年的题为“Perl, the first postmodern computer language“的演讲中说过他认为很酷的东西便把它加到 Perl 中，而没有用的东西就坚决不引入到 Perl 中。 Stevan 认同这个观点，所以 Moose 借来了 Perl 6 的面向对象系统，并且从 CLOS(LISP)，Smalltalk，Java，BETA，OCaml，Ruby等语言中借来了许多很酷的东西，而不是很喜欢的部分却一点都没有引入到 Moose 中。因此，有了现在的 Moose。"
+
+#. type: textblock
+#: Manual.pod:257
+msgid "Nuff Said."
+msgstr " "
+
+#. type: =head1
+#: Manual.pod:261
+msgid "AUTHOR"
+msgstr "作者"
+
+#. type: textblock
+#: Manual.pod:263
+msgid "Moose is maintained by the Moose Cabal, along with the help of many contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL>和L<Moose/CONTRIBUTORS>。\n"
+"译者：xiaomo (wxm4ever@gmail.com)。"
+
+#. type: =head1
+#: Manual.pod:265
+msgid "COPYRIGHT AND LICENSE"
+msgstr "版权和许可"
+
+#. type: textblock
+#: Manual.pod:267
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+
+#. type: textblock
+#: Manual.pod:269
+msgid "This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself."
+msgstr "这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相同的条款进行修改。"
+
