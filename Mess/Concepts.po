@@ -1,0 +1,800 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-21 08:38+0800\n"
+"PO-Revision-Date: 2011-12-21 13:10+0800\n"
+"Last-Translator: xiaomo <wxm4ever@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:9
+msgid "NAME"
+msgstr "NAME"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:11
+msgid "Moose::Manual::Concepts - Moose OO concepts"
+msgstr "Moose::Manual::Concepts - Moose 关于面向对象的一些概念"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:13
+msgid "VERSION"
+msgstr "VERSION"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:15
+msgid "version 2.0401"
+msgstr "version 2.0401"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:17
+msgid "MOOSE CONCEPTS (VS \"OLD SCHOOL\" Perl)"
+msgstr "Moose 与 Perl 旧式面向对象的比较"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:19
+msgid "In the past, you may not have thought too much about the difference between packages and classes, attributes and methods, constructors and methods, etc. With Moose, these are all conceptually separate, though under the hood they're implemented with plain old Perl."
+msgstr "以前你可能没有仔细的研究过 package 和 class 、 attributes 和 methods、 constructors 和 methods 等的区别。在 Moose 中，这些都是有各自的概念的，尽管它们都是基于普通的 Perl 实现的。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:24
+msgid "Our meta-object protocol (aka MOP) provides well-defined introspection features for each of those concepts, and Moose in turn provides distinct sugar for each of them. Moose also introduces additional concepts such as roles, method modifiers, and declarative delegation."
+msgstr "元对象协议(MOP)为面向对象中常用的概念提供了良好的自省功能，而 Moose 则提供语法糖。Moose 也引进了一些新的概念，比如角色（roles）,方法修饰符（method modifiers）和委托属性（declarative delegation）。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:29
+msgid "Knowing what these concepts mean in Moose-speak, and how they used to be done in old school Perl 5 OO is a good way to start learning to use Moose."
+msgstr "知道如何用 Moose 来表示这些概念，并且和旧式的 Perl 实现进行对比，这是一个比较推荐的学习方式。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:33
+msgid "Class"
+msgstr "Class"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:35
+msgid "When you say \"use Moose\" in a package, you are making your package a class. At its simplest, a class will consist simply of attributes and/or methods. It can also include roles, method modifiers, and more."
+msgstr "当你在 package 里使用 \"use Moose\"，这表明你在定义一个类。一个简单的类包括属性和方法。当然它也可以包含角色、方法修饰符等等。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:39
+msgid "A class I<has> zero or more B<attributes>."
+msgstr "一个类I<有>零个或零个以上的B<属性>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:41
+msgid "A class I<has> zero or more B<methods>."
+msgstr "一个类I<有>零个或零个以上的B<方法>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:43
+msgid "A class I<has> zero or more superclasses (aka parent classes). A class inherits from its superclass(es)."
+msgstr "一个类I<有>零个或零个以上的父类。它继承它所有的父类。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:46
+msgid "A class I<has> zero or more B<method modifiers>. These modifiers can apply to its own methods or methods that are inherited from its ancestors."
+msgstr "一个类I<有>零个或零个以上的B<方法修饰符>。这些修饰符可以作用于自己的方法或者是从父类继承过来的方法。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:50
+msgid "A class I<does> (and I<consumes>) zero or more B<roles>."
+msgstr "一个类I<能>充当零个或零个以上的B<角色>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:52
+msgid "A class I<has> a B<constructor> and a B<destructor>. These are provided for you \"for free\" by Moose."
+msgstr "一个类I<有>一个B<构造函数>和一个B<析构函数>。Moose 为你默认提供。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:55
+msgid "The B<constructor> accepts named parameters corresponding to the class's attributes and uses them to initialize an B<object instance>."
+msgstr "B<构造函数>接受相应的命名参数并用它们来初始化B<对象的实例>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:58
+msgid "A class I<has> a B<metaclass>, which in turn has B<meta-attributes>, B<meta-methods>, and B<meta-roles>. This metaclass I<describes> the class."
+msgstr "一个类I<有>一个B<元类>，同时也就有B<元类属性>，B<元类方法>，B<元类角色>。这个元类I<描述>着这个类。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:62
+msgid "A class is usually analogous to a category of nouns, like \"People\" or \"Users\"."
+msgstr "一个类通常是一个类别的或相似类别的名字，如\"People\"、\"Users\"。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:65
+#, no-wrap
+msgid ""
+"  package Person;\n"
+"\n"
+msgstr ""
+"  package Person;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:67
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  # now it's a Moose class!\n"
+"\n"
+msgstr ""
+"  use Moose;\n"
+"  # now it's a Moose class!\n"
+"\n"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:70
+msgid "Attribute"
+msgstr "Attribute"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:72
+msgid "An attribute is a property of the class that defines it. It I<always> has a name, and it I<may have> a number of other properties."
+msgstr "属性是来定义它的类的属性。它I<总有>一个名称，它I<可能>还具有一些其他属性。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:75
+msgid "These properties can include a read/write flag, a B<type>, accessor method names, B<delegations>, a default value, and more."
+msgstr "这些属性可以包含读/写标志，B<类型>信息，访问器方法，B<委托方法>，默认值等等。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:78
+msgid "Attributes I<are not> methods, but defining them causes various accessor methods to be created. At a minimum, a normal attribute will have a reader accessor method. Many attributes have other methods, such as a writer method, a clearer method, or a predicate method (\"has it been set?\")."
+msgstr "属性不是方法。而是要创建各种存取方法的原因。至少，一个正常的属性将有一个读者的访问方法。许多属性有其他方法，如一个写者的方法，一个清空方法，一个测试方法（如这个属性被设置了吗？）等等。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:84
+msgid "An attribute may also define B<delegations>, which will create additional methods based on the delegation mapping."
+msgstr "属性也可以定义B<委托属性>，这会根据委托属性的映射关系来产生额外的方法。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:87
+msgid "By default, Moose stores attributes in the object instance, which is a hashref, I<but this is invisible to the author of a Moose-based class>! It is best to think of Moose attributes as \"properties\" of the I<opaque> B<object instance>. These properties are accessed through well-defined accessor methods."
+msgstr "默认情况下，Moose 在类的实例中以哈希表的方式存储属性，但是这个过程对程序员是I<不可见>的。最好通过明确定义的存取方法来访问这些\"不透明\"的属性。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:93
+msgid "An attribute is something that the class's members have. For example, People have first and last names. Users have passwords and last login datetimes."
+msgstr "属性是类的成员。比如，People 有 first name 和 last name， User 有 password 和上次登录的datetime。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:97
+#, no-wrap
+msgid ""
+"  has 'first_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'first_name' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:102
+msgid "Method"
+msgstr "Method"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:104
+msgid "A B<method> is very straightforward. Any subroutine you define in your class is a method."
+msgstr "在类中定义的子函数就是类的方法。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:107
+msgid "B<Methods> correspond to verbs, and are what your objects can do. For example, a User can login."
+msgstr "方法对应的行为，就是你的对象要做的事情。比如，一个 User 可以登录。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:110
+#, no-wrap
+msgid ""
+"  sub login { ... }\n"
+"\n"
+msgstr ""
+"  sub login { ... }\n"
+"\n"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:112
+msgid "Role"
+msgstr "Role"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:114
+msgid "A role is something that a class I<does>. We also say that classes I<consume> roles. For example, a Machine class might do the Breakable role, and so could a Bone class. A role is used to define some concept that cuts across multiple unrelated classes, like \"breakability\", or \"has a color\"."
+msgstr "角色是用来定义类所扮演的角色。比如，Machine 类和 Bone 类都具有不易碎等特性。所以，角色就是用来定义一些跨多个不相关的类的共同特性的。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:120
+msgid "A role I<has> zero or more B<attributes>."
+msgstr "一个角色I<有>零个或零个以上的B<属性>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:122
+msgid "A role I<has> zero or more B<methods>."
+msgstr "一个角色I<有>零个或零个以上的B<方法>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:124
+msgid "A role I<has> zero or more B<method modifiers>."
+msgstr "一个角色I<有>零个或零个以上的B<方法修饰符>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:126
+msgid "A role I<has> zero or more B<required methods>."
+msgstr "一个角色I<有>零个或零个以上的B<所需方法>（required methods）。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:128
+msgid "A required method is not implemented by the role. Required methods are a way for the role to declare \"to use this role you must implement this method\"."
+msgstr "所需方法不是在角色中详细定义的。所需方法是所要充当该角色的类所必须重载的方法。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:131
+msgid "A role I<has> zero or more B<excluded roles>."
+msgstr "一个角色I<有>零个或零个以上的B<排除角色>（excluded roles）。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:133
+msgid "An excluded role is a role that the role doing the excluding says it cannot be combined with."
+msgstr "排除角色是表明充当该角色的类不能同时充当的角色。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:136
+msgid "Roles are I<composed> into classes (or other roles). When a role is composed into a class, its attributes and methods are \"flattened\" into the class. Roles I<do not> show up in the inheritance hierarchy. When a role is composed, its attributes and methods appear as if they were defined I<in the consuming class>."
+msgstr "当一个类充当一个角色时，角色的属性和方法成为类的属性和方法。（这里不好翻译）。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:142
+msgid "Role are somewhat like mixins or interfaces in other OO languages."
+msgstr "角色就好像其他面向对象的语言中的接口这一概念。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:144
+#, no-wrap
+msgid ""
+"  package Breakable;\n"
+"\n"
+msgstr ""
+"  package Breakable;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:146
+#, no-wrap
+msgid ""
+"  use Moose::Role;\n"
+"\n"
+msgstr ""
+"  use Moose::Role;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:148
+#, no-wrap
+msgid ""
+"  requires 'break';\n"
+"\n"
+msgstr ""
+"  requires 'break';\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:150
+#, no-wrap
+msgid ""
+"  has 'is_broken' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Bool',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'is_broken' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Bool',\n"
+"  );\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:155
+#, no-wrap
+msgid ""
+"  after 'break' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+"  after 'break' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:158
+#, no-wrap
+msgid ""
+"      $self->is_broken(1);\n"
+"  };\n"
+"\n"
+msgstr ""
+"      $self->is_broken(1);\n"
+"  };\n"
+"\n"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:161
+msgid "Method modifiers"
+msgstr "Method modifiers"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:163
+msgid "A B<method modifier> is a hook that is called when a named method is called. For example, you could say \"before calling C<login()>, call this modifier first\". Modifiers come in different flavors like \"before\", \"after\", \"around\", and \"augment\", and you can apply more than one modifier to a single method."
+msgstr "B<方法修饰符>是在一个特定的函数被执行时的一个钩子。比如，你可以这样定义一个方法修饰符，\"在执行C<login()>前，先执行这段代码\"。常用的修饰符有\"before\"，\"after\"，\"around\"，\"augment\"。你可以对一个方法绑定多个方法修饰符。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:169
+msgid "Method modifiers are often used as an alternative to overriding a method in a parent class. They are also used in roles as a way of modifying methods in the consuming class."
+msgstr "方法修饰符经常用来重载父类中的方法。方法修饰符经常出现在角色中。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:173
+msgid "Under the hood, a method modifier is just a plain old Perl subroutine that gets called before or after (or around, etc.) some named method."
+msgstr "本质上，方法修饰符就是普通的 Perl 程序在命名方法之前或之后调用。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:176
+#, no-wrap
+msgid ""
+"  before 'login' => sub {\n"
+"      my $self = shift;\n"
+"      my $pw   = shift;\n"
+"\n"
+msgstr ""
+"  before 'login' => sub {\n"
+"      my $self = shift;\n"
+"      my $pw   = shift;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:180
+#, no-wrap
+msgid ""
+"      warn \"Called login() with $pw\\n"
+"\";\n"
+"  };\n"
+"\n"
+msgstr ""
+"      warn \"Called login() with $pw\\n"
+"\";\n"
+"  };\n"
+"\n"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:183
+msgid "Type"
+msgstr "Type"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:185
+msgid "Moose also comes with a (miniature) type system. This allows you to define types for attributes. Moose has a set of built-in types based on the types Perl provides in its core, such as C<Str>, C<Num>, C<Bool>, C<HashRef>, etc."
+msgstr "Moose 有一个（微型）的类型系统。这允许你为属性定义类型。Moose 根据 Perl 的变量类型有内置类型，如 C<Str>，C<Num>，C<Bool>，C<HashRef>，等等。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:189
+msgid "In addition, every class name in your application can also be used as a type name."
+msgstr "此外，在你应用程序中的每一个类的名称也可以是一种类型。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:192
+msgid "Finally, you can define your own types with their own constraints. For example, you could define a C<PosInt> type, a subtype of C<Int> which only allows positive numbers."
+msgstr "当然，你也可以定义有自己的约束的类型。如，你可以定义正数 C<PosInt> 类型。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:196
+msgid "Delegation"
+msgstr "Delegation"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:198
+msgid "Moose attributes provide declarative syntax for defining delegations. A delegation is a method which in turn calls some method on an attribute to do its real work."
+msgstr "Moose 可以定义委托属性。委托属性会根据相应的映射来调用正确的方法。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:202
+msgid "Constructor"
+msgstr "Constructor"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:204
+msgid "A constructor creates an B<object instance> for the class. In old school Perl, this was usually done by defining a method called C<new()> which in turn called C<bless> on a reference."
+msgstr "构造函数为类构建B<实例>。在旧式的 Perl 语言中，这通常通过调用 C<new()> 来返回一个 C<bless> 后的引用。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:208
+msgid "With Moose, this C<new()> method is created for you, and it simply does the right thing. You should never need to define your own constructor!"
+msgstr "在 Moose 中，C<new()>已经为你做好了所有的事情。你从来不需要自己定义相应的构造函数。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:212
+msgid "Sometimes you want to do something whenever an object is created. In those cases, you can provide a C<BUILD()> method in your class. Moose will call this for you after creating a new object."
+msgstr "有些时候你想在实例初始化的时候做一些事情，你可以通过定义 C<BUILD()> 方法来实现，Moose 会在构建实例的时候自动为你调用。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:216
+msgid "Destructor"
+msgstr "Destructor"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:218
+msgid "This is a special method called when an object instance goes out of scope. You can specialize what your class does in this method if you need to, but you usually don't."
+msgstr "当你的对象实例超出范围的时候，这个方法将会自动执行。你可以指定这个方法在结束时做什么，不过这通常是不必要的。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:222
+msgid "With old school Perl 5, this is the C<DESTROY()> method, but with Moose it is the C<DEMOLISH()> method."
+msgstr "在旧式的 Perl 中，这个是 C<DESTORY()> 方法，但在 Moose 中，这个是 C<DEMOLISH()> 方法。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:225
+msgid "Object instance"
+msgstr "Object instance"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:227
+msgid "An object instance is a specific noun in the class's \"category\". For example, one specific Person or User. An instance is created by the class's B<constructor>."
+msgstr "对象的实例由B<构造函数>创建。如，Person 或者 User，由它们的B<constructor>来构建的。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:231
+msgid "An instance has values for its attributes. For example, a specific person has a first and last name."
+msgstr "实例有类的属性。如，person 有 first name 和 last name。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:234
+msgid "In old school Perl 5, this is often a blessed hash reference. With Moose, you should never need to know what your object instance actually is. (Okay, it's usually a blessed hashref with Moose, too.)"
+msgstr "在旧式的 Perl 5 中，这通常通过被绑定的哈希引用来表示。在 Moose 中，你不需要知道实例的结构具体是什么样子（虽然也是通过哈希引用来实现的）。"
+
+#. type: =head2
+#: ../POD/Manual/Concepts.pod:238
+msgid "Moose vs old school summary"
+msgstr "总结"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:242
+msgid "* Class"
+msgstr "* Class"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:244
+msgid "A package with no introspection other than mucking about in the symbol table."
+msgstr "旧式 Perl OO 中，类是一个没有自省机制以及各种符号表的包。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:247
+msgid "With Moose, you get well-defined declaration and introspection."
+msgstr "在 Moose 中，有良好的自省机制和定义格式。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:249
+msgid "* Attributes"
+msgstr "* Attributes"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:251
+msgid "Hand-written accessor methods, symbol table hackery, or a helper module like C<Class::Accessor>."
+msgstr "旧式 Perl OO 中，需要手写存取方法，定义一堆符号表，或者使用一些辅助模块如 C<Class::Accessor>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:254
+msgid "With Moose, these are declaratively defined, and distinct from methods."
+msgstr "在 Moose 中，这些都是声明好的定义，并且与方法不同。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:257
+msgid "* Method"
+msgstr "* Method"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:259
+msgid "These are pretty much the same in Moose as in old school Perl."
+msgstr "这个与旧式的 Perl OO 大致相同。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:261
+msgid "* Roles"
+msgstr "* Roles"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:263
+msgid "C<Class::Trait> or C<Class::Role>, or maybe C<mixin.pm>."
+msgstr "旧式 Perl OO 中，通过C<Class::Trait>、C<Class::Role>、或者C<mixin.pm>来实现？"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:265
+msgid "With Moose, they're part of the core feature set, and are introspectable like everything else."
+msgstr "在 Moose 中，它是 Moose 核心功能之一。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:268
+msgid "* Method Modifiers"
+msgstr "* Method Modifiers"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:270
+msgid "Could only be done through serious symbol table wizardry, and you probably never saw this before (at least in Perl 5)."
+msgstr "旧式 Perl OO 中，可能能通过高深的符号表来实现，而且你可能从来都没见过类似的实现（至少在 Perl 5 以前没有见过）。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:273
+msgid "* Type"
+msgstr "* Type"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:275
+msgid "Hand-written parameter checking in your C<new()> method and accessors."
+msgstr "旧式 Perl OO 中，通过在C<new()>或者相应的访问函数中手动检查类型。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:277
+msgid "With Moose, you define types declaratively, and then use them by name with your attributes."
+msgstr "在 Moose 中，你声明变量类型，然后通过变量名来使用它们。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:280
+msgid "* Delegation"
+msgstr "* Delegation"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:282
+msgid "C<Class::Delegation> or C<Class::Delegator>, but probably even more hand-written code."
+msgstr "旧式 Perl OO 中，通过C<Class:Delegation>或C<Class::Delegator>，不过实现起来会比想象中还难。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:285
+msgid "With Moose, this is also declarative."
+msgstr "在 Moose 中，通过简单的声明就可以。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:287
+msgid "* Constructor"
+msgstr "* Constructor"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:289
+msgid "A C<new()> method which calls C<bless> on a reference."
+msgstr "旧式 Perl OO 中，通过调用负责C<bless>引用的C<new()>方法来实现。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:291
+msgid "Comes for free when you define a class with Moose."
+msgstr "在 Moose 中，已经默认为你实现。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:293
+msgid "* Destructor"
+msgstr "* Destructor"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:295
+msgid "A C<DESTROY()> method."
+msgstr "旧式 Perl OO 中，通过定义C<DESTORY()>方法来实现。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:297
+msgid "With Moose, this is called C<DEMOLISH()>."
+msgstr "在 Moose 中，通过定义C<DEMOLISH()>来实现。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:299
+msgid "* Object Instance"
+msgstr "* Object Instance"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:301
+msgid "A blessed reference, usually a hash reference."
+msgstr "旧式 Perl OO 中，实例是一个已绑定的哈希引用。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:303
+msgid "With Moose, this is an opaque thing which has a bunch of attributes and methods, as defined by its class."
+msgstr "在 Moose 中，这是一个有着一堆属性和方法的不透明的东西，不过你可以很方便的使用。"
+
+#. type: =item
+#: ../POD/Manual/Concepts.pod:306
+msgid "* Immutabilization"
+msgstr "* Immutabilization"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:308
+msgid "Moose comes with a feature called \"immutabilization\". When you make your class immutable, it means you're done adding methods, attributes, roles, etc. This lets Moose optimize your class with a bunch of extremely dirty in-place code generation tricks that speed up things like object construction and so on."
+msgstr "Moose 所谓的\"immutabilization\"的功能，指让你的类不可改变，之后由 Moose 来为你生成一些复杂难辨别的代码，以加快速度。"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:316
+msgid "META WHAT?"
+msgstr "什么是元类？"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:318
+msgid "A metaclass is a class that describes classes. With Moose, every class you define gets a C<meta()> method. The C<meta()> method returns a L<Moose::Meta::Class> object, which has an introspection API that can tell you about the class it represents."
+msgstr "元类是用来描述类的类。在 Moose 中，每一个你定义的类都有一个C<meta()>方法。C<meta()>方法返回L<Moose::Meta::Class>实例，其中有一个自省API可以告诉你它代表的类。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:323
+#, no-wrap
+msgid ""
+"  my $meta = User->meta();\n"
+"\n"
+msgstr ""
+"  my $meta = User->meta();\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:325
+#, no-wrap
+msgid ""
+"  for my $attribute ( $meta->get_all_attributes ) {\n"
+"      print $attribute->name(), \"\\n"
+"\";\n"
+"\n"
+msgstr ""
+"  for my $attribute ( $meta->get_all_attributes ) {\n"
+"      print $attribute->name(), \"\\n"
+"\";\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:328
+#, no-wrap
+msgid ""
+"      if ( $attribute->has_type_constraint ) {\n"
+"          print \"  type: \", $attribute->type_constraint->name, \"\\n"
+"\";\n"
+"      }\n"
+"  }\n"
+"\n"
+msgstr ""
+"      if ( $attribute->has_type_constraint ) {\n"
+"          print \"  type: \", $attribute->type_constraint->name, \"\\n"
+"\";\n"
+"      }\n"
+"  }\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:333
+#, no-wrap
+msgid ""
+"  for my $method ( $meta->get_all_methods ) {\n"
+"      print $method->name, \"\\n"
+"\";\n"
+"  }\n"
+"\n"
+msgstr ""
+"  for my $method ( $meta->get_all_methods ) {\n"
+"      print $method->name, \"\\n"
+"\";\n"
+"  }\n"
+"\n"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:337
+msgid "Almost every concept we defined earlier has a meta class, so we have L<Moose::Meta::Class>, L<Moose::Meta::Attribute>, L<Moose::Meta::Method>, L<Moose::Meta::Role>, L<Moose::Meta::TypeConstraint>, L<Moose::Meta::Instance>, and so on."
+msgstr "基本上每个我们之前所提到的概念都有元类，所以有L<Moose::Meta::Class>，L<Moose::Meta::Attribute>，L<Moose::Meta::Method>，L<Moose::Meta::Role>，L<Moose::Meta::TypeConstraint>，L<Moose::Meta::Instance>，等等。"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:342
+msgid "BUT I NEED TO DO IT MY WAY!"
+msgstr "BUT I NEED TO DO IT MY WAY!"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:344
+msgid "One of the great things about Moose is that if you dig down and find that it does something the \"wrong way\", you can change it by extending a metaclass. For example, you can have arrayref based objects, you can make your constructors strict (no unknown parameters allowed!), you can define a naming scheme for attribute accessors, you can make a class a Singleton, and much, much more."
+msgstr "Moose 最伟大的事情就是当你挖掘 Moose 的本质时，发现有些事情不是按你所想的进行，那么你可以通过扩展元类来修改。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:351
+msgid "Many of these extensions require surprisingly small amounts of code, and once you've done it once, you'll never have to hand-code \"your way of doing things\" again. Instead you'll just load your favorite extensions."
+msgstr "许多这样的代码很短但是很令人惊讶，而且一旦你做过一次，你将永远不需要重复去做了，只需要简单的加载你的拓展就可以了。"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:356
+#, no-wrap
+msgid ""
+"  package MyWay::User;\n"
+"\n"
+msgstr ""
+"  package MyWay::User;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:358
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  use MooseX::StrictConstructor\n"
+"  use MooseX::MyWay;\n"
+"\n"
+msgstr ""
+"  use Moose;\n"
+"  use MooseX::StrictConstructor\n"
+"  use MooseX::MyWay;\n"
+"\n"
+
+#. type: verbatim
+#: ../POD/Manual/Concepts.pod:362
+#, no-wrap
+msgid ""
+"  has ...;\n"
+"\n"
+msgstr ""
+"  has ...;\n"
+"\n"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:364
+msgid "WHAT NEXT?"
+msgstr "接下来做什么？"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:366
+msgid "So you're sold on Moose. Time to learn how to really use it."
+msgstr "已经把 Moose 介绍给你了，接下来就该花时间来学习如何使用了。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:368
+msgid "If you want to see how Moose would translate directly into old school Perl 5 OO code, check out L<Moose::Manual::Unsweetened>. This might be helpful for quickly wrapping your brain around some aspects of \"the Moose way\"."
+msgstr "如果你想要知道 Moose 是如何把你的代码用旧式 Perl 5 OO 来实现的，你可以查看L<Moose::Manual::Unsweetened>。这会帮助你快速的了解\"the Moose way\"的。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:373
+msgid "Or you can skip that and jump straight to L<Moose::Manual::Classes> and the rest of the L<Moose::Manual>."
+msgstr "你也可以直接跳到L<Moose::Manual::Classes>来查看剩余的L<Moose::Manual>。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:376
+msgid "After that we recommend that you start with the L<Moose::Cookbook>. If you work your way through all the recipes under the basics section, you should have a pretty good sense of how Moose works, and all of its basic OO features."
+msgstr "在那之后，我们推荐你继续看L<Moose::Cookbook>。这样之后，相信你会很熟悉 Moose 的工作原理以及一些相关面向对象的特性。"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:381
+msgid "After that, check out the Role recipes. If you're really curious, go on and read the Meta and Extending recipes, but those are mostly there for people who want to be Moose wizards and extend Moose itself."
+msgstr "在那之后，如果你仍然感兴趣的话，继续看 the Meta and Extending 介绍，这对扩展 Moose 的人来说很有帮助。"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:385
+msgid "AUTHOR"
+msgstr "作者"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:387
+msgid "Moose is maintained by the Moose Cabal, along with the help of many contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr "Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL>和L<Moose/CONTRIBUTORS>。<BR/>\"\"译者:xiaomo(wxm4ever@gmail.com)"
+
+#. type: =head1
+#: ../POD/Manual/Concepts.pod:389
+msgid "COPYRIGHT AND LICENSE"
+msgstr "版权和许可"
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:391
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+
+#. type: textblock
+#: ../POD/Manual/Concepts.pod:393
+msgid "This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself."
+msgstr "这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相同的条款进行修改。"
+
