@@ -19,27 +19,27 @@ msgstr ""
 #. type: =head1
 #: Attributes.pod:9
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. type: textblock
 #: Attributes.pod:11
 msgid "Moose::Manual::Attributes - Object attributes with Moose"
-msgstr ""
+msgstr "Moose::Manual::Attributes - Moose 对象的属性"
 
 #. type: =head1
 #: Attributes.pod:13
 msgid "VERSION"
-msgstr ""
+msgstr "VERSION"
 
 #. type: textblock
 #: Attributes.pod:15
 msgid "version 2.0401"
-msgstr ""
+msgstr "version 2.0401"
 
 #. type: =head1
 #: Attributes.pod:17
 msgid "INTRODUCTION"
-msgstr ""
+msgstr "介绍"
 
 #. type: textblock
 #: Attributes.pod:19
@@ -49,6 +49,7 @@ msgid ""
 "class simply by declaring attributes. In fact, it's possible to have classes "
 "that consist solely of attribute declarations."
 msgstr ""
+""
 
 #. type: textblock
 #: Attributes.pod:24

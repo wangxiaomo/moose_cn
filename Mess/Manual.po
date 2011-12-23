@@ -521,7 +521,7 @@ msgstr "作者"
 #: Manual.pod:263
 msgid "Moose is maintained by the Moose Cabal, along with the help of many contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
-"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL>和L<Moose/CONTRIBUTORS>。\n"
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL>和L<Moose/CONTRIBUTORS>。<BR/>"
 "译者：xiaomo (wxm4ever@gmail.com)。"
 
 #. type: =head1
