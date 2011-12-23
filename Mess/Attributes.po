@@ -1,0 +1,1399 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-23 22:59+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Attributes.pod:9
+msgid "NAME"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:11
+msgid "Moose::Manual::Attributes - Object attributes with Moose"
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:13
+msgid "VERSION"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:15
+msgid "version 2.0401"
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:17
+msgid "INTRODUCTION"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:19
+msgid ""
+"Moose attributes have many properties, and attributes are probably the "
+"single most powerful and flexible part of Moose. You can create a powerful "
+"class simply by declaring attributes. In fact, it's possible to have classes "
+"that consist solely of attribute declarations."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:24
+msgid ""
+"An attribute is a property that every member of a class has. For example, we "
+"might say that \"every C<Person> object has a first name and last "
+"name\". Attributes can be optional, so that we can say \"some C<Person> "
+"objects have a social security number (and some don't)\"."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:29
+msgid ""
+"At its simplest, an attribute can be thought of as a named value (as in a "
+"hash) that can be read and set. However, attributes can also have defaults, "
+"type constraints, delegation and much more."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:33
+msgid "In other languages, attributes are also referred to as slots or properties."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:36
+msgid "ATTRIBUTE OPTIONS"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:38
+msgid "Use the C<has> function to declare an attribute:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:40 Attributes.pod:131
+#, no-wrap
+msgid ""
+"  package Person;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:42 Attributes.pod:133 Attributes.pod:555 Attributes.pod:577
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:44
+#, no-wrap
+msgid ""
+"  has 'first_name' => ( is => 'rw' );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:46
+msgid ""
+"This says that all C<Person> objects have an optional read-write "
+"\"first_name\" attribute."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:49
+msgid "Read-write vs. read-only"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:51
+msgid ""
+"The options passed to C<has> define the properties of the attribute. There "
+"are many options, but in the simplest form you just need to set C<is>, which "
+"can be either C<ro> (read-only) or C<rw> (read-write). When an attribute is "
+"C<rw>, you can change it by passing a value to its accessor. When an "
+"attribute is C<ro>, you may only read the current value of the attribute."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:57
+msgid ""
+"In fact, you could even omit C<is>, but that gives you an attribute that has "
+"no accessor. This can be useful with other attribute options, such as "
+"C<handles>. However, if your attribute generates I<no> accessors, Moose will "
+"issue a warning, because that usually means the programmer forgot to say the "
+"attribute is read-only or read-write. If you really mean to have no "
+"accessors, you can silence this warning by setting C<is> to C<bare>."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:65
+msgid "Accessor methods"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:67
+msgid ""
+"Each attribute has one or more accessor methods. An accessor lets you read "
+"and write the value of that attribute for an object."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:70
+msgid ""
+"By default, the accessor method has the same name as the attribute. If you "
+"declared your attribute as C<ro> then your accessor will be read-only. If "
+"you declared it read-write, you get a read-write accessor. Simple."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:75
+msgid ""
+"Given our C<Person> example above, we now have a single C<first_name> "
+"accessor that can read or write a C<Person> object's C<first_name> "
+"attribute's value."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:79
+msgid ""
+"If you want, you can also explicitly specify the method names to be used for "
+"reading and writing an attribute's value. This is particularly handy when "
+"you'd like an attribute to be publicly readable, but only privately "
+"settable. For example:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:84
+#, no-wrap
+msgid ""
+"  has 'weight' => (\n"
+"      is     => 'ro',\n"
+"      writer => '_set_weight',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:89
+msgid ""
+"This might be useful if weight is calculated based on other methods.  For "
+"example, every time the C<eat> method is called, we might adjust "
+"weight. This lets us hide the implementation details of weight changes, but "
+"still provide the weight value to users of the class."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:94
+msgid ""
+"Some people might prefer to have distinct methods for reading and "
+"writing. In I<Perl Best Practices>, Damian Conway recommends that reader "
+"methods start with \"get_\" and writer methods start with \"set_\"."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:98
+msgid ""
+"We can do exactly that by providing names for both the C<reader> and "
+"C<writer> methods:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:101
+#, no-wrap
+msgid ""
+"  has 'weight' => (\n"
+"      is     => 'rw',\n"
+"      reader => 'get_weight',\n"
+"      writer => 'set_weight',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:107
+msgid ""
+"If you're thinking that doing this over and over would be insanely tedious, "
+"you're right! Fortunately, Moose provides a powerful extension system that "
+"lets you override the default naming conventions. See "
+"L<Moose::Manual::MooseX> for more details."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:112
+msgid "Predicate and clearer methods"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:114
+msgid ""
+"Moose allows you to explicitly distinguish between a false or undefined "
+"attribute value and an attribute which has not been set. If you want to "
+"access this information, you must define clearer and predicate methods for "
+"an attribute."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:119
+msgid ""
+"A predicate method tells you whether or not a given attribute is currently "
+"set. Note that an attribute can be explicitly set to C<undef> or some other "
+"false value, but the predicate will return true."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:124
+msgid ""
+"The clearer method unsets the attribute. This is I<not> the same as setting "
+"the value to C<undef>, but you can only distinguish between them if you "
+"define a predicate method!"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:128
+msgid ""
+"Here's some code to illustrate the relationship between an accessor, "
+"predicate, and clearer method."
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:135
+#, no-wrap
+msgid ""
+"  has 'ssn' => (\n"
+"      is        => 'rw',\n"
+"      clearer   => 'clear_ssn',\n"
+"      predicate => 'has_ssn',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:141
+#, no-wrap
+msgid ""
+"  ...\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:143
+#, no-wrap
+msgid ""
+"  my $person = Person->new();\n"
+"  $person->has_ssn; # false\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:146
+#, no-wrap
+msgid ""
+"  $person->ssn(undef);\n"
+"  $person->ssn; # returns undef\n"
+"  $person->has_ssn; # true\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:150
+#, no-wrap
+msgid ""
+"  $person->clear_ssn;\n"
+"  $person->ssn; # returns undef\n"
+"  $person->has_ssn; # false\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:154
+#, no-wrap
+msgid ""
+"  $person->ssn('123-45-6789');\n"
+"  $person->ssn; # returns '123-45-6789'\n"
+"  $person->has_ssn; # true\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:158
+#, no-wrap
+msgid ""
+"  my $person2 = Person->new( ssn => '111-22-3333');\n"
+"  $person2->has_ssn; # true\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:161
+msgid ""
+"By default, Moose does not make a predicate or clearer for you. You must "
+"explicitly provide names for them, and then Moose will create the methods "
+"for you."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:165
+msgid "Required or not?"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:167
+msgid ""
+"By default, all attributes are optional, and do not need to be provided at "
+"object construction time. If you want to make an attribute required, simply "
+"set the C<required> option to true:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:171
+#, no-wrap
+msgid ""
+"  has 'name' => (\n"
+"      is       => 'ro',\n"
+"      required => 1,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:176
+msgid ""
+"There are a couple caveats worth mentioning in regards to what \"required\" "
+"actually means."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:179
+msgid ""
+"Basically, all it says is that this attribute (C<name>) must be provided to "
+"the constructor, or be lazy with either a default or a builder. It does not "
+"say anything about its value, so it could be C<undef>."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:183
+msgid ""
+"If you define a clearer method on a required attribute, the clearer I<will> "
+"work, so even a required attribute can be unset after object construction."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:187
+msgid ""
+"This means that if you do make an attribute required, providing a clearer "
+"doesn't make much sense. In some cases, it might be handy to have a "
+"I<private> C<clearer> and C<predicate> for a required attribute."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:192
+msgid "Default and builder methods"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:194
+msgid ""
+"Attributes can have default values, and Moose provides two ways to specify "
+"that default."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:197
+msgid ""
+"In the simplest form, you simply provide a non-reference scalar value for "
+"the C<default> option:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:200
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is        => 'ro',\n"
+"      default   => 'medium',\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:206
+msgid ""
+"If the size attribute is not provided to the constructor, then it ends up "
+"being set to C<medium>:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:209
+#, no-wrap
+msgid ""
+"  my $person = Person->new();\n"
+"  $person->size; # medium\n"
+"  $person->has_size; # true\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:213
+msgid ""
+"You can also provide a subroutine reference for C<default>. This reference "
+"will be called as a method on the object."
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:216
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is => 'ro',\n"
+"      default =>\n"
+"          sub { ( 'small', 'medium', 'large' )[ int( rand 3 ) ] },\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:223
+msgid ""
+"This is a trivial example, but it illustrates the point that the subroutine "
+"will be called for every new object created."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:226
+msgid ""
+"When you provide a C<default> subroutine reference, it is called as a method "
+"on the object, with no additional parameters:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:229
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is      => 'ro',\n"
+"      default => sub {\n"
+"          my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:234
+#, no-wrap
+msgid ""
+"          return $self->height > 200 ? 'large' : 'average';\n"
+"      },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:238
+msgid ""
+"When the C<default> is called during object construction, it may be called "
+"before other attributes have been set. If your default is dependent on other "
+"parts of the object's state, you can make the attribute C<lazy>. Laziness is "
+"covered in the next section."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:243
+msgid ""
+"If you want to use a reference of any sort as the default value, you must "
+"return it from a subroutine."
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:246
+#, no-wrap
+msgid ""
+"  has 'mapping' => (\n"
+"      is      => 'ro',\n"
+"      default => sub { {} },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:251
+msgid ""
+"This is necessary because otherwise Perl would instantiate the reference "
+"exactly once, and it would be shared by all objects:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:254
+#, no-wrap
+msgid ""
+"  has 'mapping' => (\n"
+"      is      => 'ro',\n"
+"      default => {}, # wrong!\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:259
+msgid ""
+"Moose will throw an error if you pass a bare non-subroutine reference as the "
+"default."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:262
+msgid ""
+"If Moose allowed this then the default mapping attribute could easily end up "
+"shared across many objects. Instead, wrap it in a subroutine reference as we "
+"saw above."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:266
+msgid "This is a bit awkward, but it's just the way Perl works."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:268
+msgid ""
+"As an alternative to using a subroutine reference, you can supply a "
+"C<builder> method for your attribute:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:271
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is        => 'ro',\n"
+"      builder   => '_build_size',\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:277
+#, no-wrap
+msgid ""
+"  sub _build_size {\n"
+"      return ( 'small', 'medium', 'large' )[ int( rand 3 ) ];\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:281
+msgid ""
+"This has several advantages. First, it moves a chunk of code to its own "
+"named method, which improves readability and code organization. Second, "
+"because this is a I<named> method, it can be subclassed or provided by a "
+"role."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:285
+msgid ""
+"We strongly recommend that you use a C<builder> instead of a C<default> for "
+"anything beyond the most trivial default."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:288
+msgid ""
+"A C<builder>, just like a C<default>, is called as a method on the object "
+"with no additional parameters."
+msgstr ""
+
+#. type: =head3
+#: Attributes.pod:291
+msgid "Builders allow subclassing"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:293
+msgid ""
+"Because the C<builder> is called I<by name>, it goes through Perl's method "
+"resolution. This means that builder methods are both inheritable and "
+"overridable."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:297
+msgid "If we subclass our C<Person> class, we can override C<_build_size>:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:299
+#, no-wrap
+msgid ""
+"  package Lilliputian;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:301
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  extends 'Person';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:304 Attributes.pod:328
+#, no-wrap
+msgid ""
+"  sub _build_size { return 'small' }\n"
+"\n"
+msgstr ""
+
+#. type: =head3
+#: Attributes.pod:306
+msgid "Builders work well with roles"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:308
+msgid ""
+"Because builders are called by name, they work well with roles. For example, "
+"a role could provide an attribute but require that the consuming class "
+"provide the C<builder>:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:312
+#, no-wrap
+msgid ""
+"  package HasSize;\n"
+"  use Moose::Role;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:315
+#, no-wrap
+msgid ""
+"  requires '_build_size';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:317 Attributes.pod:337
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is      => 'ro',\n"
+"      lazy    => 1,\n"
+"      builder => '_build_size',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:323
+#, no-wrap
+msgid ""
+"  package Lilliputian;\n"
+"  use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:326
+#, no-wrap
+msgid ""
+"  with 'HasSize';\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:330
+msgid "Roles are covered in L<Moose::Manual::Roles>."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:332
+msgid "Laziness"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:334
+msgid "Moose lets you defer attribute population by making an attribute C<lazy>:"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:343
+msgid ""
+"When C<lazy> is true, the default is not generated until the reader method "
+"is called, rather than at object construction time. There are several "
+"reasons you might choose to do this."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:347
+msgid ""
+"First, if the default value for this attribute depends on some other "
+"attributes, then the attribute I<must> be C<lazy>. During object "
+"construction, defaults are not generated in a predictable order, so you "
+"cannot count on some other attribute being populated when generating a "
+"default."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:353
+msgid ""
+"Second, there's often no reason to calculate a default before it's "
+"needed. Making an attribute C<lazy> lets you defer the cost until the "
+"attribute is needed. If the attribute is I<never> needed, you save some CPU "
+"time."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:358
+msgid ""
+"We recommend that you make any attribute with a builder or non-trivial "
+"default C<lazy> as a matter of course."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:361
+msgid "Constructor parameters (C<init_arg>)"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:363
+msgid ""
+"By default, each attribute can be passed by name to the class's "
+"constructor. On occasion, you may want to use a different name for the "
+"constructor parameter. You may also want to make an attribute unsettable via "
+"the constructor."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:368
+msgid "You can do either of these things with the C<init_arg> option:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:370
+#, no-wrap
+msgid ""
+"  has 'bigness' => (\n"
+"      is       => 'ro',\n"
+"      init_arg => 'size',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:375
+msgid ""
+"Now we have an attribute named \"bigness\", but we pass C<size> to the "
+"constructor."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:378
+msgid ""
+"Even more useful is the ability to disable setting an attribute via the "
+"constructor. This is particularly handy for private attributes:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:381
+#, no-wrap
+msgid ""
+"  has '_genetic_code' => (\n"
+"      is       => 'ro',\n"
+"      lazy     => 1,\n"
+"      builder  => '_build_genetic_code',\n"
+"      init_arg => undef,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:388
+msgid ""
+"By setting the C<init_arg> to C<undef>, we make it impossible to set this "
+"attribute when creating a new object."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:391
+msgid "Weak references"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:393
+msgid ""
+"Moose has built-in support for weak references. If you set the C<weak_ref> "
+"option to a true value, then it will call C<Scalar::Util::weaken> whenever "
+"the attribute is set:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:397
+#, no-wrap
+msgid ""
+"  has 'parent' => (\n"
+"      is       => 'rw',\n"
+"      weak_ref => 1,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:402
+#, no-wrap
+msgid ""
+"  $node->parent($parent_node);\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:404
+msgid ""
+"This is very useful when you're building objects that may contain circular "
+"references."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:407
+msgid ""
+"When the object in a weak references goes out of scope, the attribute's "
+"value will become C<undef> \"behind the scenes\". This is done by the Perl "
+"interpreter directly, so Moose does not see this change. This means that "
+"triggers don't fire, coercions aren't applied, etc."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:412
+msgid ""
+"The attribute is not cleared, so a predicate method for that attribute will "
+"still return true. Similarly, when the attribute is next accessed, a default "
+"value will not be generated."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:416
+msgid "Triggers"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:418
+msgid "A C<trigger> is a subroutine that is called whenever the attribute is set:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:421
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is      => 'rw',\n"
+"      trigger => \\&_size_set,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:426
+#, no-wrap
+msgid ""
+"  sub _size_set {\n"
+"      my ( $self, $size, $old_size ) = @_;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:429
+#, no-wrap
+msgid ""
+"      my $msg = $self->name;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:431
+#, no-wrap
+msgid ""
+"      if ( @_ > 2 ) {\n"
+"          $msg .= \" - old size was $old_size\";\n"
+"      }\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:435
+#, no-wrap
+msgid ""
+"      $msg .= \" - size is now $size\";\n"
+"      warn $msg;\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:439
+msgid ""
+"The trigger is called I<after> an attribute's value is set. It is called as "
+"a method on the object, and receives the new and old values as its "
+"arguments. If the attribute had not previously been set at all, then only "
+"the new value is passed. This lets you distinguish between the case where "
+"the attribute had no value versus when the old value was C<undef>."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:445
+msgid ""
+"This differs from an C<after> method modifier in two ways. First, a trigger "
+"is only called when the attribute is set, as opposed to whenever the "
+"accessor method is called (for reading or writing). Second, it is also "
+"called when an attribute's value is passed to the constructor."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:451
+msgid ""
+"However, triggers are I<not> called when an attribute is populated from a "
+"C<default> or C<builder>."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:454
+msgid "Attribute types"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:456
+msgid "Attributes can be restricted to only accept certain types:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:458
+#, no-wrap
+msgid ""
+"  has 'first_name' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:463
+msgid "This says that the C<first_name> attribute must be a string."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:465
+msgid ""
+"Moose also provides a shortcut for specifying that an attribute only accepts "
+"objects that do a certain role:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:468
+#, no-wrap
+msgid ""
+"  has 'weapon' => (\n"
+"      is   => 'rw',\n"
+"      does => 'MyApp::Weapon',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:473
+msgid ""
+"See the L<Moose::Manual::Types> documentation for a complete discussion of "
+"Moose's type system."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:476
+msgid "Delegation"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:478
+msgid "An attribute can define methods which simply delegate to its value:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:480
+#, no-wrap
+msgid ""
+"  has 'hair_color' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'Graphics::Color::RGB',\n"
+"      handles => { hair_color_hex => 'as_hex_string' },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:486
+msgid ""
+"This adds a new method, C<hair_color_hex>. When someone calls "
+"C<hair_color_hex>, internally, the object just calls C<< "
+"$self->hair_color->as_hex_string >>."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:490
+msgid ""
+"See L<Moose::Manual::Delegation> for documentation on how to set up "
+"delegation methods."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:493
+msgid "Attribute traits and metaclasses"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:495
+msgid ""
+"One of Moose's best features is that it can be extended in all sorts of ways "
+"through the use of metaclass traits and custom metaclasses."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:498
+msgid "You can apply one or more traits to an attribute:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:500
+#, no-wrap
+msgid ""
+"  use MooseX::MetaDescription;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:502
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is          => 'ro',\n"
+"      traits      => ['MooseX::MetaDescription::Meta::Trait'],\n"
+"      description => {\n"
+"          html_widget  => 'text_input',\n"
+"          serialize_as => 'element',\n"
+"      },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:511
+msgid ""
+"The advantage of traits is that you can mix more than one of them together "
+"easily (in fact, a trait is just a role under the hood)."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:514
+msgid ""
+"There are a number of MooseX modules on CPAN which provide useful attribute "
+"metaclasses and traits. See L<Moose::Manual::MooseX> for some examples. You "
+"can also write your own metaclasses and traits. See the \"Meta\" and "
+"\"Extending\" recipes in L<Moose::Cookbook> for examples."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:519
+msgid "Native Delegations"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:521
+msgid ""
+"Native delegations allow you to delegate to standard Perl data structures as "
+"if they were objects."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:524
+msgid ""
+"For example, we can pretend that an array reference has methods like "
+"C<push()>, C<shift()>, C<map()>, C<count()>, and more."
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:527
+#, no-wrap
+msgid ""
+"  has 'options' => (\n"
+"      traits  => ['Array'],\n"
+"      is      => 'ro',\n"
+"      isa     => 'ArrayRef[Str]',\n"
+"      default => sub { [] },\n"
+"      handles => {\n"
+"          all_options    => 'elements',\n"
+"          add_option     => 'push',\n"
+"          map_options    => 'map',\n"
+"          option_count   => 'count',\n"
+"          sorted_options => 'sort',\n"
+"      },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:541
+msgid "See L<Moose::Manual::Delegation> for more details."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:543
+msgid "ATTRIBUTE INHERITANCE"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:545
+msgid ""
+"By default, a child inherits all of its parent class(es)' attributes "
+"as-is. However, you can change most aspects of the inherited attribute in "
+"the child class. You cannot change any of its associated method names "
+"(reader, writer, predicate, etc)."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:550
+msgid ""
+"To override an attribute, you simply prepend its name with a plus sign "
+"(C<+>):"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:553
+#, no-wrap
+msgid ""
+"  package LazyPerson;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:557
+#, no-wrap
+msgid ""
+"  extends 'Person';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:559
+#, no-wrap
+msgid ""
+"  has '+first_name' => (\n"
+"      lazy    => 1,\n"
+"      default => 'Bill',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:564
+msgid ""
+"Now the C<first_name> attribute in C<LazyPerson> is lazy, and defaults to "
+"C<'Bill'>."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:567
+msgid ""
+"We recommend that you exercise caution when changing the type (C<isa>)  of "
+"an inherited attribute."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:570
+msgid "MULTIPLE ATTRIBUTE SHORTCUTS"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:572
+msgid ""
+"If you have a number of attributes that differ only by name, you can declare "
+"them all at once:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:575
+#, no-wrap
+msgid ""
+"  package Point;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:579
+#, no-wrap
+msgid ""
+"  has [ 'x', 'y' ] => ( is => 'ro', isa => 'Int' );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:581
+msgid "Also, because C<has> is just a function call, you can call it in a loop:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:583
+#, no-wrap
+msgid ""
+"  for my $name ( qw( x y ) ) {\n"
+"      my $builder = '_build_' . $name;\n"
+"      has $name => ( is => 'ro', isa => 'Int', builder => $builder );\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:588
+msgid "MORE ON ATTRIBUTES"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:590
+msgid ""
+"Moose attributes are a big topic, and this document glosses over a few "
+"aspects. We recommend that you read the L<Moose::Manual::Delegation> and "
+"L<Moose::Manual::Types> documents to get a more complete understanding of "
+"attribute features."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:595
+msgid "A FEW MORE OPTIONS"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:597
+msgid ""
+"Moose has lots of attribute options. The ones listed below are superseded by "
+"some more modern features, but are covered for the sake of completeness."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:601
+msgid "The C<documentation> option"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:603
+msgid "You can provide a piece of documentation as a string for an attribute:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:605
+#, no-wrap
+msgid ""
+"  has 'first_name' => (\n"
+"      is            => 'rw',\n"
+"      documentation => q{The person's first (personal) name},\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:610
+msgid "Moose does absolutely nothing with this information other than store it."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:613
+msgid "The C<auto_deref> option"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:615
+msgid ""
+"If your attribute is an array reference or hash reference, the C<auto_deref> "
+"option will make Moose dereference the value when it is returned from the "
+"reader method:"
+msgstr ""
+
+#. type: verbatim
+#: Attributes.pod:619
+#, no-wrap
+msgid ""
+"  my %map = $object->mapping;\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:621
+msgid ""
+"This option only works if your attribute is explicitly typed as an "
+"C<ArrayRef> or C<HashRef>."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:624
+msgid ""
+"However, we recommend that you use L<Moose::Meta::Attribute::Native> traits "
+"for these types of attributes, which gives you much more control over how "
+"they are accessed and manipulated."
+msgstr ""
+
+#. type: =head2
+#: Attributes.pod:628
+msgid "Initializer"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:630
+msgid ""
+"Moose provides an attribute option called C<initializer>. This is called "
+"when the attribute's value is being set in the constructor, and lets you "
+"change the value before it is set."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:634
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:636
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: Attributes.pod:638
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:640
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: Attributes.pod:642
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
