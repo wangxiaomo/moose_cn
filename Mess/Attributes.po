@@ -49,7 +49,8 @@ msgid ""
 "class simply by declaring attributes. In fact, it's possible to have classes "
 "that consist solely of attribute declarations."
 msgstr ""
-""
+"Moose 中最强大也最灵活的功能莫过于对象的属性。通过简单的声明属性便可以构造"
+"一个功能强大的类。"
 
 #. type: textblock
 #: Attributes.pod:24
@@ -59,6 +60,8 @@ msgid ""
 "name\". Attributes can be optional, so that we can say \"some C<Person> "
 "objects have a social security number (and some don't)\"."
 msgstr ""
+"类的每一个成员都是一个属性。比如，C<Person> 类有 first name 和 last name。属性"
+"对于类是可选的，好比并不是每一个 C<Person> 类都有社保号。"
 
 #. type: textblock
 #: Attributes.pod:29
@@ -67,21 +70,24 @@ msgid ""
 "hash) that can be read and set. However, attributes can also have defaults, "
 "type constraints, delegation and much more."
 msgstr ""
+"我们可以把类属性当作是成员的名字，通过这个名字我们可以读取或设置该成员的值。"
+"当然，属性还可以包括默认值、类型约束、委托方法等等。"
 
 #. type: textblock
 #: Attributes.pod:33
 msgid "In other languages, attributes are also referred to as slots or properties."
 msgstr ""
+"在其他语言中，属性也被称为 slots 或 properties。"
 
 #. type: =head1
 #: Attributes.pod:36
 msgid "ATTRIBUTE OPTIONS"
-msgstr ""
+msgstr "属性设置"
 
 #. type: textblock
 #: Attributes.pod:38
 msgid "Use the C<has> function to declare an attribute:"
-msgstr ""
+msgstr "通过 C<has> 来声明一个属性："
 
 #. type: verbatim
 #: Attributes.pod:40 Attributes.pod:131
@@ -90,6 +96,8 @@ msgid ""
 "  package Person;\n"
 "\n"
 msgstr ""
+"  package Person;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:42 Attributes.pod:133 Attributes.pod:555 Attributes.pod:577
@@ -98,6 +106,8 @@ msgid ""
 "  use Moose;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:44
@@ -106,6 +116,8 @@ msgid ""
 "  has 'first_name' => ( is => 'rw' );\n"
 "\n"
 msgstr ""
+"  has 'first_name' => ( is => 'rw' );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:46
@@ -113,11 +125,12 @@ msgid ""
 "This says that all C<Person> objects have an optional read-write "
 "\"first_name\" attribute."
 msgstr ""
+"这样就声明了有一个可读写的属性的类 C<Person>。"
 
 #. type: =head2
 #: Attributes.pod:49
 msgid "Read-write vs. read-only"
-msgstr ""
+msgstr "读写 vs 只读"
 
 #. type: textblock
 #: Attributes.pod:51
@@ -128,6 +141,9 @@ msgid ""
 "C<rw>, you can change it by passing a value to its accessor. When an "
 "attribute is C<ro>, you may only read the current value of the attribute."
 msgstr ""
+"通过 C<has> 传递的选项可以对属性进行相关设置。不过最简单也是最基本的是，你可以"
+"通过 C<is> 来设置变量的读取权限，read-only(ro) 或者 read-write(rw)。当设置为"
+"rw 时，你可以通过访问器来修改它的值。但设置为 ro时，你便只能读取该属性的值。"
 
 #. type: textblock
 #: Attributes.pod:57
@@ -139,11 +155,14 @@ msgid ""
 "attribute is read-only or read-write. If you really mean to have no "
 "accessors, you can silence this warning by setting C<is> to C<bare>."
 msgstr ""
+"事实上，你可以不设置 C<is>，Moose 会默认使该属性没有任何存取权限。这对某些属性"
+"比较管用，如句柄等。但是 Moose 会抛出警告以防止程序员忘记书写存取规则。如果你确"
+"实需要这么做，那么可以通过设置 C<is> 为 C<bare> 来防止产生警告。"
 
 #. type: =head2
 #: Attributes.pod:65
 msgid "Accessor methods"
-msgstr ""
+msgstr "存取方法"
 
 #. type: textblock
 #: Attributes.pod:67
@@ -151,6 +170,7 @@ msgid ""
 "Each attribute has one or more accessor methods. An accessor lets you read "
 "and write the value of that attribute for an object."
 msgstr ""
+"每个属性有一个或多个存取方法，通过存取方法，你可以读取或者设置该属性的值"
 
 #. type: textblock
 #: Attributes.pod:70
@@ -159,6 +179,8 @@ msgid ""
 "declared your attribute as C<ro> then your accessor will be read-only. If "
 "you declared it read-write, you get a read-write accessor. Simple."
 msgstr ""
+"默认的存取方法和属性的名字一样。如果属性存取权限设置为 rw，则可以通过存取方法"
+"来读写属性值，反之，则不可以。"
 
 #. type: textblock
 #: Attributes.pod:75
@@ -167,6 +189,8 @@ msgid ""
 "accessor that can read or write a C<Person> object's C<first_name> "
 "attribute's value."
 msgstr ""
+"以上面的 C<Person> 类为例，我们有一个存取方法为 C<first_name>，通过这个存取方法"
+"我们可以读取或设置 C<Person> 实例的 C<first_name> 属性。"
 
 #. type: textblock
 #: Attributes.pod:79
@@ -176,6 +200,8 @@ msgid ""
 "you'd like an attribute to be publicly readable, but only privately "
 "settable. For example:"
 msgstr ""
+"如果你愿意的话，你也可以指定具体的方法来进行存取操作。这对于你想要设置一个默认"
+"存取权限为 ro，但是可以通过某种方法来修改属性是非常方便的。"
 
 #. type: verbatim
 #: Attributes.pod:84
@@ -187,6 +213,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'weight' => (\n"
+"      is     => 'ro',\n"
+"      writer => '_set_weight',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:89
@@ -196,6 +227,8 @@ msgid ""
 "weight. This lets us hide the implementation details of weight changes, but "
 "still provide the weight value to users of the class."
 msgstr ""
+"这在以下场景中是非常方便的。比如，每当我们调用 C<eat> 方法的时候，我们可能会改"
+"变 weight，而在其他场景中我们对 weight 只有读取权限。"
 
 #. type: textblock
 #: Attributes.pod:94
@@ -204,6 +237,8 @@ msgid ""
 "writing. In I<Perl Best Practices>, Damian Conway recommends that reader "
 "methods start with \"get_\" and writer methods start with \"set_\"."
 msgstr ""
+"有些人喜欢把读取和设置方法分别来声明。在 I<Perl Best Practices> 中，Damian Conway"
+"也推荐读者使用\"get_\"和\"set_\"类方法。"
 
 #. type: textblock
 #: Attributes.pod:98
@@ -211,6 +246,7 @@ msgid ""
 "We can do exactly that by providing names for both the C<reader> and "
 "C<writer> methods:"
 msgstr ""
+"我们可以通过具体的声明来做到。"
 
 #. type: verbatim
 #: Attributes.pod:101
@@ -223,6 +259,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'weight' => (\n"
+"      is     => 'rw',\n"
+"      reader => 'get_weight',\n"
+"      writer => 'set_weight',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:107
@@ -232,11 +274,13 @@ msgid ""
 "lets you override the default naming conventions. See "
 "L<Moose::Manual::MooseX> for more details."
 msgstr ""
+"你认为这样一遍又一遍非常繁琐？你说的对，不过幸运的是，Moose 提供了相当强大"
+"的拓展系统，可以让你覆盖默认的命名约定。有关详细信息，请参阅 L<Moose::Manual::MooseX>。"
 
 #. type: =head2
 #: Attributes.pod:112
 msgid "Predicate and clearer methods"
-msgstr ""
+msgstr "断言和清理方法"
 
 #. type: textblock
 #: Attributes.pod:114
@@ -246,6 +290,7 @@ msgid ""
 "access this information, you must define clearer and predicate methods for "
 "an attribute."
 msgstr ""
+"Moose 允许你使用断言来判断一个属性是否已经被定义。"
 
 #. type: textblock
 #: Attributes.pod:119
@@ -254,6 +299,8 @@ msgid ""
 "set. Note that an attribute can be explicitly set to C<undef> or some other "
 "false value, but the predicate will return true."
 msgstr ""
+"断言方法可以告诉你当前属性是否被定义。不过需要注意的是，当属性被设置为 C<undef>"
+"或者其他的一些假值，断言依然会返回 true。"
 
 #. type: textblock
 #: Attributes.pod:124
@@ -262,6 +309,8 @@ msgid ""
 "the value to C<undef>, but you can only distinguish between them if you "
 "define a predicate method!"
 msgstr ""
+"清理方法会取消设置属性。这和设置属性为 C<undef> 是 I<不同的>。清理函数是为了"
+"让你更方便的使用断言。"
 
 #. type: textblock
 #: Attributes.pod:128
@@ -269,6 +318,7 @@ msgid ""
 "Here's some code to illustrate the relationship between an accessor, "
 "predicate, and clearer method."
 msgstr ""
+"这里有一个例子用来讲解断言和清理方法。"
 
 #. type: verbatim
 #: Attributes.pod:135
@@ -281,6 +331,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'ssn' => (\n"
+"      is        => 'rw',\n"
+"      clearer   => 'clear_ssn',\n"
+"      predicate => 'has_ssn',\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:141
@@ -289,6 +345,8 @@ msgid ""
 "  ...\n"
 "\n"
 msgstr ""
+"  ...\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:143
@@ -298,6 +356,9 @@ msgid ""
 "  $person->has_ssn; # false\n"
 "\n"
 msgstr ""
+"  my $person = Person->new();\n"
+"  $person->has_ssn; # false\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:146
@@ -308,6 +369,10 @@ msgid ""
 "  $person->has_ssn; # true\n"
 "\n"
 msgstr ""
+"  $person->ssn(undef);\n"
+"  $person->ssn; # returns undef\n"
+"  $person->has_ssn; # true\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:150
@@ -318,6 +383,10 @@ msgid ""
 "  $person->has_ssn; # false\n"
 "\n"
 msgstr ""
+"  $person->clear_ssn;\n"
+"  $person->ssn; # returns undef\n"
+"  $person->has_ssn; # false\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:154
@@ -328,6 +397,10 @@ msgid ""
 "  $person->has_ssn; # true\n"
 "\n"
 msgstr ""
+"  $person->ssn('123-45-6789');\n"
+"  $person->ssn; # returns '123-45-6789'\n"
+"  $person->has_ssn; # true\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:158
@@ -337,6 +410,9 @@ msgid ""
 "  $person2->has_ssn; # true\n"
 "\n"
 msgstr ""
+"  my $person2 = Person->new( ssn => '111-22-3333');\n"
+"  $person2->has_ssn; # true\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:161
@@ -345,11 +421,12 @@ msgid ""
 "explicitly provide names for them, and then Moose will create the methods "
 "for you."
 msgstr ""
+"默认情况下，Moose 不为你提供断言和清理方法。当你具体指明时，Moose 会为你提供的。"
 
 #. type: =head2
 #: Attributes.pod:165
 msgid "Required or not?"
-msgstr ""
+msgstr "必需？"
 
 #. type: textblock
 #: Attributes.pod:167
@@ -358,6 +435,8 @@ msgid ""
 "object construction time. If you want to make an attribute required, simply "
 "set the C<required> option to true:"
 msgstr ""
+"默认情况下，所有的属性都是可选的，不需要在构造对象的时候就明确给出。如果你想"
+"指明某个属性是必须的，你可以把 C<required> 属性设置为 true。"
 
 #. type: verbatim
 #: Attributes.pod:171
@@ -369,13 +448,17 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'name' => (\n"
+"      is       => 'ro',\n"
+"      required => 1,\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:176
 msgid ""
 "There are a couple caveats worth mentioning in regards to what \"required\" "
 "actually means."
-msgstr ""
+msgstr "值得一提的是，什么时候才是\"required\"。"
 
 #. type: textblock
 #: Attributes.pod:179
@@ -384,6 +467,8 @@ msgid ""
 "the constructor, or be lazy with either a default or a builder. It does not "
 "say anything about its value, so it could be C<undef>."
 msgstr ""
+"基本上，当这个属性名必须被提供给构造函数，或者通过 default、builder来设置，这"
+"种情况下是 required。"
 
 #. type: textblock
 #: Attributes.pod:183
@@ -391,6 +476,8 @@ msgid ""
 "If you define a clearer method on a required attribute, the clearer I<will> "
 "work, so even a required attribute can be unset after object construction."
 msgstr ""
+"如果你在一个必须属性上定义了清理方法，这个清理方法是I<可以>运行的，也就是说"
+"一个必须属性也是可以被取消设置的。"
 
 #. type: textblock
 #: Attributes.pod:187
@@ -399,11 +486,12 @@ msgid ""
 "doesn't make much sense. In some cases, it might be handy to have a "
 "I<private> C<clearer> and C<predicate> for a required attribute."
 msgstr ""
+"但是这样做大多是没有意义的，所以我们并不推荐这么做。"
 
 #. type: =head2
 #: Attributes.pod:192
 msgid "Default and builder methods"
-msgstr ""
+msgstr "默认值和构造方法"
 
 #. type: textblock
 #: Attributes.pod:194
@@ -411,6 +499,7 @@ msgid ""
 "Attributes can have default values, and Moose provides two ways to specify "
 "that default."
 msgstr ""
+"属性可以设置默认值，而且 Moose 提供了两种方法来设置默认值。"
 
 #. type: textblock
 #: Attributes.pod:197
@@ -418,6 +507,7 @@ msgid ""
 "In the simplest form, you simply provide a non-reference scalar value for "
 "the C<default> option:"
 msgstr ""
+"最简单的，你可以通过 C<default> 来设置。"
 
 #. type: verbatim
 #: Attributes.pod:200
@@ -430,6 +520,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is        => 'ro',\n"
+"      default   => 'medium',\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:206
@@ -437,6 +533,7 @@ msgid ""
 "If the size attribute is not provided to the constructor, then it ends up "
 "being set to C<medium>:"
 msgstr ""
+"如果 size 属性没有提供给构造函数，那么 size 属性会被设置为默认值 C<medium>："
 
 #. type: verbatim
 #: Attributes.pod:209
@@ -447,6 +544,10 @@ msgid ""
 "  $person->has_size; # true\n"
 "\n"
 msgstr ""
+"  my $person = Person->new();\n"
+"  $person->size; # medium\n"
+"  $person->has_size; # true\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:213
@@ -454,6 +555,7 @@ msgid ""
 "You can also provide a subroutine reference for C<default>. This reference "
 "will be called as a method on the object."
 msgstr ""
+"你也可以通过提供一个子函数来提供默认值。"
 
 #. type: verbatim
 #: Attributes.pod:216
@@ -467,6 +569,13 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is => 'ro',\n"
+"      default =>\n"
+"          sub { ( 'small', 'medium', 'large' )[ int( rand 3 ) ] },\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:223
@@ -474,6 +583,7 @@ msgid ""
 "This is a trivial example, but it illustrates the point that the subroutine "
 "will be called for every new object created."
 msgstr ""
+"这是一个简单的例子。每次初始化构建默认值的时候，子函数便会被调用。"
 
 #. type: textblock
 #: Attributes.pod:226
@@ -481,6 +591,7 @@ msgid ""
 "When you provide a C<default> subroutine reference, it is called as a method "
 "on the object, with no additional parameters:"
 msgstr ""
+"当你提供子函数引用时，Moose 会调用它，并且不传递任何参数进去。"
 
 #. type: verbatim
 #: Attributes.pod:229
@@ -492,6 +603,11 @@ msgid ""
 "          my $self = shift;\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is      => 'ro',\n"
+"      default => sub {\n"
+"          my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:234
@@ -502,6 +618,10 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"          return $self->height > 200 ? 'large' : 'average';\n"
+"      },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:238
@@ -511,6 +631,9 @@ msgid ""
 "parts of the object's state, you can make the attribute C<lazy>. Laziness is "
 "covered in the next section."
 msgstr ""
+"C<default> 是在构造函数中开始运行的，所以会比一些属性更先运行。但当 C<default>"
+"依赖其他属性时就会出现一些问题。不过你可以通过设置属性为 C<lazy> 来解决。这个"
+"会在之后讲到。"
 
 #. type: textblock
 #: Attributes.pod:243
@@ -518,6 +641,7 @@ msgid ""
 "If you want to use a reference of any sort as the default value, you must "
 "return it from a subroutine."
 msgstr ""
+"如果你想在 default 中使用引用的话，这个引用必须在子函数中返回。"
 
 #. type: verbatim
 #: Attributes.pod:246
@@ -529,6 +653,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'mapping' => (\n"
+"      is      => 'ro',\n"
+"      default => sub { {} },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:251
@@ -536,6 +665,8 @@ msgid ""
 "This is necessary because otherwise Perl would instantiate the reference "
 "exactly once, and it would be shared by all objects:"
 msgstr ""
+"这是必要的。否则 Perl 会实例化一次，然后该引用在各个实例中被共享。下面这个"
+"是错误的。"
 
 #. type: verbatim
 #: Attributes.pod:254
@@ -547,6 +678,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'mapping' => (\n"
+"      is      => 'ro',\n"
+"      default => {}, # wrong!\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:259
@@ -554,6 +690,7 @@ msgid ""
 "Moose will throw an error if you pass a bare non-subroutine reference as the "
 "default."
 msgstr ""
+"如果你赋给 default 一个非子函数返回的引用时，Moose 会抛出一个错误。"
 
 #. type: textblock
 #: Attributes.pod:262
@@ -562,11 +699,13 @@ msgid ""
 "shared across many objects. Instead, wrap it in a subroutine reference as we "
 "saw above."
 msgstr ""
+""
 
 #. type: textblock
 #: Attributes.pod:266
 msgid "This is a bit awkward, but it's just the way Perl works."
 msgstr ""
+"这有一点古怪，不过请原谅，Perl 有时候就是这样。"
 
 #. type: textblock
 #: Attributes.pod:268
@@ -574,6 +713,7 @@ msgid ""
 "As an alternative to using a subroutine reference, you can supply a "
 "C<builder> method for your attribute:"
 msgstr ""
+"你可以通过 C<builder> 方法来避开这一古怪的现象。"
 
 #. type: verbatim
 #: Attributes.pod:271
@@ -586,6 +726,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is        => 'ro',\n"
+"      builder   => '_build_size',\n"
+"      predicate => 'has_size',\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:277
@@ -596,6 +742,10 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  sub _build_size {\n"
+"      return ( 'small', 'medium', 'large' )[ int( rand 3 ) ];\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:281
@@ -605,6 +755,8 @@ msgid ""
 "because this is a I<named> method, it can be subclassed or provided by a "
 "role."
 msgstr ""
+"这个使用有以下几个好处。把对属性的操作移到一个代码块中，方便阅读与组织。"
+"这样子使用的话，也方便子类重载或者由一个 role 来实现。"
 
 #. type: textblock
 #: Attributes.pod:285
@@ -612,6 +764,7 @@ msgid ""
 "We strongly recommend that you use a C<builder> instead of a C<default> for "
 "anything beyond the most trivial default."
 msgstr ""
+"我们强烈建议你使用 C<builder> 来初始化属性。它就是 C<default> 的增强版。"
 
 #. type: textblock
 #: Attributes.pod:288
@@ -619,11 +772,12 @@ msgid ""
 "A C<builder>, just like a C<default>, is called as a method on the object "
 "with no additional parameters."
 msgstr ""
+"C<builder> 和 C<default> 作为类方法调用的，不接受额外的参数。"
 
 #. type: =head3
 #: Attributes.pod:291
 msgid "Builders allow subclassing"
-msgstr ""
+msgstr "Builders 覆写"
 
 #. type: textblock
 #: Attributes.pod:293
@@ -632,11 +786,13 @@ msgid ""
 "resolution. This means that builder methods are both inheritable and "
 "overridable."
 msgstr ""
+"C<builder> 是通过名字来指定初始化函数的。所以 builder 方法是可以被继承和重载的。"
 
 #. type: textblock
 #: Attributes.pod:297
 msgid "If we subclass our C<Person> class, we can override C<_build_size>:"
 msgstr ""
+"比如我们继承 C<Person> 类，我们便可以重载 C<_build_size>："
 
 #. type: verbatim
 #: Attributes.pod:299
@@ -645,6 +801,8 @@ msgid ""
 "  package Lilliputian;\n"
 "\n"
 msgstr ""
+"  package Lilliputian;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:301
@@ -654,6 +812,9 @@ msgid ""
 "  extends 'Person';\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  extends 'Person';\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:304 Attributes.pod:328
@@ -662,11 +823,13 @@ msgid ""
 "  sub _build_size { return 'small' }\n"
 "\n"
 msgstr ""
+"  sub _build_size { return 'small' }\n"
+"\n"
 
 #. type: =head3
 #: Attributes.pod:306
 msgid "Builders work well with roles"
-msgstr ""
+msgstr "Builders 与 roles 配合工作"
 
 #. type: textblock
 #: Attributes.pod:308
@@ -675,6 +838,8 @@ msgid ""
 "a role could provide an attribute but require that the consuming class "
 "provide the C<builder>:"
 msgstr ""
+"同样，builders 可以与 roles 完美的配合。比如，一个角色可以为一个类提供 builder"
+"方法。"
 
 #. type: verbatim
 #: Attributes.pod:312
@@ -684,6 +849,9 @@ msgid ""
 "  use Moose::Role;\n"
 "\n"
 msgstr ""
+"  package HasSize;\n"
+"  use Moose::Role;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:315
@@ -692,6 +860,8 @@ msgid ""
 "  requires '_build_size';\n"
 "\n"
 msgstr ""
+"  requires '_build_size';\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:317 Attributes.pod:337
@@ -704,6 +874,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is      => 'ro',\n"
+"      lazy    => 1,\n"
+"      builder => '_build_size',\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:323
@@ -713,6 +889,9 @@ msgid ""
 "  use Moose;\n"
 "\n"
 msgstr ""
+"  package Lilliputian;\n"
+"  use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:326
@@ -721,21 +900,24 @@ msgid ""
 "  with 'HasSize';\n"
 "\n"
 msgstr ""
+"  with 'HasSize';\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:330
 msgid "Roles are covered in L<Moose::Manual::Roles>."
-msgstr ""
+msgstr "关于 Roles 的更多信息可以查阅 L<Moose::Manual::Roles>。"
 
 #. type: =head2
 #: Attributes.pod:332
 msgid "Laziness"
-msgstr ""
+msgstr "Laziness"
 
 #. type: textblock
 #: Attributes.pod:334
 msgid "Moose lets you defer attribute population by making an attribute C<lazy>:"
 msgstr ""
+"Moose 允许你通过 C<lazy> 来推迟属性定义。"
 
 #. type: textblock
 #: Attributes.pod:343
@@ -744,6 +926,8 @@ msgid ""
 "is called, rather than at object construction time. There are several "
 "reasons you might choose to do this."
 msgstr ""
+"当某属性 C<lazy> 为 true 时，该属性的 default 并不会在构造实例时运行，而是在"
+"相应的访问器访问时才进行计算。为什么要这样做呢？"
 
 #. type: textblock
 #: Attributes.pod:347
@@ -754,6 +938,8 @@ msgid ""
 "cannot count on some other attribute being populated when generating a "
 "default."
 msgstr ""
+"首先，如果该属性的 default 值依赖于其他属性，那么该属性的 C<lazy> I<必须>"
+"为 true。"
 
 #. type: textblock
 #: Attributes.pod:353
@@ -763,6 +949,8 @@ msgid ""
 "attribute is needed. If the attribute is I<never> needed, you save some CPU "
 "time."
 msgstr ""
+"有一些情况下是不需要在该属性被请求前进行计算的。通过设置该属性为 C<lazy>，"
+"你可以有效的节省你的 CPU 时间。"
 
 #. type: textblock
 #: Attributes.pod:358
@@ -770,11 +958,12 @@ msgid ""
 "We recommend that you make any attribute with a builder or non-trivial "
 "default C<lazy> as a matter of course."
 msgstr ""
+"我们建议你使用 builder 或者 lazy default。"
 
 #. type: =head2
 #: Attributes.pod:361
 msgid "Constructor parameters (C<init_arg>)"
-msgstr ""
+msgstr "构造函数的参数（C<init_arg>）"
 
 #. type: textblock
 #: Attributes.pod:363
@@ -784,11 +973,13 @@ msgid ""
 "constructor parameter. You may also want to make an attribute unsettable via "
 "the constructor."
 msgstr ""
+"默认情况下，每个属性都可以通过名字传递给类。有时，你可能需要用一个略有不同的"
+"名字，或者你不想传递任何参数进去。"
 
 #. type: textblock
 #: Attributes.pod:368
 msgid "You can do either of these things with the C<init_arg> option:"
-msgstr ""
+msgstr "你可以通过 C<init_arg> 选项来做到以上的事情。"
 
 #. type: verbatim
 #: Attributes.pod:370
@@ -800,6 +991,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'bigness' => (\n"
+"      is       => 'ro',\n"
+"      init_arg => 'size',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:375
@@ -807,6 +1003,7 @@ msgid ""
 "Now we have an attribute named \"bigness\", but we pass C<size> to the "
 "constructor."
 msgstr ""
+"现在我们有一个\"bigness\"属性，但是我们通过 C<size> 来传递到构造函数中。"
 
 #. type: textblock
 #: Attributes.pod:378
@@ -814,6 +1011,7 @@ msgid ""
 "Even more useful is the ability to disable setting an attribute via the "
 "constructor. This is particularly handy for private attributes:"
 msgstr ""
+"你也可以通过如下方式设置不接受任何参数。"
 
 #. type: verbatim
 #: Attributes.pod:381
@@ -827,6 +1025,13 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has '_genetic_code' => (\n"
+"      is       => 'ro',\n"
+"      lazy     => 1,\n"
+"      builder  => '_build_genetic_code',\n"
+"      init_arg => undef,\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:388
@@ -838,7 +1043,7 @@ msgstr ""
 #. type: =head2
 #: Attributes.pod:391
 msgid "Weak references"
-msgstr ""
+msgstr "循环引用"
 
 #. type: textblock
 #: Attributes.pod:393
@@ -847,6 +1052,7 @@ msgid ""
 "option to a true value, then it will call C<Scalar::Util::weaken> whenever "
 "the attribute is set:"
 msgstr ""
+"Moose 内置是支持 weak reference 的，可以通过设置 C<weak_ref> 为 true 来实现。"
 
 #. type: verbatim
 #: Attributes.pod:397
@@ -858,6 +1064,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'parent' => (\n"
+"      is       => 'rw',\n"
+"      weak_ref => 1,\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:402
@@ -866,13 +1077,15 @@ msgid ""
 "  $node->parent($parent_node);\n"
 "\n"
 msgstr ""
+"  $node->parent($parent_node);\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:404
 msgid ""
 "This is very useful when you're building objects that may contain circular "
 "references."
-msgstr ""
+msgstr "这对你构建一个包含循环引用的类是非常有用的。"
 
 #. type: textblock
 #: Attributes.pod:407
@@ -890,16 +1103,18 @@ msgid ""
 "still return true. Similarly, when the attribute is next accessed, a default "
 "value will not be generated."
 msgstr ""
+"该属性并没有被清楚，所以在调用断言方法时，仍然返回 true。（这里有点含糊不清，"
+"具体的请见原文档）"
 
 #. type: =head2
 #: Attributes.pod:416
 msgid "Triggers"
-msgstr ""
+msgstr "触发器"
 
 #. type: textblock
 #: Attributes.pod:418
 msgid "A C<trigger> is a subroutine that is called whenever the attribute is set:"
-msgstr ""
+msgstr "C<trigger> 将在属性被设置的时候自动被调用。"
 
 #. type: verbatim
 #: Attributes.pod:421
@@ -911,6 +1126,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is      => 'rw',\n"
+"      trigger => \\&_size_set,\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:426
@@ -920,6 +1140,9 @@ msgid ""
 "      my ( $self, $size, $old_size ) = @_;\n"
 "\n"
 msgstr ""
+"  sub _size_set {\n"
+"      my ( $self, $size, $old_size ) = @_;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:429
@@ -928,6 +1151,8 @@ msgid ""
 "      my $msg = $self->name;\n"
 "\n"
 msgstr ""
+"      my $msg = $self->name;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:431
@@ -938,6 +1163,10 @@ msgid ""
 "      }\n"
 "\n"
 msgstr ""
+"      if ( @_ > 2 ) {\n"
+"          $msg .= \" - old size was $old_size\";\n"
+"      }\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:435
@@ -948,6 +1177,10 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      $msg .= \" -size is now $size\";\n"
+"      warn $msg;\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:439
@@ -958,6 +1191,8 @@ msgid ""
 "the new value is passed. This lets you distinguish between the case where "
 "the attribute had no value versus when the old value was C<undef>."
 msgstr ""
+"当属性被设置之后，触发器将会被调用。Moose 会传递新值、旧值进去，当没有旧值时，"
+"旧值参数为 C<undef>。"
 
 #. type: textblock
 #: Attributes.pod:445
@@ -967,6 +1202,8 @@ msgid ""
 "accessor method is called (for reading or writing). Second, it is also "
 "called when an attribute's value is passed to the constructor."
 msgstr ""
+"这个与 C<after> 方法修饰符是有区别的。触发器只在属性被设置时被调用，而不是每当"
+"访问器访问时触发。触发器也会在构造函数运行时被调用。而 C<after> 方法修饰符不是。"
 
 #. type: textblock
 #: Attributes.pod:451
@@ -974,16 +1211,17 @@ msgid ""
 "However, triggers are I<not> called when an attribute is populated from a "
 "C<default> or C<builder>."
 msgstr ""
+"注意，触发器不在 C<default> 或 C<builder> 之后被调用。"
 
 #. type: =head2
 #: Attributes.pod:454
 msgid "Attribute types"
-msgstr ""
+msgstr "属性类型"
 
 #. type: textblock
 #: Attributes.pod:456
 msgid "Attributes can be restricted to only accept certain types:"
-msgstr ""
+msgstr "属性类型可以限制只接受某些类型的值："
 
 #. type: verbatim
 #: Attributes.pod:458
@@ -995,18 +1233,24 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'first_name' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Str',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:463
 msgid "This says that the C<first_name> attribute must be a string."
-msgstr ""
+msgstr "这表明 C<first_name> 属性是字符串类型。"
 
 #. type: textblock
 #: Attributes.pod:465
 msgid ""
 "Moose also provides a shortcut for specifying that an attribute only accepts "
 "objects that do a certain role:"
-msgstr ""
+msgstr "Moose 还提供了一个快捷的方法来指定一个属性的类型，就是通过一个 role 来"
+"实现的。"
 
 #. type: verbatim
 #: Attributes.pod:468
@@ -1018,23 +1262,28 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'weapon' => (\n"
+"      is   => 'rw',\n"
+"      does => 'MyApp::Weapon',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:473
 msgid ""
 "See the L<Moose::Manual::Types> documentation for a complete discussion of "
 "Moose's type system."
-msgstr ""
+msgstr "关于属性类型的信息具体请查阅 L<Moose::Manual::Types>。"
 
 #. type: =head2
 #: Attributes.pod:476
 msgid "Delegation"
-msgstr ""
+msgstr "委托属性"
 
 #. type: textblock
 #: Attributes.pod:478
 msgid "An attribute can define methods which simply delegate to its value:"
-msgstr ""
+msgstr "Moose 可以定义委托属性来操作属性值。"
 
 #. type: verbatim
 #: Attributes.pod:480
@@ -1047,6 +1296,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'hair_color' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'Graphics::Color::RGB',\n"
+"      handles => { hair_color_hex => 'as_hex_string' },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:486
@@ -1055,6 +1310,7 @@ msgid ""
 "C<hair_color_hex>, internally, the object just calls C<< "
 "$self->hair_color->as_hex_string >>."
 msgstr ""
+"当调用 C<hair_color_hex> 时，会实际上调用 C<<$self->hair_color->as_hex_string>>。"
 
 #. type: textblock
 #: Attributes.pod:490
@@ -1062,11 +1318,12 @@ msgid ""
 "See L<Moose::Manual::Delegation> for documentation on how to set up "
 "delegation methods."
 msgstr ""
+"关于委托属性的更多信息请查阅 L<Moose::Manual::Delegation>。"
 
 #. type: =head2
 #: Attributes.pod:493
 msgid "Attribute traits and metaclasses"
-msgstr ""
+msgstr "属性特征和元类"
 
 #. type: textblock
 #: Attributes.pod:495
@@ -1074,11 +1331,12 @@ msgid ""
 "One of Moose's best features is that it can be extended in all sorts of ways "
 "through the use of metaclass traits and custom metaclasses."
 msgstr ""
+"Moose 最好的特点就是可以通过 traits 和 元类来实现自省。"
 
 #. type: textblock
 #: Attributes.pod:498
 msgid "You can apply one or more traits to an attribute:"
-msgstr ""
+msgstr "你可以提供一个或多个 traits 来描述一个属性："
 
 #. type: verbatim
 #: Attributes.pod:500
@@ -1087,6 +1345,8 @@ msgid ""
 "  use MooseX::MetaDescription;\n"
 "\n"
 msgstr ""
+"  use MooseX::MetaDescription;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:502
@@ -1102,13 +1362,22 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is          => 'ro',\n"
+"      traits      => ['MooseX::MetaDescription::Meta::Trait'],\n"
+"      description => {\n"
+"          html_widget  => 'text_input',\n"
+"          serialize_as => 'element',\n"
+"      },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:511
 msgid ""
 "The advantage of traits is that you can mix more than one of them together "
 "easily (in fact, a trait is just a role under the hood)."
-msgstr ""
+msgstr "你可以很方便的使用一个或多个 traits。"
 
 #. type: textblock
 #: Attributes.pod:514
@@ -1117,12 +1386,14 @@ msgid ""
 "metaclasses and traits. See L<Moose::Manual::MooseX> for some examples. You "
 "can also write your own metaclasses and traits. See the \"Meta\" and "
 "\"Extending\" recipes in L<Moose::Cookbook> for examples."
-msgstr ""
+msgstr "关于属性特征和元类的许多模块都可以在 CPAN 上找到。你可以在"
+"L<Moose::Manual::MooseX> 中找到一些示例。关于\"元类\"和\"继承\"的更多信息请"
+"查阅 L<Moose::Cookbook>。"
 
 #. type: =head2
 #: Attributes.pod:519
 msgid "Native Delegations"
-msgstr ""
+msgstr "定义自己的委托属性"
 
 #. type: textblock
 #: Attributes.pod:521
@@ -1130,6 +1401,7 @@ msgid ""
 "Native delegations allow you to delegate to standard Perl data structures as "
 "if they were objects."
 msgstr ""
+"Native delegations 允许你定义 Perl 的数据结构。"
 
 #. type: textblock
 #: Attributes.pod:524
@@ -1137,6 +1409,8 @@ msgid ""
 "For example, we can pretend that an array reference has methods like "
 "C<push()>, C<shift()>, C<map()>, C<count()>, and more."
 msgstr ""
+"比如，我们可以创建关于数组引用的 C<push()>，C<shift()>，C<map()>，C<count()>等"
+"方法。"
 
 #. type: verbatim
 #: Attributes.pod:527
@@ -1157,16 +1431,30 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'options' => (\n"
+"      traits  => ['Array'],\n"
+"      is      => 'ro',\n"
+"      isa     => 'ArrayRef[Str]',\n"
+"      default => sub { [] },\n"
+"      handles => {\n"
+"          all_options    => 'elements',\n"
+"          add_option     => 'push',\n"
+"          map_option     => 'map',\n"
+"          option_count   => 'count',\n"
+"          sorted_options => 'sort',\n"
+"      },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:541
 msgid "See L<Moose::Manual::Delegation> for more details."
-msgstr ""
+msgstr "更多信息请查阅 L<Moose::Manual::Delegation>。"
 
 #. type: =head1
 #: Attributes.pod:543
 msgid "ATTRIBUTE INHERITANCE"
-msgstr ""
+msgstr "属性继承"
 
 #. type: textblock
 #: Attributes.pod:545
@@ -1176,6 +1464,7 @@ msgid ""
 "the child class. You cannot change any of its associated method names "
 "(reader, writer, predicate, etc)."
 msgstr ""
+"默认情况下，子类可以继承父类中所有的属性。你也可以在子类中重载它们。"
 
 #. type: textblock
 #: Attributes.pod:550
@@ -1183,6 +1472,7 @@ msgid ""
 "To override an attribute, you simply prepend its name with a plus sign "
 "(C<+>):"
 msgstr ""
+"继承一个属性，只需要简单的在前面加(C<+>)："
 
 #. type: verbatim
 #: Attributes.pod:553
@@ -1191,6 +1481,8 @@ msgid ""
 "  package LazyPerson;\n"
 "\n"
 msgstr ""
+"  package LazyPerson;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:557
@@ -1199,6 +1491,8 @@ msgid ""
 "  extends 'Person';\n"
 "\n"
 msgstr ""
+"  extends 'Person';\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:559
@@ -1210,6 +1504,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has '+first_name' => (\n"
+"      lazy    => 1,\n"
+"      default => 'Bill',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:564
@@ -1217,6 +1516,7 @@ msgid ""
 "Now the C<first_name> attribute in C<LazyPerson> is lazy, and defaults to "
 "C<'Bill'>."
 msgstr ""
+"现在子类中的 C<first_name> 属性是 lazy 的，而且默认值为 C<'Bill'>。"
 
 #. type: textblock
 #: Attributes.pod:567
@@ -1224,11 +1524,12 @@ msgid ""
 "We recommend that you exercise caution when changing the type (C<isa>)  of "
 "an inherited attribute."
 msgstr ""
+"我们建议你在不是很了解的时候不要随便使用，尤其是涉及到类型（C<isa>）的时候。"
 
 #. type: =head1
 #: Attributes.pod:570
 msgid "MULTIPLE ATTRIBUTE SHORTCUTS"
-msgstr ""
+msgstr "多属性快捷创建"
 
 #. type: textblock
 #: Attributes.pod:572
@@ -1236,6 +1537,7 @@ msgid ""
 "If you have a number of attributes that differ only by name, you can declare "
 "them all at once:"
 msgstr ""
+"如果你有大量的属性仅仅是名字不同，你可以一次性的声明它们。"
 
 #. type: verbatim
 #: Attributes.pod:575
@@ -1244,6 +1546,8 @@ msgid ""
 "  package Point;\n"
 "\n"
 msgstr ""
+"  package Point;\n"
+"\n"
 
 #. type: verbatim
 #: Attributes.pod:579
@@ -1252,11 +1556,13 @@ msgid ""
 "  has [ 'x', 'y' ] => ( is => 'ro', isa => 'Int' );\n"
 "\n"
 msgstr ""
+"  has [ 'x', 'y' ] => ( is => 'ro', isa => 'Int' );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:581
 msgid "Also, because C<has> is just a function call, you can call it in a loop:"
-msgstr ""
+msgstr "因为 C<has> 也是一个函数，所以你也可以通过循环来创建。"
 
 #. type: verbatim
 #: Attributes.pod:583
@@ -1268,11 +1574,16 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  for my $name ( qw( x y ) ) {\n"
+"      my $builder = '_build_' . $name;\n"
+"      has $name => ( is => 'ro', isa => 'Int', builder => $builder );\n"
+"  }\n"
+"\n"
 
 #. type: =head1
 #: Attributes.pod:588
 msgid "MORE ON ATTRIBUTES"
-msgstr ""
+msgstr "更多"
 
 #. type: textblock
 #: Attributes.pod:590
@@ -1282,11 +1593,13 @@ msgid ""
 "L<Moose::Manual::Types> documents to get a more complete understanding of "
 "attribute features."
 msgstr ""
+"Moose 属性是一个 big topic，而这个文档只包含了一部分。我们建议你继续阅读"
+"L<Moose::Manual::Delegation> 和 L<Moose::Manual::Types> 来更全面的了解属性。"
 
 #. type: =head1
 #: Attributes.pod:595
 msgid "A FEW MORE OPTIONS"
-msgstr ""
+msgstr "更多的选项信息"
 
 #. type: textblock
 #: Attributes.pod:597
@@ -1294,16 +1607,17 @@ msgid ""
 "Moose has lots of attribute options. The ones listed below are superseded by "
 "some more modern features, but are covered for the sake of completeness."
 msgstr ""
+"Moose 属性有许多选项。下面列出一些你可能会比较感兴趣的。"
 
 #. type: =head2
 #: Attributes.pod:601
 msgid "The C<documentation> option"
-msgstr ""
+msgstr "C<文档描述>"
 
 #. type: textblock
 #: Attributes.pod:603
 msgid "You can provide a piece of documentation as a string for an attribute:"
-msgstr ""
+msgstr "你可以为你的属性提供一个文档描述。"
 
 #. type: verbatim
 #: Attributes.pod:605
@@ -1315,16 +1629,21 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'first_name' => (\n"
+"      is            => 'rw',\n"
+"      documentation => q{The person's first (personal) name},\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:610
 msgid "Moose does absolutely nothing with this information other than store it."
-msgstr ""
+msgstr "Moose 会把该描述存储起来。"
 
 #. type: =head2
 #: Attributes.pod:613
 msgid "The C<auto_deref> option"
-msgstr ""
+msgstr "C<序列化数据>"
 
 #. type: textblock
 #: Attributes.pod:615
@@ -1333,6 +1652,8 @@ msgid ""
 "option will make Moose dereference the value when it is returned from the "
 "reader method:"
 msgstr ""
+"如果你的属性是一段数组引用或者 hash 引用，C<auto_deref> 这个设置会让 reader 来"
+"访问这个属性时，可以看到序列化以后的内容："
 
 #. type: verbatim
 #: Attributes.pod:619
@@ -1341,6 +1662,8 @@ msgid ""
 "  my %map = $object->mapping;\n"
 "\n"
 msgstr ""
+"  my %map = $object->mapping;\n"
+"\n"
 
 #. type: textblock
 #: Attributes.pod:621
@@ -1348,6 +1671,7 @@ msgid ""
 "This option only works if your attribute is explicitly typed as an "
 "C<ArrayRef> or C<HashRef>."
 msgstr ""
+"当然这仅仅在你的属性是 C<ArrayRef> 或者 C<HashRef> 时有用。"
 
 #. type: textblock
 #: Attributes.pod:624
@@ -1356,11 +1680,12 @@ msgid ""
 "for these types of attributes, which gives you much more control over how "
 "they are accessed and manipulated."
 msgstr ""
+"我们推荐你查阅 L<Moose::Meta::Attribute::Native> 来得到更多信息。"
 
 #. type: =head2
 #: Attributes.pod:628
 msgid "Initializer"
-msgstr ""
+msgstr "初始化"
 
 #. type: textblock
 #: Attributes.pod:630
@@ -1369,11 +1694,12 @@ msgid ""
 "when the attribute's value is being set in the constructor, and lets you "
 "change the value before it is set."
 msgstr ""
+"Moose 提供一个选项叫做 C<initializer>。这个会在构造函数中改变属性值。"
 
 #. type: =head1
 #: Attributes.pod:634
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: Attributes.pod:636
@@ -1381,16 +1707,19 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看"
+"L<Moose/CABAL> 和 L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: Attributes.pod:638
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: Attributes.pod:640
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: Attributes.pod:642
@@ -1398,3 +1727,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"
