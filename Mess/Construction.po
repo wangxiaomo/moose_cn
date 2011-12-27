@@ -1,0 +1,441 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-28 01:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Construction.pod:9
+msgid "NAME"
+msgstr "NAME"
+
+#. type: textblock
+#: Construction.pod:11
+msgid ""
+"Moose::Manual::Construction - Object construction (and destruction) with "
+"Moose"
+msgstr "Moose::Manual::Construction - Moose 构造与析构"
+
+#. type: =head1
+#: Construction.pod:13
+msgid "VERSION"
+msgstr "VERSION"
+
+#. type: textblock
+#: Construction.pod:15
+msgid "version 2.0401"
+msgstr "version 2.0401"
+
+#. type: =head1
+#: Construction.pod:17
+msgid "WHERE'S THE CONSTRUCTOR?"
+msgstr "什么是构造器？"
+
+#. type: textblock
+#: Construction.pod:19
+msgid "B<Do not define a C<new()> method for your classes!>"
+msgstr "B<不要再为你的类定义 C<new()> 方法了！>。"
+
+#. type: textblock
+#: Construction.pod:21
+msgid ""
+"When you C<use Moose> in your class, your class becomes a subclass of "
+"L<Moose::Object>. The L<Moose::Object> provides a C<new()> method for your "
+"class. If you follow our recommendations in L<Moose::Manual::BestPractices> "
+"and make your class immutable, then you actually get a class-specific "
+"C<new()> method \"inlined\" in your class."
+msgstr ""
+"当你 C<use Moose> 之后，你的类就成为了 L<Moose::Object> 的子类。L<Moose::Object>"
+"为你提供了 C<new()> 方法。如果你按照 L<Moose::Manual::BestPractices> 推荐那样，"
+"并且使你的类 immutable 的话，那你已经得到了一个内置的 C<new()> 方法了。"
+
+#. type: =head1
+#: Construction.pod:27
+msgid "OBJECT CONSTRUCTION AND ATTRIBUTES"
+msgstr "对象的构造和属性"
+
+#. type: textblock
+#: Construction.pod:29
+msgid ""
+"The Moose-provided constructor accepts a hash or hash reference of named "
+"parameters matching your attributes (actually, matching their "
+"C<init_arg>s). This is just another way in which Moose keeps you from "
+"worrying I<how> classes are implemented. Simply define a class and you're "
+"ready to start creating objects!"
+msgstr ""
+"Moose 允许你在初始化实例时通过哈希表或者哈希引用等方式来传递参数（实际上，"
+"是根据 C<init_arg> 的设置来进行）。你不需要再烦恼具体是怎么实现的了，Moose"
+"已经为你做好了。"
+
+#. type: =head1
+#: Construction.pod:35
+msgid "OBJECT CONSTRUCTION HOOKS"
+msgstr "对象构造中的 HOOKS"
+
+#. type: textblock
+#: Construction.pod:37
+msgid ""
+"Moose lets you hook into object construction. You can validate an object's "
+"state, do logging, customize construction from parameters which do not match "
+"your attributes, or maybe allow non-hash(ref) constructor arguments. You can "
+"do this by creating C<BUILD> and/or C<BUILDARGS> methods."
+msgstr ""
+"Moose 允许你在构造过程中使用 hook。你可以通过 hook 来验证一个对象的状态，做日志，"
+"自定义参数不匹配时的行为，或者允许非哈希引用作为参数传递等等。你可以通过"
+"C<BUILD> 或 C<BUILDARGS> 来设置 hook。"
+
+#. type: textblock
+#: Construction.pod:43
+msgid ""
+"If these methods exist in your class, Moose will arrange for them to be "
+"called as part of the object construction process."
+msgstr ""
+
+#. type: =head2
+#: Construction.pod:46
+msgid "BUILDARGS"
+msgstr "BUILDARGS"
+
+#. type: textblock
+#: Construction.pod:48
+msgid ""
+"The C<BUILDARGS> method is called as a class method I<before> an object is "
+"created. It will receive all of the arguments that were passed to C<new()> "
+"I<as-is>, and is expected to return a hash reference. This hash reference "
+"will be used to construct the object, so it should contain keys matching "
+"your attributes' names (well, C<init_arg>s)."
+msgstr ""
+"C<BUILDARGS> 方法在对象构造I<之前>被调用，它接受 C<new()> 传递进来的所有参数，"
+"并且返回一个哈希引用。这个哈希引用最终用来构建对象。"
+
+#. type: textblock
+#: Construction.pod:55
+msgid ""
+"One common use for C<BUILDARGS> is to accommodate a non-hash(ref)  calling "
+"style. For example, we might want to allow our Person class to be called "
+"with a single argument of a social security number, C<< Person->new($ssn) "
+">>."
+msgstr ""
+"一个最常见的用法就是 C<BUILDARGS> 实现非哈希引用的参数传递。比如我们想 C<Person>"
+"类可以通过社保号来直接引用对象,C<<Person->new($ssn)>>。"
+
+#. type: textblock
+#: Construction.pod:60
+msgid ""
+"Without a C<BUILDARGS> method, Moose will complain, because it expects a "
+"hash or hash reference. We can use the C<BUILDARGS> method to accommodate "
+"this calling style:"
+msgstr ""
+"没有 C<BUILDARGS> 方法处理的话，Moose 处理的时候可能就不会如你所愿了。因为默认的"
+"Moose 是不能那样处理参数的，所以我们用 C<BUILDARGS> 来处理这种参数传递。"
+
+#. type: verbatim
+#: Construction.pod:64
+#, no-wrap
+msgid ""
+"  around BUILDARGS => sub {\n"
+"      my $orig  = shift;\n"
+"      my $class = shift;\n"
+"\n"
+msgstr ""
+"  around BUILDARGS => sub {\n"
+"      my $orig  = shift;\n"
+"      my $class = shift;\n"
+"\n"
+
+#. type: verbatim
+#: Construction.pod:68
+#, no-wrap
+msgid ""
+"      if ( @_ == 1 && !ref $_[0] ) {\n"
+"          return $class->$orig( ssn => $_[0] );\n"
+"      }\n"
+"      else {\n"
+"          return $class->$orig(@_);\n"
+"      }\n"
+"  };\n"
+"\n"
+msgstr ""
+"      if ( @_ == 1 && !ref $_[0] ) {\n"
+"          return $class->$orig( ssn => $_[0] );\n"
+"      }\n"
+"      else {\n"
+"          return $class->$orig(@_);\n"
+"      }\n"
+"  };\n"
+"\n"
+
+#. type: textblock
+#: Construction.pod:76
+msgid ""
+"Note the call to C<< $class->$orig >>. This will call the default "
+"C<BUILDARGS> in L<Moose::Object>. This method takes care of distinguishing "
+"between a hash reference and a plain hash for you."
+msgstr ""
+"这里 C<<$class->$orig>>是调用 Moose 内部的 C<BUILDARGS>。"
+
+#. type: =head2
+#: Construction.pod:80
+msgid "BUILD"
+msgstr "BUILD"
+
+#. type: textblock
+#: Construction.pod:82
+msgid ""
+"The C<BUILD> method is called I<after> an object is created. There are "
+"several reasons to use a C<BUILD> method. One of the most common is to check "
+"that the object state is valid. While we can validate individual attributes "
+"through the use of types, we can't validate the state of a whole object that "
+"way."
+msgstr ""
+"C<BUILD> 方法是在对象创建完I<之后>被调用的。很多情况下我们需要使用它。最普遍的"
+"就是检测对象的状态时。虽然我们可以通过使用类型的单个属性来验证，不过我们无法验证"
+"一个整体的对象的状态。"
+
+#. type: verbatim
+#: Construction.pod:88 Construction.pod:100
+#, no-wrap
+msgid ""
+"  sub BUILD {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+"  sub BUILD {\n"
+"      my $self = shift;\n"
+"\n"
+
+#. type: verbatim
+#: Construction.pod:91
+#, no-wrap
+msgid ""
+"      if ( $self->country_of_residence eq 'USA' ) {\n"
+"          die 'All US residents must have an SSN'\n"
+"              unless $self->has_ssn;\n"
+"      }\n"
+"  }\n"
+"\n"
+msgstr ""
+"      if ( $self->country_of_residence eq 'USA' ) {\n"
+"          die 'All US residents must have an SSN'\m"
+"      }\n"
+"  }\n"
+"\n"
+
+#. type: textblock
+#: Construction.pod:97
+msgid ""
+"Another use of a C<BUILD> method could be for logging or tracking object "
+"creation."
+msgstr ""
+"另一个用法就是可以追踪对象构造过程。"
+
+#. type: verbatim
+#: Construction.pod:103
+#, no-wrap
+msgid ""
+"      debug( 'Made a new person - SSN = ', $self->ssn, );\n"
+"  }\n"
+"\n"
+msgstr ""
+"      debug( 'Made a new person - SSN = ', $self->ssn, );\n"
+"  }\n"
+"\n"
+
+#. type: textblock
+#: Construction.pod:106
+msgid ""
+"The C<BUILD> method is called with the hash reference of the parameters "
+"passed to the constructor (after munging by C<BUILDARGS>). This gives you a "
+"chance to do something with parameters that do not represent object "
+"attributes."
+msgstr ""
+"在对象构造的时候，我们可以从日志中看到对象构造的记录，并且还可以在对象里面添加"
+"一些附加的信息。"
+
+#. type: verbatim
+#: Construction.pod:110
+#, no-wrap
+msgid ""
+"  sub BUILD {\n"
+"      my $self = shift;\n"
+"      my $args = shift;\n"
+"\n"
+msgstr ""
+"  sub BUILD {\n"
+"      my $self = shift;\n"
+"      my $args = shift;\n"
+"\n"
+
+#. type: verbatim
+#: Construction.pod:114
+#, no-wrap
+msgid ""
+"      $self->add_friend(\n"
+"          My::User->new(\n"
+"              user_id => $args->{user_id},\n"
+"          )\n"
+"      );\n"
+"  }\n"
+"\n"
+msgstr ""
+"      $self->add_friend(\n"
+"          My::User->new(\n"
+"              user_id => $args->{user_id},\n"
+"          )\n"
+"      );\n"
+"  }\n"
+"\n"
+
+#. type: =head3
+#: Construction.pod:121
+msgid "BUILD and parent classes"
+msgstr "BUILD 和 父类"
+
+#. type: textblock
+#: Construction.pod:123
+msgid ""
+"The interaction between multiple C<BUILD> methods in an inheritance "
+"hierarchy is different from normal Perl methods. B<You should never call C<< "
+"$self->SUPER::BUILD >>>, nor should you ever apply a method modifier to "
+"C<BUILD>."
+msgstr ""
+"Moose 的继承层次结构上与旧式的 Perl 5 OO 不同。B<你不应该写 C<<$self->SUPER"
+"::BUILD>>>，或是把 C<BUILD>方法应用于方法修饰符"
+
+#. type: textblock
+#: Construction.pod:128
+msgid ""
+"Moose arranges to have all of the C<BUILD> methods in a hierarchy called "
+"when an object is constructed, I<from parents to children>. This might be "
+"surprising at first, because it reverses the normal order of method "
+"inheritance."
+msgstr ""
+"Moose 调用 C<BUILD> 方法的顺序是先父类后子类。这似乎颠覆了传统的对象调用方法"
+"顺序，不过不要感到惊讶，Moose 就是这么干的。"
+
+#. type: textblock
+#: Construction.pod:133
+msgid ""
+"The theory behind this is that C<BUILD> methods can only be used for "
+"increasing specialization of a class's constraints, so it makes sense to "
+"call the least specific C<BUILD> method first. Also, this is how Perl 6 does "
+"it."
+msgstr ""
+"这个顺序还是很有意义的，这是一种日益专业化的方法。而且，Perl 6 也是这么做的。"
+
+#. type: =head1
+#: Construction.pod:138
+msgid "OBJECT DESTRUCTION"
+msgstr "对象的析构"
+
+#. type: textblock
+#: Construction.pod:140
+msgid ""
+"Moose provides a hook for object destruction with the C<DEMOLISH> method. As "
+"with C<BUILD>, you should never explicitly call C<< $self->SUPER::DEMOLISH "
+">>. Moose will arrange for all of the C<DEMOLISH> methods in your hierarchy "
+"to be called, from most to least specific."
+msgstr ""
+"Moose 通过 C<DEMOLISH> 方法来提供对象析构时的 hook。和 C<BUILD> 相似，你永远不"
+"应该使用 C<<$self->SUPER::DEMOLISH>>。它的调用顺序也是先调用父类后子类。"
+
+#. type: textblock
+#: Construction.pod:146
+msgid "Each C<DEMOLISH> method is called with a single argument."
+msgstr "每个 C<DEMOLISH> 方法被调用时只接受到一个参数。"
+
+#. type: textblock
+#: Construction.pod:148
+msgid ""
+"In most cases, Perl's built-in garbage collection is sufficient, and you "
+"won't need to provide a C<DEMOLISH> method."
+msgstr "多数情况下，你不会用到该方法。"
+
+#. type: =head2
+#: Construction.pod:151
+msgid "Error Handling During Destruction"
+msgstr "析构过程中的错误处理"
+
+#. type: textblock
+#: Construction.pod:153
+msgid ""
+"The interaction of object destruction and Perl's global C<$@> and C<$?> "
+"variables can be very confusing."
+msgstr ""
+"对象销毁时与 Perl 的全局变量 C<$@> 和 C<$?> 在这时候会非常混乱。"
+
+#. type: textblock
+#: Construction.pod:156
+msgid ""
+"Moose always localizes C<$?> when an object is being destroyed. This means "
+"that if you explicitly call C<exit>, that exit code will be preserved even "
+"if an object's destructor makes a system call."
+msgstr ""
+"Moose 总是在销毁对象时本地化 C<$?>。如果你这时候调用 C<exit>，exit 代码将会"
+"被保存起来，即便对象销毁正在做系统调用。"
+
+#. type: textblock
+#: Construction.pod:160
+msgid ""
+"Moose also preserves C<$@> against any C<eval> calls that may happen during "
+"object destruction. However, if an object's C<DEMOLISH> method actually "
+"dies, Moose explicitly rethrows that error."
+msgstr ""
+"Moose 同样会针对 C<eval> 来保存 C<$@>。如果你在 C<DEMOLISH> 中使用 die，Moose"
+"会重复抛出错误。"
+
+#. type: textblock
+#: Construction.pod:164
+msgid ""
+"If you do not like this behavior, you will have to provide your own "
+"C<DESTROY> method and use that instead of the one provided by "
+"L<Moose::Object>. You can do this to preserve C<$@> I<and> capture any "
+"errors from object destruction by creating an error stack."
+msgstr ""
+"如果你不喜欢这样的处理方式，你不得不去写自己的 C<DESTROY> 方法来取代内置的。"
+
+#. type: =head1
+#: Construction.pod:169
+msgid "AUTHOR"
+msgstr "作者"
+
+#. type: textblock
+#: Construction.pod:171
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL> 和"
+"L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
+
+#. type: =head1
+#: Construction.pod:173
+msgid "COPYRIGHT AND LICENSE"
+msgstr "版权和许可"
+
+#. type: textblock
+#: Construction.pod:175
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+
+#. type: textblock
+#: Construction.pod:177
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
+"这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"
