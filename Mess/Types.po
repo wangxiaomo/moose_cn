@@ -1,0 +1,1060 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-28 03:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Types.pod:9
+msgid "NAME"
+msgstr "NAME"
+
+#. type: textblock
+#: Types.pod:11
+msgid "Moose::Manual::Types - Moose's type system"
+msgstr "Moose::Manual::Types - Moose 的类型系统"
+
+#. type: =head1
+#: Types.pod:13
+msgid "VERSION"
+msgstr "VERSION"
+
+#. type: textblock
+#: Types.pod:15
+msgid "version 2.0401"
+msgstr "version 2.0401"
+
+#. type: =head1
+#: Types.pod:17
+msgid "TYPES IN PERL?"
+msgstr "和 Perl 的类型相似？"
+
+#. type: textblock
+#: Types.pod:19
+msgid ""
+"Moose provides its own type system for attributes. You can also use these "
+"types to validate method parameters with the help of a MooseX module."
+msgstr ""
+"Moose 拥有自己的类型系统。你也可以配合 MooseX 模块用来进行参数验证。"
+
+#. type: textblock
+#: Types.pod:23
+msgid ""
+"Moose's type system is based on a combination of Perl 5's own I<implicit> "
+"types and some Perl 6 concepts. You can create your own subtypes with custom "
+"constraints, making it easy to express any sort of validation."
+msgstr ""
+"Moose 的类型系统是根据 Perl 5 的默认类型以及 Perl 6 的一些新概念而来的。当然，"
+"你也可以自己定义新的类型。"
+
+#. type: textblock
+#: Types.pod:28
+msgid ""
+"Types have names, and you can re-use them by name, making it easy to share "
+"types throughout a large application."
+msgstr ""
+"每个类型都有一个名字，你可以通过命名空间重复使用它们，所以很容易的在大型应用程序"
+"中共享类型。"
+
+#. type: textblock
+#: Types.pod:31
+msgid ""
+"However, this is not a \"real\" type system. Moose does not magically make "
+"Perl start associating types with variables. This is just an advanced "
+"parameter checking system which allows you to associate a name with a "
+"constraint."
+msgstr ""
+"然而，这不是一个\"实际\"的类型系统。Moose 不会奇迹般的使 Perl 关联类型的变量，这"
+"只是一个比较先进的类型检查系统，可以让你的参数通过约束的名字来进行检查。"
+
+#. type: textblock
+#: Types.pod:35
+msgid ""
+"That said, it's still pretty damn useful, and we think it's one of the "
+"things that makes Moose both fun and powerful. Taking advantage of the type "
+"system makes it much easier to ensure that you are getting valid data, and "
+"it also contributes greatly to code maintainability."
+msgstr ""
+"尽管那样说，Moose 类型系统仍然是非常有用的，而且它是我们认为 Moose 强大的原因之一。"
+"好好的使用 Moose 类型系统，可以方便我们得到有效的数据，以及更好的维护我们的程序。"
+
+#. type: =head1
+#: Types.pod:40
+msgid "THE TYPES"
+msgstr "Moose 类型"
+
+#. type: textblock
+#: Types.pod:42
+msgid "The basic Moose type hierarchy looks like this"
+msgstr "基本的 Moose 类型层次结构看起来时这样的。"
+
+#. type: verbatim
+#: Types.pod:44
+#, no-wrap
+msgid ""
+"  Any\n"
+"  Item\n"
+"      Bool\n"
+"      Maybe[`a]\n"
+"      Undef\n"
+"      Defined\n"
+"          Value\n"
+"              Str\n"
+"                  Num\n"
+"                      Int\n"
+"                  ClassName\n"
+"                  RoleName\n"
+"          Ref\n"
+"              ScalarRef[`a]\n"
+"              ArrayRef[`a]\n"
+"              HashRef[`a]\n"
+"              CodeRef\n"
+"              RegexpRef\n"
+"              GlobRef\n"
+"                  FileHandle\n"
+"              Object\n"
+"\n"
+msgstr ""
+"  Any\n"
+"  Item\n"
+"      Bool\n"
+"      Maybe[`a]\n"
+"      Undef\n"
+"      Defined\n"
+"          Value\n"
+"              Str\n"
+"                  Num\n"
+"                      Int\n"
+"                  ClassName\n"
+"                  RoleName\n"
+"          Ref\n"
+"              ScalarRef[`a]\n"
+"              ArrayRef[`a]\n"
+"              HashRef[`a]\n"
+"              CodeRef\n"
+"              RegexpRef\n"
+"              GlobRef\n"
+"                  FileHandle\n"
+"              Object\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:66
+msgid ""
+"In practice, the only difference between C<Any> and C<Item> is "
+"conceptual. C<Item> is used as the top-level type in the hierarchy."
+msgstr "在实践中，C<Any> 和 C<Item> 是有概念性的区别的。C<Item> 是层次结构中的"
+"顶层类型。"
+
+#. type: textblock
+#: Types.pod:69
+msgid ""
+"The rest of these types correspond to existing Perl concepts.  In "
+"particular:"
+msgstr ""
+"这些类型的其余部分对应于现有的 Perl 的概念。特别是："
+
+#. type: textblock
+#: Types.pod:76
+msgid "C<Bool> accepts C<1> for true, and undef, 0, or the empty string as false."
+msgstr "C<Bool> 接受 C<1> 为 true, 接受 undef, 0, 或者空字符串为 false。"
+
+#. type: textblock
+#: Types.pod:80
+msgid "C<Maybe[`a]> accepts either C<`a> or C<undef>."
+msgstr "C<Maybe[`a]> 接受 C<`a> 或 C<undef>。"
+
+#. type: textblock
+#: Types.pod:84
+msgid ""
+"C<Num> accepts anything that perl thinks looks like a number (see "
+"L<Scalar::Util/looks_like_number>)."
+msgstr ""
+"C<Num> 接受任何 perl 认为的数字。（详见 L<Scalar::Util/looks_like_number>）"
+
+#. type: textblock
+#: Types.pod:88
+msgid ""
+"C<ClassName> and C<RoleName> accept strings that are either the name of a "
+"class or the name of a role. The class/role must already be loaded when the "
+"constraint is checked."
+msgstr ""
+"C<ClassName> 和 C<RoleName> 接受字符串（类名或角色名）。当约束被检查时，类或"
+"角色必须已经被载入。"
+
+#. type: textblock
+#: Types.pod:92
+msgid ""
+"C<FileHandle> accepts either an L<IO::Handle> object or a builtin perl "
+"filehandle (see L<Scalar::Util/openhandle>)."
+msgstr ""
+"C<FileHandle> 接受 L<IO::Handle> 或者 Perl 内建句柄。（详见 L<Scalar::Util/openhandle>)"
+
+#. type: textblock
+#: Types.pod:96
+msgid "C<Object> accepts any blessed reference."
+msgstr "C<Object> 接受被绑定的引用。"
+
+#. type: textblock
+#: Types.pod:100
+msgid ""
+"The types followed by \"[`a]\" can be parameterized. So instead of just "
+"plain C<ArrayRef> we can say that we want C<ArrayRef[Int]> instead. We can "
+"even do something like C<HashRef[ArrayRef[Str]]>."
+msgstr ""
+"\"[`a]\" 的类型可以被参数化。因此，不是只有简单的 C<ArrayRef>，也可以使用"
+"C<ArrayRef[Int]>，甚至是 C<HashRef[ArrayRef[Str]]>。"
+
+#. type: textblock
+#: Types.pod:104
+msgid ""
+"The C<Maybe[`a]> type deserves a special mention. Used by itself, it doesn't "
+"really mean anything (and is equivalent to C<Item>). When it is "
+"parameterized, it means that the value is either C<undef> or the "
+"parameterized type. So C<Maybe[Int]> means an integer or C<undef>."
+msgstr ""
+"C<Maybe[`a]> 需要特别说明下。当你只是单独使用它的时候，它没有任何意义。但当被"
+"参数化后，就表明它的值是 C<undef> 或者是参数化的类型。所以，C<Maybe[Int]> 表示"
+"整数或者 C<undef>。"
+
+#. type: textblock
+#: Types.pod:109
+msgid "For more details on the type hierarchy, see L<Moose::Util::TypeConstraints>."
+msgstr "想要了解更多的类型结构的细节，请查阅 L<Moose::Util::TypeConstraints>。"
+
+#. type: =head1
+#: Types.pod:112
+msgid "WHAT IS A TYPE?"
+msgstr "什么是类型？"
+
+#. type: textblock
+#: Types.pod:114
+msgid ""
+"It's important to realize that types are not classes (or packages). Types "
+"are just objects (L<Moose::Meta::TypeConstraint> objects, to be exact) with "
+"a name and a constraint. Moose maintains a global type registry that lets it "
+"convert names like C<Num> into the appropriate object."
+msgstr ""
+"你需要意识到类型不是一个类（或包）。类型只是对象名字和属性约束（准确的讲是"
+"L<Moose::Meta::TypeConstraint>）。Moose 会维护一个全局的注册过的类型名字。对象"
+"可以转换成相应的名称，如 C<Num>。"
+
+#. type: textblock
+#: Types.pod:120
+msgid ""
+"However, class names I<can be> type names. When you define a new class using "
+"Moose, it defines an associated type name behind the scenes:"
+msgstr ""
+"然而， 类名I<可以>是类型名称。当你使用 Moose 定义一个新的类时，它会自动关联的"
+"定义一个相关的类型名称："
+
+#. type: verbatim
+#: Types.pod:123
+#, no-wrap
+msgid ""
+"  package MyApp::User;\n"
+"\n"
+msgstr ""
+"  package MyApp::User;\n"
+"\n"
+
+#. type: verbatim
+#: Types.pod:125 Types.pod:336
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+"  use Moose;\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:127
+msgid "Now you can use C<'MyApp::User'> as a type name:"
+msgstr "现在你就可以用 C<'MyApp::User'> 做为一个类型名称："
+
+#. type: verbatim
+#: Types.pod:129
+#, no-wrap
+msgid ""
+"  has creator => (\n"
+"      is  => 'ro',\n"
+"      isa => 'MyApp::User',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has creator => (\n"
+"      is  => 'ro',\n"
+"      isa => 'MyApp::User',\n"
+"  );\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:134
+msgid ""
+"However, for non-Moose classes there's no magic. You may have to explicitly "
+"declare the class type. This is a bit muddled because Moose assumes that any "
+"unknown type name passed as the C<isa> value for an attribute is a class. So "
+"this works:"
+msgstr ""
+"但是，非 Moose 类是不能这样的。这时你需要显示的声明类型信息。"
+
+#. type: verbatim
+#: Types.pod:139
+#, no-wrap
+msgid ""
+"  has 'birth_date' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'DateTime',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'birth_date' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'DateTime',\n"
+"  );\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:144
+msgid ""
+"In general, when Moose is presented with an unknown name, it assumes that "
+"the name is a class:"
+msgstr ""
+"一般情况下，当 Moose 见到一个未知的名字时，都会假设这个名字是一个类名。"
+
+#. type: verbatim
+#: Types.pod:147
+#, no-wrap
+msgid ""
+"  subtype 'ModernDateTime'\n"
+"      => as 'DateTime'\n"
+"      => where { $_->year() >= 1980 }\n"
+"      => message { 'The date you provided is not modern enough' };\n"
+"\n"
+msgstr ""
+"  subtype 'ModernDateTime'\n"
+"      => as 'DateTime'\n"
+"      => where { $_->year() >= 1980 }\n"
+"      => message { 'The date you provided is not modern enough' };\n"
+"\n"
+
+#. type: verbatim
+#: Types.pod:152
+#, no-wrap
+msgid ""
+"  has 'valid_dates' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'ArrayRef[DateTime]',\n"
+"  );\n"
+"\n"
+msgstr ""
+"  has 'valid_dates' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'ArrayRef[DateTime]',\n"
+"  );\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:157
+msgid ""
+"Moose will assume that C<DateTime> is a class name in both of these "
+"instances."
+msgstr "在上面这两个实例中，Moose 都会假设这个 C<DateTime> 是一个类名。"
+
+#. type: =head1
+#: Types.pod:160
+msgid "SUBTYPES"
+msgstr "子类型"
+
+#. type: textblock
+#: Types.pod:162
+msgid ""
+"Moose uses subtypes in its built-in hierarchy. For example, C<Int> is a "
+"child of C<Num>."
+msgstr ""
+"Moose 在其内建的层次结构中也有子类型。如，C<Int> 就是 C<Num> 的子类型。"
+
+#. type: textblock
+#: Types.pod:165
+msgid ""
+"A subtype is defined in terms of a parent type and a constraint. Any "
+"constraints defined by the parent(s) will be checked first, followed by "
+"constraints defined by the subtype. A value must pass I<all> of these checks "
+"to be valid for the subtype."
+msgstr ""
+"子类型是在父类型和约束下的。子类型的值必须先通过父类型的约束检验，然后再通过"
+"自己的约束检验，才是有效的值。"
+
+#. type: textblock
+#: Types.pod:170
+msgid ""
+"Typically, a subtype takes the parent's constraint and makes it more "
+"specific."
+msgstr ""
+"也就是说，子类型会通过父类型的约束和自己的约束来达到更加具体的约束。"
+
+#. type: textblock
+#: Types.pod:173
+msgid ""
+"A subtype can also define its own constraint failure message. This lets you "
+"do things like have an error \"The value you provided (20), was not a valid "
+"rating, which must be a number from 1-10.\" This is much friendlier than the "
+"default error, which just says that the value failed a validation check for "
+"the type. The default error can, however, be made more friendly by "
+"installing L<Devel::PartialDump> (version 0.14 or higher), which Moose will "
+"use if possible to display the invalid value."
+msgstr ""
+"子类型也可以定义自己约束检测失败时的消息。比如你可能会见到如下出错信息\"你提供"
+"的值为20，它不是一个有效的值，有效的值必须是1-10\"。这种错误信息比默认定义的更"
+"加友好。还有一个更加友好的方法，你可以通过 L<Devel::PartialDump> 来得到更加友好"
+"提示信息。"
+
+#. type: textblock
+#: Types.pod:181
+msgid "Here's a simple (and useful) subtype example:"
+msgstr "这里有一个简单但是有用的例子："
+
+#. type: verbatim
+#: Types.pod:183
+#, no-wrap
+msgid ""
+"  subtype 'PositiveInt',\n"
+"      as 'Int',\n"
+"      where { $_ > 0 },\n"
+"      message { \"The number you provided, $_, was not a positive number\" "
+"};\n"
+"\n"
+msgstr ""
+"  subtype 'PositiveInt',\n"
+"      as 'Int',\n"
+"      where { $_ > 0 },\n"
+"      message { \"The number you provided, $_, was not a positive number\" "
+"};\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:188
+msgid ""
+"Note that the sugar functions for working with types are all exported by "
+"L<Moose::Util::TypeConstraints>."
+msgstr ""
+"注意，所有关于类型的语法糖在 L<Moose::Util::TypeConstraints> 中被提供。"
+
+#. type: =head1
+#: Types.pod:191
+msgid "TYPE NAMES"
+msgstr "类型名称"
+
+#. type: textblock
+#: Types.pod:193
+msgid ""
+"Type names are global throughout the current Perl interpreter. Internally, "
+"Moose maps names to type objects via a "
+"L<registry|Moose::Meta::TypeConstraint::Registry>."
+msgstr ""
+"类型名称在 Perl 的环境中是全局存在的。Moose 会把注册的名称映射到类型对象中。"
+"有关注册过程，请见 L<registry|Moose::Meta::TypeConstraint::Registry>。"
+
+#. type: textblock
+#: Types.pod:197
+msgid ""
+"If you have multiple apps or libraries all using Moose in the same process, "
+"you could have problems with collisions. We recommend that you prefix names "
+"with some sort of namespace indicator to prevent these sorts of collisions."
+msgstr ""
+"如果你在同一个进程中有多个 apps 或者函数库使用 Moose，可能会有一些名字冲突。"
+"所以我们推荐你在你的类型名字前加前缀。"
+
+#. type: textblock
+#: Types.pod:202
+msgid ""
+"For example, instead of calling a type \"PositiveInt\", call it "
+"\"MyApp::Type::PositiveInt\" or \"MyApp::Types::PositiveInt\". We recommend "
+"that you centralize all of these definitions in a single package, "
+"C<MyApp::Types>, which can be loaded by other classes in your application."
+msgstr ""
+"如，定义类型名称为\"MyApp::Type::PositiveInt\"，而不是\"PositiveInt\"。我们"
+"建议你集中定义所有的类型在 C<MyApp::Types> 中，这样也方便于移植。"
+
+#. type: textblock
+#: Types.pod:208
+msgid ""
+"However, before you do this, you should look at the L<MooseX::Types> "
+"module. This module makes it easy to create a \"type library\" module, which "
+"can export your types as perl constants."
+msgstr ""
+"不管怎样，在你那样做之前，我们建议你去看看 L<MooseX::Types> 模块。这个模块可以"
+"帮助你创建一个\"类型库\"，这个库可以很方便的导入到你的程序中。"
+
+#. type: verbatim
+#: Types.pod:212
+#, no-wrap
+msgid ""
+"  has 'counter' => (is => 'rw', isa => PositiveInt);\n"
+"\n"
+msgstr ""
+"  has 'counter' => (is => 'rw', isa => PositiveInt);\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:214
+msgid ""
+"This lets you use a short name rather than needing to fully qualify the name "
+"everywhere. It also allows you to easily create parameterized types:"
+msgstr ""
+"这使得你可以使用一个简短的名称而不需要到处都使用完全限定名。它还允许你轻松的"
+"创建参数类型："
+
+#. type: verbatim
+#: Types.pod:217
+#, no-wrap
+msgid ""
+"  has 'counts' => (is => 'ro', isa => HashRef[PositiveInt]);\n"
+"\n"
+msgstr ""
+"  has 'counts' => (is => 'ro', isa => HashRef[PositiveInt]);\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:219
+msgid ""
+"This module will check your names at compile time, and is generally more "
+"robust than the string type parsing for complex cases."
+msgstr ""
+"这个模块会在编译时进行检查，而且它通常在解析比较复杂的字符串类型时更加强壮。"
+
+
+#. type: =head1
+#: Types.pod:222
+msgid "COERCION"
+msgstr "强制类型转化"
+
+#. type: textblock
+#: Types.pod:224
+msgid "A coercion lets you tell Moose to automatically convert one type to another."
+msgstr "强制类型转化可以让 Moose 帮你将一个类型转换成另外一个类型。"
+
+#. type: verbatim
+#: Types.pod:226 Types.pod:285
+#, no-wrap
+msgid ""
+"  subtype 'ArrayRefOfInts',\n"
+"      as 'ArrayRef[Int]';\n"
+"\n"
+msgstr ""
+"  subtype 'ArrayRefOfInts',\n"
+"      as 'ArrayRef[Int]';\n"
+"\n"
+
+#. type: verbatim
+#: Types.pod:229
+#, no-wrap
+msgid ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'Int',\n"
+"      via { [ $_ ] };\n"
+"\n"
+msgstr ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'Int',\n"
+"      via { [ $_ ] };\n"
+"\n"
+
+#. type: textblock
+#: Types.pod:233
+msgid ""
+"You'll note that we created a subtype rather than coercing C<ArrayRef[Int]> "
+"directly. It's a bad idea to add coercions to the raw built in types."
+msgstr ""
+"你会发现我们并没有在 C<ArrayRef[Int]> 的基础上进行强制转化，这是因为 Moose 不"
+"推荐在原生类型上进行强制转化。"
+
+#. type: textblock
+#: Types.pod:237
+msgid ""
+"Coercions are global, just like type names, so a coercion applied to a built "
+"in type is seen by all modules using Moose types. This is I<another> reason "
+"why it is good to namespace your types."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:241
+msgid ""
+"Moose will I<never> try to coerce a value unless you explicitly ask for "
+"it. This is done by setting the C<coerce> attribute option to a true value:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:244
+#, no-wrap
+msgid ""
+"  package Foo;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:246
+#, no-wrap
+msgid ""
+"  has 'sizes' => (\n"
+"      is     => 'ro',\n"
+"      isa    => 'ArrayRefOfInts',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:252
+#, no-wrap
+msgid ""
+"  Foo->new( sizes => 42 );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:254
+msgid ""
+"This code example will do the right thing, and the newly created object will "
+"have C<[ 42 ]> as its C<sizes> attribute."
+msgstr ""
+
+#. type: =head2
+#: Types.pod:257
+msgid "Deep coercion"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:259
+msgid ""
+"Deep coercion is the coercion of type parameters for parameterized "
+"types. Let's take these types as an example:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:262
+#, no-wrap
+msgid ""
+"  subtype 'HexNum',\n"
+"      as 'Str',\n"
+"      where { /[a-f0-9]/i };\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:266
+#, no-wrap
+msgid ""
+"  coerce 'Int',\n"
+"      from 'HexNum',\n"
+"      via { hex $_ };\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:270
+#, no-wrap
+msgid ""
+"  has 'sizes' => (\n"
+"      is     => 'ro',\n"
+"      isa    => 'ArrayRef[Int]',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:276
+msgid ""
+"If we try passing an array reference of hex numbers for the C<sizes> "
+"attribute, Moose will not do any coercion."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:279
+msgid ""
+"However, you can define a set of subtypes to enable coercion between two "
+"parameterized types."
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:282
+#, no-wrap
+msgid ""
+"  subtype 'ArrayRefOfHexNums',\n"
+"      as 'ArrayRef[HexNum]';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:288
+#, no-wrap
+msgid ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'ArrayRefOfHexNums',\n"
+"      via { [ map { hex } @{$_} ] };\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:292
+#, no-wrap
+msgid ""
+"  Foo->new( sizes => [ 'a1', 'ff', '22' ] );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:294
+msgid "Now Moose will coerce the hex numbers to integers."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:296
+msgid ""
+"Moose does not attempt to chain coercions, so it will not coerce a single "
+"hex number. To do that, we need to define a separate coercion:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:300
+#, no-wrap
+msgid ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'HexNum',\n"
+"      via { [ hex $_ ] };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:304
+msgid ""
+"Yes, this can all get verbose, but coercion is tricky magic, and we think "
+"it's best to make it explicit."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:307
+msgid "TYPE UNIONS"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:309
+msgid ""
+"Moose allows you to say that an attribute can be of two or more disparate "
+"types. For example, we might allow an C<Object> or C<FileHandle>:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:313
+#, no-wrap
+msgid ""
+"  has 'output' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Object | FileHandle',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:318
+msgid ""
+"Moose actually parses that string and recognizes that you are creating a "
+"type union. The C<output> attribute will accept any sort of object, as well "
+"as an unblessed file handle. It is up to you to do the right thing for each "
+"of them in your code."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:323
+msgid ""
+"Whenever you use a type union, you should consider whether or not coercion "
+"might be a better answer."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:326
+msgid ""
+"For our example above, we might want to be more specific, and insist that "
+"output be an object with a C<print> method:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:329
+#, no-wrap
+msgid ""
+"  duck_type 'CanPrint', [qw(print)];\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:331
+msgid ""
+"We can coerce file handles to an object that satisfies this condition with a "
+"simple wrapper class:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:334
+#, no-wrap
+msgid ""
+"  package FHWrapper;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:338
+#, no-wrap
+msgid ""
+"  has 'handle' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'FileHandle',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:343
+#, no-wrap
+msgid ""
+"  sub print {\n"
+"      my $self = shift;\n"
+"      my $fh   = $self->handle();\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:347
+#, no-wrap
+msgid ""
+"      print {$fh} @_;\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:350
+msgid "Now we can define a coercion from C<FileHandle> to our wrapper class:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:352
+#, no-wrap
+msgid ""
+"  coerce 'CanPrint'\n"
+"      => from 'FileHandle'\n"
+"      => via { FHWrapper->new( handle => $_ ) };\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:356
+#, no-wrap
+msgid ""
+"  has 'output' => (\n"
+"      is     => 'rw',\n"
+"      isa    => 'CanPrint',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:362
+msgid ""
+"This pattern of using a coercion instead of a type union will help make your "
+"class internals simpler."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:365
+msgid "TYPE CREATION HELPERS"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:367
+msgid ""
+"The L<Moose::Util::TypeConstraints> module exports a number of helper "
+"functions for creating specific kinds of types. These include C<class_type>, "
+"C<role_type>, C<maybe_type>, and C<duck_type>. See the docs for details."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:372
+msgid ""
+"One helper worth noting is C<enum>, which allows you to create a subtype of "
+"C<Str> that only allows the specified values:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:375
+#, no-wrap
+msgid ""
+"  enum 'RGB', [qw( red green blue )];\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:377
+msgid "This creates a type named C<RGB>."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:379
+msgid "ANONYMOUS TYPES"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:381
+msgid ""
+"All of the type creation functions return a type object. This type object "
+"can be used wherever you would use a type name, as a parent type, or as the "
+"value for an attribute's C<isa> option:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:385
+#, no-wrap
+msgid ""
+"  has 'size' => (\n"
+"      is  => 'ro',\n"
+"      isa => subtype( 'Int' => where { $_ > 0 } ),\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:390
+msgid ""
+"This is handy when you want to create a one-off type and don't want to "
+"\"pollute\" the global namespace registry."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:393
+msgid "VALIDATING METHOD PARAMETERS"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:395
+msgid ""
+"Moose does not provide any means of validating method parameters. However, "
+"there are several MooseX extensions on CPAN which let you do this."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:399
+msgid ""
+"The simplest and least sugary is L<MooseX::Params::Validate>. This lets you "
+"validate a set of named parameters using Moose types:"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:402
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  use MooseX::Params::Validate;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:405
+#, no-wrap
+msgid ""
+"  sub foo {\n"
+"      my $self   = shift;\n"
+"      my %params = validated_hash(\n"
+"          \\@_,\n"
+"          bar => { isa => 'Str', default => 'Moose' },\n"
+"      );\n"
+"      ...\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:414
+msgid "L<MooseX::Params::Validate> also supports coercions."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:416
+msgid ""
+"There are several more powerful extensions that support method parameter "
+"validation using Moose types, including L<MooseX::Method::Signatures>, which "
+"gives you a full-blown C<method> keyword."
+msgstr ""
+
+#. type: verbatim
+#: Types.pod:421
+#, no-wrap
+msgid ""
+"  method morning ( Str $name ) {\n"
+"      $self->say(\"Good morning ${name}!\");\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: Types.pod:425
+msgid "LOAD ORDER ISSUES"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:427
+msgid ""
+"Because Moose types are defined at runtime, you may run into load order "
+"problems. In particular, you may want to use a class's type constraint "
+"before that type has been defined."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:431
+msgid ""
+"In order to ameliorate this problem, we recommend defining I<all> of your "
+"custom types in one module, C<MyApp::Types>, and then loading this module in "
+"all of your other modules."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:435
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:437
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: Types.pod:439
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: Types.pod:441
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: Types.pod:443
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
