@@ -1,0 +1,770 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-12-28 16:53+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: MethodModifiers.pod:9
+msgid "NAME"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:11
+msgid "Moose::Manual::MethodModifiers - Moose's method modifiers"
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:13
+msgid "VERSION"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:15
+msgid "version 2.0401"
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:17
+msgid "WHAT IS A METHOD MODIFIER?"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:19
+msgid ""
+"Moose provides a feature called \"method modifiers\". You can also think of "
+"these as \"hooks\" or \"advice\"."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:22
+msgid "It's probably easiest to understand this feature with a few examples:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:24
+#, no-wrap
+msgid ""
+"  package Example;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:26 MethodModifiers.pod:203 MethodModifiers.pod:221 MethodModifiers.pod:247 MethodModifiers.pod:291
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:28
+#, no-wrap
+msgid ""
+"  sub foo {\n"
+"      print \"    foo\\n\";\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:32
+#, no-wrap
+msgid ""
+"  before 'foo' => sub { print \"about to call foo\\n\"; };\n"
+"  after 'foo'  => sub { print \"just called foo\\n\"; };\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:35
+#, no-wrap
+msgid ""
+"  around 'foo' => sub {\n"
+"      my $orig = shift;\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:39
+#, no-wrap
+msgid ""
+"      print \"  I'm around foo\\n\";\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:41
+#, no-wrap
+msgid ""
+"      $self->$orig(@_);\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:43
+#, no-wrap
+msgid ""
+"      print \"  I'm still around foo\\n\";\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:46
+msgid "Now if I call C<< Example->new->foo >> I'll get the following output:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:48
+#, no-wrap
+msgid ""
+"  about to call foo\n"
+"    I'm around foo\n"
+"      foo\n"
+"    I'm still around foo\n"
+"  just called foo\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:54
+msgid ""
+"You probably could have figured that out from the names \"before\", "
+"\"after\", and \"around\"."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:57
+msgid ""
+"Also, as you can see, the before modifiers come before around modifiers, and "
+"after modifiers come last."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:60
+msgid ""
+"When there are multiple modifiers of the same type, the before and around "
+"modifiers run from the last added to the first, and after modifiers run from "
+"first added to last:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:64
+#, no-wrap
+msgid ""
+"   before 2\n"
+"    before 1\n"
+"     around 2\n"
+"      around 1\n"
+"       primary\n"
+"      around 1\n"
+"     around 2\n"
+"    after 1\n"
+"   after 2\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:74
+msgid "WHY USE THEM?"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:76
+msgid ""
+"Method modifiers have many uses. They are often used in roles to alter the "
+"behavior of methods in the classes that consume the role. See "
+"L<Moose::Manual::Roles> for more information about roles."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:80
+msgid ""
+"Since modifiers are mostly useful in roles, some of the examples below are a "
+"bit artificial. They're intended to give you an idea of how modifiers work, "
+"but may not be the most natural usage."
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:84
+msgid "BEFORE, AFTER, AND AROUND"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:86
+msgid ""
+"Method modifiers can be used to add behavior to methods without modifying "
+"the definition of those methods."
+msgstr ""
+
+#. type: =head2
+#: MethodModifiers.pod:88
+msgid "BEFORE and AFTER modifiers"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:90
+msgid ""
+"Method modifiers can be used to add behavior to a method that Moose "
+"generates for you, such as an attribute accessor:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:93
+#, no-wrap
+msgid ""
+"  has 'size' => ( is => 'rw' );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:95 MethodModifiers.pod:106
+#, no-wrap
+msgid ""
+"  before 'size' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:98
+#, no-wrap
+msgid ""
+"      if (@_) {\n"
+"          Carp::cluck('Someone is setting size');\n"
+"      }\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:103
+msgid ""
+"Another use for the before modifier would be to do some sort of prechecking "
+"on a method call. For example:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:109
+#, no-wrap
+msgid ""
+"      die 'Cannot set size while the person is growing'\n"
+"          if @_ && $self->is_growing;\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:113
+msgid ""
+"This lets us implement logical checks that don't make sense as type "
+"constraints. In particular, they're useful for defining logical rules about "
+"an object's state changes."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:117
+msgid ""
+"Similarly, an after modifier could be used for logging an action that was "
+"taken."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:120
+msgid "Note that the return values of both before and after modifiers are ignored."
+msgstr ""
+
+#. type: =head2
+#: MethodModifiers.pod:123
+msgid "AROUND modifiers"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:125
+msgid ""
+"An around modifier is more powerful than either a before or after "
+"modifier. It can modify the arguments being passed to the original method, "
+"and you can even decide to simply not call the original method at all. You "
+"can also modify the return value with an around modifier."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:131
+msgid ""
+"An around modifier receives the original method as its first argument, "
+"I<then> the object, and finally any arguments passed to the method."
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:134
+#, no-wrap
+msgid ""
+"  around 'size' => sub {\n"
+"      my $orig = shift;\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:138
+#, no-wrap
+msgid ""
+"      return $self->$orig()\n"
+"          unless @_;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:141
+#, no-wrap
+msgid ""
+"      my $size = shift;\n"
+"      $size = $size / 2\n"
+"          if $self->likes_small_things();\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:145
+#, no-wrap
+msgid ""
+"      return $self->$orig($size);\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: =head2
+#: MethodModifiers.pod:148
+msgid "Wrapping multiple methods at once"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:150
+msgid ""
+"C<before>, C<after>, and C<around> can also modify multiple methods at "
+"once. The simplest example of this is passing them as a list:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:153
+#, no-wrap
+msgid ""
+"  before [qw(foo bar baz)] => sub {\n"
+"      warn \"something is being called!\";\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:157
+msgid ""
+"This will add a C<before> modifier to each of the C<foo>, C<bar>, and C<baz> "
+"methods in the current class, just as though a separate call to C<before> "
+"was made for each of them. The list can be passed either as a bare list, or "
+"as an arrayref. Note that the name of the function being modified isn't "
+"passed in in any way; this syntax is only intended for cases where the "
+"function being modified doesn't actually matter. If the function name does "
+"matter, use something like this:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:165
+#, no-wrap
+msgid ""
+"  for my $func (qw(foo bar baz)) {\n"
+"      before $func => sub {\n"
+"          warn \"$func was called!\";\n"
+"      };\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head2
+#: MethodModifiers.pod:171
+msgid "Using regular expressions to select methods to wrap"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:173
+msgid ""
+"In addition, you can specify a regular expression to indicate the methods to "
+"wrap, like so:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:176
+#, no-wrap
+msgid ""
+"  after qr/^command_/ => sub {\n"
+"      warn \"got a command\";\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:180
+msgid ""
+"This will match the regular expression against each method name returned by "
+"L<Class::MOP::Class/get_method_list>, and add a modifier to each one that "
+"matches. The same caveats apply as above."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:184
+msgid ""
+"Using regular expressions to determine methods to wrap is quite a bit more "
+"powerful than the previous alternatives, but it's also quite a bit more "
+"dangerous.  Bear in mind that if your regular expression matches certain "
+"Perl and Moose reserved method names with a special meaning to Moose or "
+"Perl, such as C<meta>, C<new>, C<BUILD>, C<DESTROY>, C<AUTOLOAD>, etc, this "
+"could cause unintended (and hard to debug) problems and is best avoided."
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:191
+msgid "INNER AND AUGMENT"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:193
+msgid ""
+"Augment and inner are two halves of the same feature. The augment modifier "
+"provides a sort of inverted subclassing. You provide part of the "
+"implementation in a superclass, and then document that subclasses are "
+"expected to provide the rest."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:198
+msgid ""
+"The superclass calls C<inner()>, which then calls the C<augment> modifier in "
+"the subclass:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:201
+#, no-wrap
+msgid ""
+"  package Document;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:205
+#, no-wrap
+msgid ""
+"  sub as_xml {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:208
+#, no-wrap
+msgid ""
+"      my $xml = \"<document>\\n\";\n"
+"      $xml .= inner();\n"
+"      $xml .= \"</document>\\n\";\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:212
+#, no-wrap
+msgid ""
+"      return $xml;\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:215
+msgid ""
+"Using C<inner()> in this method makes it possible for one or more subclasses "
+"to then augment this method with their own specific implementation:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:219
+#, no-wrap
+msgid ""
+"  package Report;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:223
+#, no-wrap
+msgid ""
+"  extends 'Document';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:225 MethodModifiers.pod:251
+#, no-wrap
+msgid ""
+"  augment 'as_xml' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:228
+#, no-wrap
+msgid ""
+"      my $xml = \"  <report>\\n\";\n"
+"      $xml .= inner();\n"
+"      $xml .= \"  </report>\\n\";\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:232 MethodModifiers.pod:261
+#, no-wrap
+msgid ""
+"      return $xml;\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:235
+msgid "When we call C<as_xml> on a Report object, we get something like this:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:237
+#, no-wrap
+msgid ""
+"  <document>\n"
+"    <report>\n"
+"    </report>\n"
+"  </document>\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:242
+msgid ""
+"But we also called C<inner()> in C<Report>, so we can continue subclassing "
+"and adding more content inside the document:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:245
+#, no-wrap
+msgid ""
+"  package Report::IncomeAndExpenses;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:249
+#, no-wrap
+msgid ""
+"  extends 'Report';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:254
+#, no-wrap
+msgid ""
+"      my $xml = '    <income>' . $self->income . '</income>';\n"
+"      $xml .= \"\\n\";\n"
+"      $xml .= '    <expenses>' . $self->expenses . '</expenses>';\n"
+"      $xml .= \"\\n\";\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:259
+#, no-wrap
+msgid ""
+"      $xml .= inner() || q{};\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:264
+msgid "Now our report has some content:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:266
+#, no-wrap
+msgid ""
+"  <document>\n"
+"    <report>\n"
+"      <income>$10</income>\n"
+"      <expenses>$8</expenses>\n"
+"    </report>\n"
+"  </document>\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:273
+msgid ""
+"What makes this combination of C<augment> and C<inner()> special is that it "
+"allows us to have methods which are called from parent (least specific) to "
+"child (most specific). This inverts the normal inheritance pattern."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:278
+msgid ""
+"Note that in C<Report::IncomeAndExpenses> we call C<inner()> again. If the "
+"object is an instance of C<Report::IncomeAndExpenses> then this call is a "
+"no-op, and just returns false. It's a good idea to always call C<inner()> to "
+"allow for future subclassing."
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:283
+msgid "OVERRIDE AND SUPER"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:285
+msgid ""
+"Finally, Moose provides some simple sugar for Perl's built-in method "
+"overriding scheme. If you want to override a method from a parent class, you "
+"can do this with C<override>:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:289
+#, no-wrap
+msgid ""
+"  package Employee;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:293
+#, no-wrap
+msgid ""
+"  extends 'Person';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:295
+#, no-wrap
+msgid ""
+"  has 'job_title' => ( is => 'rw' );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:297
+#, no-wrap
+msgid ""
+"  override 'display_name' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:300
+#, no-wrap
+msgid ""
+"      return super() . q{, } . $self->title();\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:303
+msgid ""
+"The call to C<super()> is almost the same as calling C<< "
+"$self->SUPER::display_name >>. The difference is that the arguments passed "
+"to the superclass's method will always be the same as the ones passed to the "
+"method modifier, and cannot be changed."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:308
+msgid ""
+"All arguments passed to C<super()> are ignored, as are any changes made to "
+"C<@_> before C<super()> is called."
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:311
+msgid "SEMI-COLONS"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:313
+msgid ""
+"Because all of these method modifiers are implemented as Perl functions, you "
+"must always end the modifier declaration with a semi-colon:"
+msgstr ""
+
+#. type: verbatim
+#: MethodModifiers.pod:317
+#, no-wrap
+msgid ""
+"  after 'foo' => sub { };\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:319
+msgid "CAVEATS"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:321
+msgid ""
+"These method modification features do not work well with multiple "
+"inheritance, due to how method resolution is performed in Perl. Experiment "
+"with a test program to ensure your class hierarchy works as expected, or "
+"more preferably, don't use multiple inheritance (roles can help with this)!"
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:326
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:328
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: MethodModifiers.pod:330
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:332
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: MethodModifiers.pod:334
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
