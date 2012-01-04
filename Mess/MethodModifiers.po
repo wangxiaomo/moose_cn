@@ -258,11 +258,12 @@ msgid ""
 "Method modifiers can be used to add behavior to methods without modifying "
 "the definition of those methods."
 msgstr ""
+"方法修饰符可以在不修改之前代码的基础上增加某些行为方法。"
 
 #. type: =head2
 #: MethodModifiers.pod:88
 msgid "BEFORE and AFTER modifiers"
-msgstr ""
+msgstr "BEFORE 和 AFTER 修饰符"
 
 #. type: textblock
 #: MethodModifiers.pod:90
@@ -270,6 +271,7 @@ msgid ""
 "Method modifiers can be used to add behavior to a method that Moose "
 "generates for you, such as an attribute accessor:"
 msgstr ""
+"方法修饰符也可以为 Moose 库方法服务，比如属性访问器。"
 
 #. type: verbatim
 #: MethodModifiers.pod:93
@@ -278,6 +280,8 @@ msgid ""
 "  has 'size' => ( is => 'rw' );\n"
 "\n"
 msgstr ""
+"  has 'size' => ( is => 'rw' );\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:95 MethodModifiers.pod:106
@@ -287,6 +291,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  before 'size' => sub {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:98
@@ -298,6 +305,11 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"     if (@_) {\n"
+"         Carp::cluck('Someone is setting size');\n"
+"     }\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:103
@@ -305,6 +317,7 @@ msgid ""
 "Another use for the before modifier would be to do some sort of prechecking "
 "on a method call. For example:"
 msgstr ""
+"BEFORE 修饰符另一个用途就是在方法调用前做一些检测判断的工作。"
 
 #. type: verbatim
 #: MethodModifiers.pod:109
@@ -315,6 +328,10 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      die 'Cannot set size while the person is growing'\n"
+"          if @_ && $self->is_growing;\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:113
@@ -323,6 +340,8 @@ msgid ""
 "constraints. In particular, they're useful for defining logical rules about "
 "an object's state changes."
 msgstr ""
+"上面这种方法方便我们进行一些类型约束以外的逻辑检查。这对我们定义大量的逻辑规则"
+"时非常有用。"
 
 #. type: textblock
 #: MethodModifiers.pod:117
@@ -330,16 +349,17 @@ msgid ""
 "Similarly, an after modifier could be used for logging an action that was "
 "taken."
 msgstr ""
+"原理类似， AFTER 修饰符可以方便我们在操作完成时做出一些记录工作。"
 
 #. type: textblock
 #: MethodModifiers.pod:120
 msgid "Note that the return values of both before and after modifiers are ignored."
-msgstr ""
+msgstr "注意，BEFORE 和 AFTER 修饰符的返回值都会被忽略。"
 
 #. type: =head2
 #: MethodModifiers.pod:123
 msgid "AROUND modifiers"
-msgstr ""
+msgstr "AROUND 修饰符"
 
 #. type: textblock
 #: MethodModifiers.pod:125
@@ -349,6 +369,8 @@ msgid ""
 "and you can even decide to simply not call the original method at all. You "
 "can also modify the return value with an around modifier."
 msgstr ""
+"AROUND 修饰符是一个比 BEFORE 和 AFTER 修饰符更加强大的修饰符。它可以修改传递"
+"给原始方法的参数，甚至你可以决定是否调用原始方法，你也可以决定方法的返回值。"
 
 #. type: textblock
 #: MethodModifiers.pod:131
@@ -356,6 +378,8 @@ msgid ""
 "An around modifier receives the original method as its first argument, "
 "I<then> the object, and finally any arguments passed to the method."
 msgstr ""
+"AROUND 方法修饰符接受到第一个参数是被调用的原始方法，I<下一个>参数是对象，"
+"剩余的参数为调用原始方法的参数。"
 
 #. type: verbatim
 #: MethodModifiers.pod:134
@@ -366,6 +390,10 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  around 'size' => sub {\n"
+"      my $orig = shift;\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:138
@@ -375,6 +403,9 @@ msgid ""
 "          unless @_;\n"
 "\n"
 msgstr ""
+"      return $self->$orig()\n"
+"          unless @_;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:141
@@ -385,6 +416,10 @@ msgid ""
 "          if $self->likes_small_things();\n"
 "\n"
 msgstr ""
+"      my $size = shift;\n"
+"      $size = $size / 2\n"
+"          if $self->likes_small_things();\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:145
@@ -394,11 +429,14 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      return $self->$orig($size);\n"
+"  };\n"
+"\n"
 
 #. type: =head2
 #: MethodModifiers.pod:148
 msgid "Wrapping multiple methods at once"
-msgstr ""
+msgstr "一次性封装多个方法修饰符"
 
 #. type: textblock
 #: MethodModifiers.pod:150
@@ -406,6 +444,8 @@ msgid ""
 "C<before>, C<after>, and C<around> can also modify multiple methods at "
 "once. The simplest example of this is passing them as a list:"
 msgstr ""
+"C<before>，C<after>，和 C<around> 方法修饰符可以一次性为多个属性定义。"
+"最简单的方法就是通过列表来实现："
 
 #. type: verbatim
 #: MethodModifiers.pod:153
@@ -416,6 +456,10 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"  before [qw(foo bar baz)] => sub {\n"
+"      warn \"something is being called!\";\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:157
@@ -428,6 +472,8 @@ msgid ""
 "function being modified doesn't actually matter. If the function name does "
 "matter, use something like this:"
 msgstr ""
+"这段代码会为 C<foo>，C<bar>，C<baz> 添加 C<before> 修饰符。属性列表可以通过"
+"列表的方式声明，也可以通过数组引用来声明。有些情况下也可以通过如下方法实现："
 
 #. type: verbatim
 #: MethodModifiers.pod:165
@@ -440,18 +486,24 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  for my $func (qw(foo bar baz)) {\n"
+"      before $func => sub {\n"
+"          warn \"$func was called!\";\n"
+"      };\n"
+"  }\n"
+"\n"
 
 #. type: =head2
 #: MethodModifiers.pod:171
 msgid "Using regular expressions to select methods to wrap"
-msgstr ""
+msgstr "通过正则表达式来选择要封装的方法"
 
 #. type: textblock
 #: MethodModifiers.pod:173
 msgid ""
 "In addition, you can specify a regular expression to indicate the methods to "
 "wrap, like so:"
-msgstr ""
+msgstr "你可以通过正则表达式来指明要封装的方法，比如："
 
 #. type: verbatim
 #: MethodModifiers.pod:176
@@ -462,6 +514,10 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"  after qr/^command_/ => sub {\n"
+"      warn \"got a command\";\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:180
@@ -470,6 +526,8 @@ msgid ""
 "L<Class::MOP::Class/get_method_list>, and add a modifier to each one that "
 "matches. The same caveats apply as above."
 msgstr ""
+"这段代码会通过 L<Class::MOP::Class/get_method_list> 来返回符合正则的函数列表，"
+"然后会给它们添加相应的方法修饰符。"
 
 #. type: textblock
 #: MethodModifiers.pod:184
@@ -481,11 +539,14 @@ msgid ""
 "Perl, such as C<meta>, C<new>, C<BUILD>, C<DESTROY>, C<AUTOLOAD>, etc, this "
 "could cause unintended (and hard to debug) problems and is best avoided."
 msgstr ""
+"使用正则表达式来指定要封装的方法确实是一个比较强大的途径，但是它也是有一些危"
+"险的。Moose 内部的 C<meta>，C<new>，C<BUILD>，C<DESTROY>，C<AUTOLOAD> 等方法"
+"是不允许这么操作的，所以我们在操作的时候应该尽可能的避开它们。"
 
 #. type: =head1
 #: MethodModifiers.pod:191
 msgid "INNER AND AUGMENT"
-msgstr ""
+msgstr "INNER 和 AUGMENT"
 
 #. type: textblock
 #: MethodModifiers.pod:193
@@ -495,6 +556,7 @@ msgid ""
 "implementation in a superclass, and then document that subclasses are "
 "expected to provide the rest."
 msgstr ""
+"augment 和 inner 是个相互配合的过程。"
 
 #. type: textblock
 #: MethodModifiers.pod:198
@@ -502,6 +564,7 @@ msgid ""
 "The superclass calls C<inner()>, which then calls the C<augment> modifier in "
 "the subclass:"
 msgstr ""
+"在父类中调用 C<inner()> 时，会相应的调用子类的 C<augment> 修饰符。"
 
 #. type: verbatim
 #: MethodModifiers.pod:201
@@ -510,6 +573,8 @@ msgid ""
 "  package Document;\n"
 "\n"
 msgstr ""
+"  package Document;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:205
@@ -519,6 +584,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  sub as_xml {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:208
@@ -529,6 +597,10 @@ msgid ""
 "      $xml .= \"</document>\\n\";\n"
 "\n"
 msgstr ""
+"      my $xml = \"<document>\\n\";\n"
+"      $xml .= inner();\n"
+"      $xml .= \"</document>\\n\";\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:212
@@ -538,6 +610,9 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      return $xml;\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:215
@@ -545,6 +620,7 @@ msgid ""
 "Using C<inner()> in this method makes it possible for one or more subclasses "
 "to then augment this method with their own specific implementation:"
 msgstr ""
+"通过 C<inner()> 方法，然后我们在多个子类中使用 augment 的方法来增强实现："
 
 #. type: verbatim
 #: MethodModifiers.pod:219
@@ -553,6 +629,8 @@ msgid ""
 "  package Report;\n"
 "\n"
 msgstr ""
+"  package Report;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:223
@@ -561,6 +639,8 @@ msgid ""
 "  extends 'Document';\n"
 "\n"
 msgstr ""
+"  extends 'Document';\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:225 MethodModifiers.pod:251
@@ -570,6 +650,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  augment 'as_xml' => sub {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:228
@@ -580,6 +663,10 @@ msgid ""
 "      $xml .= \"  </report>\\n\";\n"
 "\n"
 msgstr ""
+"      my $xml = \"  <report>\\n\";\n"
+"      $xml .= inner();\n"
+"      $xml .= \"  </report>\\n\";\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:232 MethodModifiers.pod:261
@@ -589,11 +676,14 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      return $xml;\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:235
 msgid "When we call C<as_xml> on a Report object, we get something like this:"
-msgstr ""
+msgstr "当我们调用 Report 类的 C<as_xml> 方法时，我们会得到如下结果："
 
 #. type: verbatim
 #: MethodModifiers.pod:237
@@ -605,13 +695,19 @@ msgid ""
 "  </document>\n"
 "\n"
 msgstr ""
+"  <document>\n"
+"    <report>\n"
+"    </report>\n"
+"  </document>\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:242
 msgid ""
 "But we also called C<inner()> in C<Report>, so we can continue subclassing "
 "and adding more content inside the document:"
-msgstr ""
+msgstr "因为我们在 C<Report> 中也调用了 C<inner()> 方法，所以我们可以继续进行"
+"子类的拓展。"
 
 #. type: verbatim
 #: MethodModifiers.pod:245
@@ -620,6 +716,8 @@ msgid ""
 "  package Report::IncomeAndExpenses;\n"
 "\n"
 msgstr ""
+"  package Report::IncomeAndExpenses;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:249
@@ -628,6 +726,8 @@ msgid ""
 "  extends 'Report';\n"
 "\n"
 msgstr ""
+"  extends 'Report';\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:254
@@ -639,6 +739,11 @@ msgid ""
 "      $xml .= \"\\n\";\n"
 "\n"
 msgstr ""
+"      my $xml = '    <income>' . $self->income . '</income>';\n"
+"      $xml .= \"\\n\";\n"
+"      $xml .= '    <expenses>' . $self->expenses . '</expenses>';\n"
+"      $xml .= \"\\n\";\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:259
@@ -647,11 +752,13 @@ msgid ""
 "      $xml .= inner() || q{};\n"
 "\n"
 msgstr ""
+"      $xml .= inner() || q{};\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:264
 msgid "Now our report has some content:"
-msgstr ""
+msgstr "现在我们的 report 有如下内容："
 
 #. type: verbatim
 #: MethodModifiers.pod:266
@@ -665,6 +772,13 @@ msgid ""
 "  </document>\n"
 "\n"
 msgstr ""
+"  <document>\n"
+"    <report>\n"
+"      <income>$10</income>\n"
+"      <expenses>$8</expenses>\n"
+"    </report>\n"
+"  </document>\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:273
@@ -673,6 +787,8 @@ msgid ""
 "allows us to have methods which are called from parent (least specific) to "
 "child (most specific). This inverts the normal inheritance pattern."
 msgstr ""
+"通过 C<augment> 和 C<inner()> 方法我们便可以得到一个有父类向子类逐渐调用的一个"
+"过程。"
 
 #. type: textblock
 #: MethodModifiers.pod:278
@@ -682,11 +798,15 @@ msgid ""
 "no-op, and just returns false. It's a good idea to always call C<inner()> to "
 "allow for future subclassing."
 msgstr ""
+"需要注意的是我们在 C<Report::IncomeAndExpenses> 中又调用了一次 C<inner()>。"
+"如果对象是一个 C<Report::IncomeAndExpenses> 实例，那么 C<inner()> 调用会返回"
+"false，所以在书写过程中最好保持调用 C<inner()> 的好习惯，这样会方便后续的子类"
+"拓展。"
 
 #. type: =head1
 #: MethodModifiers.pod:283
 msgid "OVERRIDE AND SUPER"
-msgstr ""
+msgstr "OVERRIDE 和 SUPER"
 
 #. type: textblock
 #: MethodModifiers.pod:285
@@ -695,6 +815,8 @@ msgid ""
 "overriding scheme. If you want to override a method from a parent class, you "
 "can do this with C<override>:"
 msgstr ""
+"Moose 提供了一些语法糖来方便你重载 Perl 内置函数。如果你想重载父类的一个方法，"
+"你可以通过 C<override> 来实现："
 
 #. type: verbatim
 #: MethodModifiers.pod:289
@@ -703,6 +825,8 @@ msgid ""
 "  package Employee;\n"
 "\n"
 msgstr ""
+"  package Employee;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:293
@@ -711,6 +835,8 @@ msgid ""
 "  extends 'Person';\n"
 "\n"
 msgstr ""
+"  extends 'Person';\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:295
@@ -719,6 +845,8 @@ msgid ""
 "  has 'job_title' => ( is => 'rw' );\n"
 "\n"
 msgstr ""
+"  has 'job_title' => ( is => 'rw' );\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:297
@@ -728,6 +856,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  override 'display_name' => sub {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:300
@@ -737,6 +868,9 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      return super() . q{, } . $self->title();\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:303
@@ -746,6 +880,8 @@ msgid ""
 "to the superclass's method will always be the same as the ones passed to the "
 "method modifier, and cannot be changed."
 msgstr ""
+"这里 C<super()> 方法相当与调用 C<< $self->SUPER::display_name >>。区别是这种方法"
+"传入父类的参数总是和相应的方法修饰符的参数相同，并且不能更改。"
 
 #. type: textblock
 #: MethodModifiers.pod:308
@@ -753,11 +889,13 @@ msgid ""
 "All arguments passed to C<super()> are ignored, as are any changes made to "
 "C<@_> before C<super()> is called."
 msgstr ""
+"而调用 C<super()> 方法时参数是被忽略的。所有对 C<@_> 的操作都在 C<super()> 之前"
+"进行。"
 
 #. type: =head1
 #: MethodModifiers.pod:311
 msgid "SEMI-COLONS"
-msgstr ""
+msgstr "分号"
 
 #. type: textblock
 #: MethodModifiers.pod:313
@@ -765,6 +903,8 @@ msgid ""
 "Because all of these method modifiers are implemented as Perl functions, you "
 "must always end the modifier declaration with a semi-colon:"
 msgstr ""
+"因为这些方法修饰符都是通过 Perl 来实现的，所以你需要在语句的结尾写分号来标明"
+"结束。"
 
 #. type: verbatim
 #: MethodModifiers.pod:317
@@ -773,11 +913,13 @@ msgid ""
 "  after 'foo' => sub { };\n"
 "\n"
 msgstr ""
+"  after 'foo' => sub { };\n"
+"\n"
 
 #. type: =head1
 #: MethodModifiers.pod:319
 msgid "CAVEATS"
-msgstr ""
+msgstr "注意事项"
 
 #. type: textblock
 #: MethodModifiers.pod:321
@@ -787,11 +929,13 @@ msgid ""
 "with a test program to ensure your class hierarchy works as expected, or "
 "more preferably, don't use multiple inheritance (roles can help with this)!"
 msgstr ""
+"方法修饰符在多继承时会有些问题。所以建议您在应用时多加测试，观察结果是否与"
+"预期相同。另外，roles 可以帮助解决多继承这个问题。"
 
 #. type: =head1
 #: MethodModifiers.pod:326
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: MethodModifiers.pod:328
@@ -799,16 +943,18 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL>和L<Moose/CONTRIBUTORS>。"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: MethodModifiers.pod:330
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: MethodModifiers.pod:332
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: MethodModifiers.pod:334
@@ -816,3 +962,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相同的条款进行"
+"修改。"
