@@ -1,0 +1,742 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2012-01-05 00:43+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Roles.pod:9
+msgid "NAME"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:11
+msgid ""
+"Moose::Manual::Roles - Roles, an alternative to deep hierarchies and base "
+"classes"
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:13
+msgid "VERSION"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:15
+msgid "version 2.0401"
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:17
+msgid "WHAT IS A ROLE?"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:19
+msgid ""
+"A role encapsulates some piece of behavior or state that can be shared "
+"between classes. It is something that classes I<do>. It is important to "
+"understand that I<roles are not classes>. You cannot inherit from a role, "
+"and a role cannot be instantiated. We sometimes say that roles are "
+"I<consumed>, either by classes or other roles."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:25
+msgid ""
+"Instead, a role is I<composed> into a class. In practical terms, this means "
+"that all of the methods, method modifiers, and attributes defined in a role "
+"are added directly to (we sometimes say \"flattened into\") the class that "
+"consumes the role. These attributes and methods then appear as if they were "
+"defined in the class itself. A subclass of the consuming class will inherit "
+"all of these methods and attributes."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:32
+msgid "Moose roles are similar to mixins or interfaces in other languages."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:34
+msgid ""
+"Besides defining their own methods and attributes, roles can also require "
+"that the consuming class define certain methods of its own. You could have a "
+"role that consisted only of a list of required methods, in which case the "
+"role would be very much like a Java interface."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:40
+msgid ""
+"Note that attribute accessors also count as methods for the purposes of "
+"satisfying the requirements of a role."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:43
+msgid "A SIMPLE ROLE"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:45
+msgid "Creating a role looks a lot like creating a Moose class:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:47 Roles.pod:122 Roles.pod:191 Roles.pod:311
+#, no-wrap
+msgid ""
+"  package Breakable;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:49 Roles.pod:124 Roles.pod:193 Roles.pod:261 Roles.pod:313
+#, no-wrap
+msgid ""
+"  use Moose::Role;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:51 Roles.pod:128
+#, no-wrap
+msgid ""
+"  has 'is_broken' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Bool',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:56 Roles.pod:158
+#, no-wrap
+msgid ""
+"  sub break {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:59
+#, no-wrap
+msgid ""
+"      print \"I broke\\n\";\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:61
+#, no-wrap
+msgid ""
+"      $self->is_broken(1);\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:64
+msgid ""
+"Except for our use of L<Moose::Role>, this looks just like a class "
+"definition with Moose. However, this is not a class, and it cannot be "
+"instantiated."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:68
+msgid ""
+"Instead, its attributes and methods will be composed into classes which use "
+"the role:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:71 Roles.pod:197
+#, no-wrap
+msgid ""
+"  package Car;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:73 Roles.pod:104 Roles.pod:149 Roles.pod:199 Roles.pod:221 Roles.pod:251 Roles.pod:272
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:75 Roles.pod:106 Roles.pod:151 Roles.pod:206
+#, no-wrap
+msgid ""
+"  with 'Breakable';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:77 Roles.pod:153
+#, no-wrap
+msgid ""
+"  has 'engine' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Engine',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:82
+msgid ""
+"The C<with> function composes roles into a class. Once that is done, the "
+"C<Car> class has an C<is_broken> attribute and a C<break> method. The C<Car> "
+"class also C<does('Breakable')>:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:86
+#, no-wrap
+msgid ""
+"  my $car = Car->new( engine => Engine->new );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:88
+#, no-wrap
+msgid ""
+"  print $car->is_broken ? 'Busted' : 'Still working';\n"
+"  $car->break;\n"
+"  print $car->is_broken ? 'Busted' : 'Still working';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:92
+#, no-wrap
+msgid ""
+"  $car->does('Breakable'); # true\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:94
+msgid "This prints:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:96
+#, no-wrap
+msgid ""
+"  Still working\n"
+"  I broke\n"
+"  Busted\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:100
+msgid "We could use this same role in a C<Bone> class:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:102
+#, no-wrap
+msgid ""
+"  package Bone;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:108
+#, no-wrap
+msgid ""
+"  has 'marrow' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Marrow',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:113
+msgid "See also L<Moose::Cookbook::Roles::Recipe1> for an example."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:115
+msgid "REQUIRED METHODS"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:117
+msgid ""
+"As mentioned previously, a role can require that consuming classes provide "
+"one or more methods. Using our C<Breakable> example, let's make it require "
+"that consuming classes implement their own C<break> methods:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:126
+#, no-wrap
+msgid ""
+"  requires 'break';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:133
+#, no-wrap
+msgid ""
+"  after 'break' => sub {\n"
+"      my $self = shift;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:136
+#, no-wrap
+msgid ""
+"      $self->is_broken(1);\n"
+"  };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:139
+msgid ""
+"If we try to consume this role in a class that does not have a C<break> "
+"method, we will get an exception."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:142
+msgid ""
+"You can see that we added a method modifier on C<break>. We want classes "
+"that consume this role to implement their own logic for breaking, but we "
+"make sure that the C<is_broken> attribute is always set to true when "
+"C<break> is called."
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:147
+#, no-wrap
+msgid ""
+"  package Car\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:161
+#, no-wrap
+msgid ""
+"      if ( $self->is_moving ) {\n"
+"          $self->stop;\n"
+"      }\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head2
+#: Roles.pod:166
+msgid "Roles Versus Abstract Base Classes"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:168
+msgid ""
+"If you are familiar with the concept of abstract base classes in other "
+"languages, you may be tempted to use roles in the same way."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:171
+msgid ""
+"You I<can> define an \"interface-only\" role, one that contains I<just> a "
+"list of required methods."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:174
+msgid ""
+"However, any class which consumes this role must implement all of the "
+"required methods, either directly or through inheritance from a parent. You "
+"cannot delay the method requirement check so that they can be implemented by "
+"future subclasses."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:179
+msgid ""
+"Because the role defines the required methods directly, adding a base class "
+"to the mix would not achieve anything. We recommend that you simply consume "
+"the interface role in each class which implements that interface."
+msgstr ""
+
+#. type: =head2
+#: Roles.pod:184
+msgid "Required Attributes"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:186
+msgid ""
+"As mentioned before, a role's required method may also be satisfied by an "
+"attribute accessor. However, the call to C<has> which defines an attribute "
+"happens at runtime. This means that you must define the attribute I<before> "
+"consuming the role, or else the role will not see the generated accessor."
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:195
+#, no-wrap
+msgid ""
+"  requires 'stress';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:201
+#, no-wrap
+msgid ""
+"  has 'stress' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Int',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:208
+msgid "USING METHOD MODIFIERS"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:210
+msgid ""
+"Method modifiers and roles are a very powerful combination.  Often, a role "
+"will combine method modifiers and required methods. We already saw one "
+"example with our C<Breakable> example."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:214
+msgid ""
+"Method modifiers increase the complexity of roles, because they make the "
+"role application order relevant. If a class uses multiple roles, each of "
+"which modify the same method, those modifiers will be applied in the same "
+"order as the roles are used:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:219
+#, no-wrap
+msgid ""
+"  package MovieCar;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:223
+#, no-wrap
+msgid ""
+"  extends 'Car';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:225
+#, no-wrap
+msgid ""
+"  with 'Breakable', 'ExplodesOnBreakage';\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:227
+msgid ""
+"Assuming that the new C<ExplodesOnBreakage> method I<also> has an C<after> "
+"modifier on C<break>, the C<after> modifiers will run one after the "
+"other. The modifier from C<Breakable> will run first, then the one from "
+"C<ExplodesOnBreakage>."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:232
+msgid "METHOD CONFLICTS"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:234
+msgid ""
+"If a class composes multiple roles, and those roles have methods of the same "
+"name, we will have a conflict. In that case, the composing class is required "
+"to provide its I<own> method of the same name."
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:238
+#, no-wrap
+msgid ""
+"  package Breakdancer;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:240
+#, no-wrap
+msgid ""
+"  use Moose::Role\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:242
+#, no-wrap
+msgid ""
+"  sub break {\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:244
+#, no-wrap
+msgid ""
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:246
+msgid ""
+"If we compose both C<Breakable> and C<Breakdancer> in a class, we must "
+"provide our own C<break> method:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:249 Roles.pod:270
+#, no-wrap
+msgid ""
+"  package FragileDancer;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:253
+#, no-wrap
+msgid ""
+"  with 'Breakable', 'Breakdancer';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:255
+#, no-wrap
+msgid ""
+"  sub break { ... }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:257
+msgid "A role can be a collection of other roles:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:259
+#, no-wrap
+msgid ""
+"  package Break::Bundle;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:263
+#, no-wrap
+msgid ""
+"  with ('Breakable', 'Breakdancer');\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:265
+msgid "METHOD EXCLUSION AND ALIASING"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:267
+msgid ""
+"If we want our C<FragileDancer> class to be able to call the methods from "
+"both its roles, we can alias the methods:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:274
+#, no-wrap
+msgid ""
+"  with 'Breakable'   => { -alias => { break => 'break_bone' } },\n"
+"       'Breakdancer' => { -alias => { break => 'break_dance' } };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:277
+msgid ""
+"However, aliasing a method simply makes a I<copy> of the method with the new "
+"name. We also need to exclude the original name:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:280
+#, no-wrap
+msgid ""
+"  with 'Breakable' => {\n"
+"      -alias    => { break => 'break_bone' },\n"
+"      -excludes => 'break',\n"
+"      },\n"
+"      'Breakdancer' => {\n"
+"      -alias    => { break => 'break_dance' },\n"
+"      -excludes => 'break',\n"
+"      };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:289
+msgid ""
+"The excludes parameter prevents the C<break> method from being composed into "
+"the C<FragileDancer> class, so we don't have a conflict. This means that "
+"C<FragileDancer> does not need to implement its own C<break> method."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:294
+msgid ""
+"This is useful, but it's worth noting that this breaks the contract implicit "
+"in consuming a role. Our C<FragileDancer> class does both the C<Breakable> "
+"and C<BreakDancer>, but does not provide a C<break> method. If some API "
+"expects an object that does one of those roles, it probably expects it to "
+"implement that method."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:300
+msgid ""
+"In some use cases we might alias and exclude methods from roles, but then "
+"provide a method of the same name in the class itself."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:303
+msgid "Also see L<Moose::Cookbook::Roles::Recipe2> for an example."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:305
+msgid "ROLE EXCLUSION"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:307
+msgid ""
+"A role can say that it cannot be combined with some other role. This should "
+"be used with great caution, since it limits the re-usability of the role."
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:315
+#, no-wrap
+msgid ""
+"  excludes 'BreakDancer';\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:317
+msgid "ADDING A ROLE TO AN OBJECT INSTANCE"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:319
+msgid ""
+"You may want to add a role to an object instance, rather than to a "
+"class. For example, you may want to add debug tracing to one instance of an "
+"object while debugging a particular bug. Another use case might be to "
+"dynamically change objects based on a user's configuration, as a plugin "
+"system."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:324
+msgid ""
+"The best way to do this is to use the C<apply_all_roles()> function from "
+"L<Moose::Util>:"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:327
+#, no-wrap
+msgid ""
+"  use Moose::Util qw( apply_all_roles );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Roles.pod:329
+#, no-wrap
+msgid ""
+"  my $car = Car->new;\n"
+"  apply_all_roles( $car, 'Breakable' );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:332
+msgid ""
+"This function can apply more than one role at a time, and will do so using "
+"the normal Moose role combination system. We recommend using this function "
+"to apply roles to an object. This is what Moose uses internally when you "
+"call C<with>."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:337
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:339
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: Roles.pod:341
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:343
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: Roles.pod:345
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
