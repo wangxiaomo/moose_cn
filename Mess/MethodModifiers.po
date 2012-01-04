@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-12-28 16:53+0800\n"
+"POT-Creation-Date: 2011-12-31 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,27 +19,27 @@ msgstr ""
 #. type: =head1
 #: MethodModifiers.pod:9
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. type: textblock
 #: MethodModifiers.pod:11
 msgid "Moose::Manual::MethodModifiers - Moose's method modifiers"
-msgstr ""
+msgstr "Moose::Manual::MethodModifiers - Moose 方法修饰符"
 
 #. type: =head1
 #: MethodModifiers.pod:13
 msgid "VERSION"
-msgstr ""
+msgstr "VERSION"
 
 #. type: textblock
 #: MethodModifiers.pod:15
 msgid "version 2.0401"
-msgstr ""
+msgstr "version 2.0401"
 
 #. type: =head1
 #: MethodModifiers.pod:17
 msgid "WHAT IS A METHOD MODIFIER?"
-msgstr ""
+msgstr "什么是方法修饰符？"
 
 #. type: textblock
 #: MethodModifiers.pod:19
@@ -47,11 +47,13 @@ msgid ""
 "Moose provides a feature called \"method modifiers\". You can also think of "
 "these as \"hooks\" or \"advice\"."
 msgstr ""
+"Moose 提供一种叫做\"方法修饰符\"的特殊功能。你可以把它理解成 \"hooks\" 或者是"
+" \"advice\"。"
 
 #. type: textblock
 #: MethodModifiers.pod:22
 msgid "It's probably easiest to understand this feature with a few examples:"
-msgstr ""
+msgstr "理解方法修饰符最简单的方法莫过于通过以下几个简单的例子："
 
 #. type: verbatim
 #: MethodModifiers.pod:24
@@ -60,6 +62,8 @@ msgid ""
 "  package Example;\n"
 "\n"
 msgstr ""
+"  package Example;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:26 MethodModifiers.pod:203 MethodModifiers.pod:221 MethodModifiers.pod:247 MethodModifiers.pod:291
@@ -68,6 +72,8 @@ msgid ""
 "  use Moose;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:28
@@ -78,6 +84,10 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  sub foo {\n"
+"      print \"    foo\\n\";\n"
+"  }\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:32
@@ -87,6 +97,9 @@ msgid ""
 "  after 'foo'  => sub { print \"just called foo\\n\"; };\n"
 "\n"
 msgstr ""
+"  before 'foo' => sub { print \"about to call foo\\n\"; };\n"
+"  after 'foo'  => sub { print \"just called foo\\n\"; };\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:35
@@ -97,6 +110,10 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  around 'foo' => sub {\n"
+"      my $orig = shift;\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:39
@@ -105,6 +122,8 @@ msgid ""
 "      print \"  I'm around foo\\n\";\n"
 "\n"
 msgstr ""
+"      print \"  I'm around foo\\n\";\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:41
@@ -113,6 +132,8 @@ msgid ""
 "      $self->$orig(@_);\n"
 "\n"
 msgstr ""
+"      $self->$orig(@_);\n"
+"\n"
 
 #. type: verbatim
 #: MethodModifiers.pod:43
@@ -122,11 +143,14 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      print \"  I'm still around foo\\n\";\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:46
 msgid "Now if I call C<< Example->new->foo >> I'll get the following output:"
-msgstr ""
+msgstr "现在如果我们调用 C<< Example->new->foo >>，我们会得到如下的结果："
 
 #. type: verbatim
 #: MethodModifiers.pod:48
@@ -139,6 +163,12 @@ msgid ""
 "  just called foo\n"
 "\n"
 msgstr ""
+"  about to call foo\n"
+"    I'm around foo\n"
+"      foo\n"
+"    I'm still around foo\n"
+"  just called foo\n"
+"\n"
 
 #. type: textblock
 #: MethodModifiers.pod:54
@@ -146,6 +176,7 @@ msgid ""
 "You probably could have figured that out from the names \"before\", "
 "\"after\", and \"around\"."
 msgstr ""
+"你或许早已料到 \"before\"，\"after\"，\"around\" 会发生什么。"
 
 #. type: textblock
 #: MethodModifiers.pod:57
@@ -153,6 +184,7 @@ msgid ""
 "Also, as you can see, the before modifiers come before around modifiers, and "
 "after modifiers come last."
 msgstr ""
+"而且你也看出来了，before 发生在 around 前，after 则最后发生。"
 
 #. type: textblock
 #: MethodModifiers.pod:60
@@ -161,6 +193,8 @@ msgid ""
 "modifiers run from the last added to the first, and after modifiers run from "
 "first added to last:"
 msgstr ""
+"当添加多个类似的方法修饰符时，before 和 around 的修饰符会先运行最先添加的，而"
+" after 修饰符则后运行先添加的。"
 
 #. type: verbatim
 #: MethodModifiers.pod:64
@@ -177,11 +211,21 @@ msgid ""
 "   after 2\n"
 "\n"
 msgstr ""
+"   before 2\n"
+"    before 1\n"
+"     around 2\n"
+"      around 1\n"
+"       primary\n"
+"      around 1\n"
+"     around 2\n"
+"    after 1\n"
+"   after 2\n"
+"\n"
 
 #. type: =head1
 #: MethodModifiers.pod:74
 msgid "WHY USE THEM?"
-msgstr ""
+msgstr "为什么要用方法修饰符？"
 
 #. type: textblock
 #: MethodModifiers.pod:76
@@ -190,6 +234,8 @@ msgid ""
 "behavior of methods in the classes that consume the role. See "
 "L<Moose::Manual::Roles> for more information about roles."
 msgstr ""
+"方法修饰符有很多用途。它们经常用与 roles 配合使用。关于 roles 的详情，请参阅"
+"L<Moose::Manual::Roles>。"
 
 #. type: textblock
 #: MethodModifiers.pod:80
@@ -198,11 +244,13 @@ msgid ""
 "bit artificial. They're intended to give you an idea of how modifiers work, "
 "but may not be the most natural usage."
 msgstr ""
+"本文档剩余的部分会给出你一些优美的例子来学习方法修饰符是如何工作的，尽管它们"
+"不是用一种最自然的方式给出。"
 
 #. type: =head1
 #: MethodModifiers.pod:84
 msgid "BEFORE, AFTER, AND AROUND"
-msgstr ""
+msgstr "BEFORE, AFTER, AROUND"
 
 #. type: textblock
 #: MethodModifiers.pod:86

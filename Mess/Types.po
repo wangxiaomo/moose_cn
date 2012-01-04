@@ -536,7 +536,6 @@ msgid ""
 msgstr ""
 "这个模块会在编译时进行检查，而且它通常在解析比较复杂的字符串类型时更加强壮。"
 
-
 #. type: =head1
 #: Types.pod:222
 msgid "COERCION"
@@ -589,6 +588,8 @@ msgid ""
 "in type is seen by all modules using Moose types. This is I<another> reason "
 "why it is good to namespace your types."
 msgstr ""
+"强制类型转换是全局的，就像类型名称，所以一个内建类型被强制转化后，整个程序都"
+"会使用转化后的类型。这就是上面提到的另一个使用良好命名空间的原因。"
 
 #. type: textblock
 #: Types.pod:241
@@ -596,6 +597,8 @@ msgid ""
 "Moose will I<never> try to coerce a value unless you explicitly ask for "
 "it. This is done by setting the C<coerce> attribute option to a true value:"
 msgstr ""
+"Moose I<绝对不会>自己对类型进行强制转化，除非你通过设置 C<coerce> 选项为 true"
+"来明确要求。"
 
 #. type: verbatim
 #: Types.pod:244
@@ -604,6 +607,8 @@ msgid ""
 "  package Foo;\n"
 "\n"
 msgstr ""
+"  package Foo;\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:246
@@ -616,6 +621,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'sizes' => (\n"
+"      is     => 'ro',\n"
+"      isa    => 'ArrayRefOfInts',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:252
@@ -624,6 +635,8 @@ msgid ""
 "  Foo->new( sizes => 42 );\n"
 "\n"
 msgstr ""
+"  Foo->new( sizes => 42 );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:254
@@ -631,11 +644,12 @@ msgid ""
 "This code example will do the right thing, and the newly created object will "
 "have C<[ 42 ]> as its C<sizes> attribute."
 msgstr ""
+"此代码示例是正确的，创建的新对象将有C<[ 42 ]>作为其 C<sizes> 的属性。"
 
 #. type: =head2
 #: Types.pod:257
 msgid "Deep coercion"
-msgstr ""
+msgstr "递归转化"
 
 #. type: textblock
 #: Types.pod:259
@@ -643,6 +657,7 @@ msgid ""
 "Deep coercion is the coercion of type parameters for parameterized "
 "types. Let's take these types as an example:"
 msgstr ""
+"递归转化是转化类型参数的类型参数。让我们看下面这个例子："
 
 #. type: verbatim
 #: Types.pod:262
@@ -653,6 +668,10 @@ msgid ""
 "      where { /[a-f0-9]/i };\n"
 "\n"
 msgstr ""
+"  subtype 'HexNum',\n"
+"      as 'Str',\n"
+"      where { /[a-f0-9]/i };\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:266
@@ -663,6 +682,10 @@ msgid ""
 "      via { hex $_ };\n"
 "\n"
 msgstr ""
+"  coerce 'Int',\n"
+"      from 'HexNum',\n"
+"      via { hex $_ };\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:270
@@ -675,13 +698,19 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'sizes' => (\n"
+"      is     => 'ro',\n"
+"      isa    => 'ArrayRef[Int]',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:276
 msgid ""
 "If we try passing an array reference of hex numbers for the C<sizes> "
 "attribute, Moose will not do any coercion."
-msgstr ""
+msgstr "如果我们传递十六进制数组的引用给 C<sizes>，Moose 不会为我们转化。"
 
 #. type: textblock
 #: Types.pod:279
@@ -689,6 +718,7 @@ msgid ""
 "However, you can define a set of subtypes to enable coercion between two "
 "parameterized types."
 msgstr ""
+"然而，你可以通过定义一个子类型使其在两个参数类型间进行转化。"
 
 #. type: verbatim
 #: Types.pod:282
@@ -698,6 +728,9 @@ msgid ""
 "      as 'ArrayRef[HexNum]';\n"
 "\n"
 msgstr ""
+"  subtype 'ArrayRefOfHexNums',\n"
+"      as 'ArrayRef[HexNum]';\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:288
@@ -708,6 +741,10 @@ msgid ""
 "      via { [ map { hex } @{$_} ] };\n"
 "\n"
 msgstr ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'ArrayRefOfHexNums',\n"
+"      via { [ map { hex } @{$_} ] };\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:292
@@ -716,11 +753,13 @@ msgid ""
 "  Foo->new( sizes => [ 'a1', 'ff', '22' ] );\n"
 "\n"
 msgstr ""
+"  Foo->new( sizes => [ 'a1', 'ff', '22' ] );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:294
 msgid "Now Moose will coerce the hex numbers to integers."
-msgstr ""
+msgstr "现在 Moose 将会强制转化十六进制数为整数。"
 
 #. type: textblock
 #: Types.pod:296
@@ -728,6 +767,8 @@ msgid ""
 "Moose does not attempt to chain coercions, so it will not coerce a single "
 "hex number. To do that, we need to define a separate coercion:"
 msgstr ""
+"Moose 不会尝试级联的强制转化，所以它不会强制转化单一的十六进制数。所以要做到"
+"这一点，我们需要定义一个单独的强制类型转化："
 
 #. type: verbatim
 #: Types.pod:300
@@ -738,6 +779,10 @@ msgid ""
 "      via { [ hex $_ ] };\n"
 "\n"
 msgstr ""
+"  coerce 'ArrayRefOfInts',\n"
+"      from 'HexNum',\n"
+"      via { [ hex $_ ] };\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:304
@@ -745,11 +790,13 @@ msgid ""
 "Yes, this can all get verbose, but coercion is tricky magic, and we think "
 "it's best to make it explicit."
 msgstr ""
+"虽然这样写很冗长，但是在这个强制类型转化的魔法中，我们认为这样是最好的，因为"
+"这样写会非常清楚。"
 
 #. type: =head1
 #: Types.pod:307
 msgid "TYPE UNIONS"
-msgstr ""
+msgstr "类型联合"
 
 #. type: textblock
 #: Types.pod:309
@@ -757,6 +804,7 @@ msgid ""
 "Moose allows you to say that an attribute can be of two or more disparate "
 "types. For example, we might allow an C<Object> or C<FileHandle>:"
 msgstr ""
+"Moose 允许你声明一个属性为一个或一个以上不同的类型。比如下面这个例子："
 
 #. type: verbatim
 #: Types.pod:313
@@ -768,6 +816,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'output' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Object | FileHandle',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:318
@@ -777,6 +830,8 @@ msgid ""
 "as an unblessed file handle. It is up to you to do the right thing for each "
 "of them in your code."
 msgstr ""
+"Moose 会解析这个字符串，并认出你正在创建的类型是什么。C<output> 属性会接受任何"
+"类型的对象或未绑定的句柄。"
 
 #. type: textblock
 #: Types.pod:323
@@ -784,6 +839,7 @@ msgid ""
 "Whenever you use a type union, you should consider whether or not coercion "
 "might be a better answer."
 msgstr ""
+"当你使用类型联合的时候，你应该仔细考虑是否强制转化是个更好的解决方法。"
 
 #. type: textblock
 #: Types.pod:326
@@ -791,6 +847,7 @@ msgid ""
 "For our example above, we might want to be more specific, and insist that "
 "output be an object with a C<print> method:"
 msgstr ""
+"对于我们上面的例子，使用对象的 C<print> 方法是个更好的解决方法。"
 
 #. type: verbatim
 #: Types.pod:329
@@ -799,6 +856,8 @@ msgid ""
 "  duck_type 'CanPrint', [qw(print)];\n"
 "\n"
 msgstr ""
+"  duck_type 'CanPrint', [qw(print)];\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:331
@@ -806,6 +865,7 @@ msgid ""
 "We can coerce file handles to an object that satisfies this condition with a "
 "simple wrapper class:"
 msgstr ""
+"我们可以转化句柄到一个对象，只需要简单的封装这个类："
 
 #. type: verbatim
 #: Types.pod:334
@@ -814,6 +874,8 @@ msgid ""
 "  package FHWrapper;\n"
 "\n"
 msgstr ""
+"  package FHWrapper;\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:338
@@ -825,6 +887,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'handle' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'FileHandle',\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:343
@@ -835,6 +902,10 @@ msgid ""
 "      my $fh   = $self->handle();\n"
 "\n"
 msgstr ""
+"  sub print {\n"
+"      my $self = shift;\n"
+"      my $fh   = $self->handle();\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:347
@@ -844,11 +915,14 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      print {$fh} @_;\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:350
 msgid "Now we can define a coercion from C<FileHandle> to our wrapper class:"
-msgstr ""
+msgstr "现在我们能定义一个从 C<FileHandle> 到我们封装的类的强制转化："
 
 #. type: verbatim
 #: Types.pod:352
@@ -859,6 +933,10 @@ msgid ""
 "      => via { FHWrapper->new( handle => $_ ) };\n"
 "\n"
 msgstr ""
+"  coerce 'CanPrint'\n"
+"      => from 'FileHandle'\n"
+"      => via { FHWrapper->new( handle => $_ ) };\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:356
@@ -871,18 +949,24 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'output' => (\n"
+"      is     => 'rw',\n"
+"      isa    => 'CanPrint',\n"
+"      coerce => 1,\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:362
 msgid ""
 "This pattern of using a coercion instead of a type union will help make your "
 "class internals simpler."
-msgstr ""
+msgstr "这种模式使用一个类型转化，而不是一个类型联合，这将使你的类内部更加简单些。"
 
 #. type: =head1
 #: Types.pod:365
 msgid "TYPE CREATION HELPERS"
-msgstr ""
+msgstr "类型创建助手"
 
 #. type: textblock
 #: Types.pod:367
@@ -891,6 +975,9 @@ msgid ""
 "functions for creating specific kinds of types. These include C<class_type>, "
 "C<role_type>, C<maybe_type>, and C<duck_type>. See the docs for details."
 msgstr ""
+"L<Moose::Util::TypeConstraints> 中包含创建指定类型的一些助手函数，包括"
+"C<class_type>，C<role_type>，C<maybe_type> 和 C<duck_type> 等等。具体的请查阅"
+"文档。"
 
 #. type: textblock
 #: Types.pod:372
@@ -898,6 +985,8 @@ msgid ""
 "One helper worth noting is C<enum>, which allows you to create a subtype of "
 "C<Str> that only allows the specified values:"
 msgstr ""
+"一个比较有用的就是 C<enum> 类型，它允许你创建一个有 C<Str> 的子类型，让你指定"
+"它可能出现的值。"
 
 #. type: verbatim
 #: Types.pod:375
@@ -906,16 +995,18 @@ msgid ""
 "  enum 'RGB', [qw( red green blue )];\n"
 "\n"
 msgstr ""
+"  enum 'RGB', [qw( red green blue )];\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:377
 msgid "This creates a type named C<RGB>."
-msgstr ""
+msgstr "这样就创建了一个叫做 C<RGB> 的类型。"
 
 #. type: =head1
 #: Types.pod:379
 msgid "ANONYMOUS TYPES"
-msgstr ""
+msgstr "匿名类型"
 
 #. type: textblock
 #: Types.pod:381
@@ -924,6 +1015,7 @@ msgid ""
 "can be used wherever you would use a type name, as a parent type, or as the "
 "value for an attribute's C<isa> option:"
 msgstr ""
+"创建类型的函数均返回类型的对象。这个对象可以被用在任何可以使用的地方。"
 
 #. type: verbatim
 #: Types.pod:385
@@ -935,6 +1027,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'size' => (\n"
+"      is  => 'ro',\n"
+"      isa => subtype( 'Int' => where { $_ > 0 } ),\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:390
@@ -942,25 +1039,29 @@ msgid ""
 "This is handy when you want to create a one-off type and don't want to "
 "\"pollute\" the global namespace registry."
 msgstr ""
+"这对于你只想使用一次的类型，是非常方便的，你不需要纠结于给它起一个什么样的"
+"名字。"
 
 #. type: =head1
 #: Types.pod:393
 msgid "VALIDATING METHOD PARAMETERS"
-msgstr ""
+msgstr "确认方法的参数"
 
 #. type: textblock
 #: Types.pod:395
 msgid ""
 "Moose does not provide any means of validating method parameters. However, "
 "there are several MooseX extensions on CPAN which let you do this."
-msgstr ""
+msgstr "Moose 不提供任何验证方法的参数手段。不过，也有几个 CPAN 上的拓展可以"
+"让你这么做。"
 
 #. type: textblock
 #: Types.pod:399
 msgid ""
 "The simplest and least sugary is L<MooseX::Params::Validate>. This lets you "
 "validate a set of named parameters using Moose types:"
-msgstr ""
+msgstr "最简单的就是使用 L<MooseX::Params::Validate> 模块，这个可以让你通过"
+"Moose 的类型来对你的参数进行检查。"
 
 #. type: verbatim
 #: Types.pod:402
@@ -970,6 +1071,9 @@ msgid ""
 "  use MooseX::Params::Validate;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  use MooseX::Params::Validate;\n"
+"\n"
 
 #. type: verbatim
 #: Types.pod:405
@@ -985,11 +1089,20 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  sub foo {\n"
+"      my $self   = shift;\n"
+"      my %params = validate_hash(\n"
+"          \\@_,\n"
+"          bar => { isa => 'Str', default => 'Moose' },\n"
+"      );\n"
+"      ...\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Types.pod:414
 msgid "L<MooseX::Params::Validate> also supports coercions."
-msgstr ""
+msgstr "L<MooseX::Params::Validate> 也支持类型强制转化。"
 
 #. type: textblock
 #: Types.pod:416
@@ -998,6 +1111,8 @@ msgid ""
 "validation using Moose types, including L<MooseX::Method::Signatures>, which "
 "gives you a full-blown C<method> keyword."
 msgstr ""
+"也有一些更强大的拓展来支持参数的验证，只要加载 L<MooseX::Method::Signatures>"
+"模块，这个模块会给我们提供相关的关键字的。"
 
 #. type: verbatim
 #: Types.pod:421
@@ -1008,11 +1123,15 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  method morning ( Str $name ) {\n"
+"      $self->say(\"Good morning ${name}!\");\n"
+"  }\n"
+"\n"
 
 #. type: =head1
 #: Types.pod:425
 msgid "LOAD ORDER ISSUES"
-msgstr ""
+msgstr "加载顺序问题"
 
 #. type: textblock
 #: Types.pod:427
@@ -1021,6 +1140,8 @@ msgid ""
 "problems. In particular, you may want to use a class's type constraint "
 "before that type has been defined."
 msgstr ""
+"因为 Moose 的类型是在运行时声明的，所以你可能会遇到一些加载顺序问题。特别是，"
+"你可能使用一个类的类型约束，在此之前这个类型已经定义过了。"
 
 #. type: textblock
 #: Types.pod:431
@@ -1029,11 +1150,13 @@ msgid ""
 "custom types in one module, C<MyApp::Types>, and then loading this module in "
 "all of your other modules."
 msgstr ""
+"为了改善这个问题，我们推荐你定义你I<所有>的类型在一个模块中，然后在其他的模块"
+"中加载这个模块。"
 
 #. type: =head1
 #: Types.pod:435
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: Types.pod:437
@@ -1041,16 +1164,19 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL> 和"
+"L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: Types.pod:439
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: Types.pod:441
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: Types.pod:443
@@ -1058,3 +1184,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"
