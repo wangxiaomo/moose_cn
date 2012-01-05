@@ -1,0 +1,684 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2012-01-05 19:50+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: MooseX.pod:9
+msgid "NAME"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:11
+msgid "Moose::Manual::MooseX - Recommended Moose extensions"
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:13
+msgid "VERSION"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:15
+msgid "version 2.0401"
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:17
+msgid "MooseX?"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:19
+msgid ""
+"It's easy to extend and change Moose, and this is part of what makes Moose "
+"so powerful. You can use the MOP API to do things your own way, add new "
+"features, and generally customize your Moose."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:23
+msgid ""
+"Writing your own extensions does require a good understanding of the "
+"meta-model. You can start learning about this with the L<Moose::Manual::MOP> "
+"docs. There are also several extension recipes in the L<Moose::Cookbook>."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:28
+msgid ""
+"Explaining how to write extensions is beyond the scope of this "
+"manual. Fortunately, lots of people have already written extensions and put "
+"them on CPAN for you."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:32
+msgid "This document covers a few of the ones we like best."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:34
+msgid "L<MooseX::AttributeHelpers>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:36
+msgid ""
+"The functionality of this MooseX module has been moved into Moose core.  See "
+"L<Moose::Meta::Attribute::Native>."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:39
+msgid "L<Moose::Autobox>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:41
+msgid ""
+"MooseX::AttributeHelpers, but turned inside out, Moose::Autobox provides "
+"methods on both arrays/hashes/etc. but also references to them, using Moose "
+"roles, allowing you do to things like:"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:45
+#, no-wrap
+msgid ""
+"  use Moose::Autobox;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:47
+#, no-wrap
+msgid ""
+"  $somebody_elses_object->orders->push($order);\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:49
+msgid ""
+"Lexically scoped and not to everybody's taste, but very handy for sugaring "
+"up other people's APIs and your own code."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:52
+msgid "L<MooseX::StrictConstructor>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:54
+msgid ""
+"By default, Moose lets you pass any old junk into a class's constructor. If "
+"you load L<MooseX::StrictConstructor>, your class will throw an error if it "
+"sees something it doesn't recognize;"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:58 MooseX.pod:85 MooseX.pod:214
+#, no-wrap
+msgid ""
+"  package User;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:60
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  use MooseX::StrictConstructor;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:63
+#, no-wrap
+msgid ""
+"  has 'name';\n"
+"  has 'email';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:66
+#, no-wrap
+msgid ""
+"  User->new( name => 'Bob', emali => 'bob@example.com' );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:68
+msgid ""
+"With L<MooseX::StrictConstructor>, that typo (\"emali\") will cause a "
+"runtime error. With plain old Moose, the \"emali\" attribute would be "
+"silently ignored."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:72
+msgid "L<MooseX::Params::Validate>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:74
+msgid ""
+"We have high hopes for the future of L<MooseX::Method::Signatures> and "
+"L<MooseX::Declare>. However, these modules, while used regularly in "
+"production by some of the more insane members of the community, are still "
+"marked alpha just in case backwards incompatible changes need to be made."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:80
+msgid ""
+"If you don't want to risk that, for now we recommend the decidedly more "
+"clunky (but also faster and simpler) L<MooseX::Params::Validate>. This "
+"module lets you apply Moose types and coercions to any method arguments."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:87
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  use MooseX::Params::Validate;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:90
+#, no-wrap
+msgid ""
+"  sub login {\n"
+"      my $self = shift;\n"
+"      my ($password)\n"
+"          = validated_list( \\@_, password => { isa => 'Str', required => 1 "
+"} );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:95
+#, no-wrap
+msgid ""
+"      ...\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:98
+msgid "L<MooseX::Getopt>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:100
+msgid ""
+"This is a role which adds a C<new_with_options> method to your class. This "
+"is a constructor that takes the command line options and uses them to "
+"populate attributes."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:104
+msgid "This makes writing a command-line application as a module trivially simple:"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:107
+#, no-wrap
+msgid ""
+"  package App::Foo;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:109
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  with 'MooseX::Getopt';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:112
+#, no-wrap
+msgid ""
+"  has 'input' => (\n"
+"      is       => 'ro',\n"
+"      isa      => 'Str',\n"
+"      required => 1\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:118
+#, no-wrap
+msgid ""
+"  has 'output' => (\n"
+"      is       => 'ro',\n"
+"      isa      => 'Str',\n"
+"      required => 1\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:124
+#, no-wrap
+msgid ""
+"  sub run { ... }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:126
+msgid "Then in the script that gets run we have:"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:128
+#, no-wrap
+msgid ""
+"  use App::Foo;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:130
+#, no-wrap
+msgid ""
+"  App::Foo->new_with_options->run;\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:132
+msgid "From the command line, someone can execute the script:"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:134
+#, no-wrap
+msgid ""
+"  foo@example> foo --input /path/to/input --output /path/to/output\n"
+"\n"
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:136
+msgid "L<MooseX::Singleton>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:138
+msgid ""
+"To be honest, using a singleton is just a way to have a magic global "
+"variable in languages that don't actually have global variables."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:141
+msgid ""
+"In perl, you can just as easily use a global. However, if your colleagues "
+"are Java-infected, they might prefer a singleton. Also, if you have an "
+"existing class that I<isn't> a singleton but should be, using "
+"L<MooseX::Singleton> is the easiest way to convert it."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:146
+#, no-wrap
+msgid ""
+"  package Config;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:148
+#, no-wrap
+msgid ""
+"  use MooseX::Singleton; # instead of Moose\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:150
+#, no-wrap
+msgid ""
+"  has 'cache_dir' => ( ... );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:152
+msgid "It's that simple."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:154
+msgid "EXTENSIONS TO CONSIDER"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:156
+msgid ""
+"There are literally dozens of other extensions on CPAN. This is a list of "
+"extensions that you might find useful, but we're not quite ready to endorse "
+"just yet."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:160
+msgid "L<MooseX::Declare>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:162
+msgid ""
+"Extends Perl with Moose-based keywords using C<Devel::Declare>. Very cool, "
+"but still new and experimental."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:165
+#, no-wrap
+msgid ""
+"  class User {\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:167
+#, no-wrap
+msgid ""
+"      has 'name'  => ( ... );\n"
+"      has 'email' => ( ... );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:170
+#, no-wrap
+msgid ""
+"      method login (Str $password) { ... }\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:173
+msgid "L<MooseX::Types>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:175
+msgid ""
+"This extension helps you build a type library for your application. It also "
+"lets you predeclare type names and use them as barewords."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:178
+#, no-wrap
+msgid ""
+"  use MooseX::Types -declare => ['PositiveInt'];\n"
+"  use MooseX::Types::Moose 'Int';\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:181
+#, no-wrap
+msgid ""
+"  subtype PositiveInt,\n"
+"      as Int,\n"
+"      where { $_ > 0 },\n"
+"      message { \"Int is not larger than 0\" };\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:186
+msgid ""
+"One nice feature is that those bareword names are actually namespaced in "
+"Moose's type registry, so multiple applications can use the same bareword "
+"names, even if the type definitions differ."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:190
+msgid "L<MooseX::Types::Structured>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:192
+msgid ""
+"This extension builds on top of L<MooseX::Types> to let you declare complex "
+"data structure types."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:195
+#, no-wrap
+msgid ""
+"  use MooseX::Types -declare => [ qw( Name Color ) ];\n"
+"  use MooseX::Types::Moose qw(Str Int);\n"
+"  use MooseX::Types::Structured qw(Dict Tuple Optional);\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:199
+#, no-wrap
+msgid ""
+"  subtype Name\n"
+"      => as Dict[ first => Str, middle => Optional[Str], last => Str ];\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:202
+#, no-wrap
+msgid ""
+"  subtype Color\n"
+"      => as Tuple[ Int, Int, Int, Optional[Int] ];\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:205
+msgid ""
+"Of course, you could always use objects to represent these sorts of things "
+"too."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:208
+msgid "L<MooseX::ClassAttribute>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:210
+msgid ""
+"This extension provides class attributes for Moose classes. The declared "
+"class attributes are introspectable just like regular Moose attributes."
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:216
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"  use MooseX::ClassAttribute;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:219
+#, no-wrap
+msgid ""
+"  has 'name' => ( ... );\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:221
+#, no-wrap
+msgid ""
+"  class_has 'Cache' => ( ... );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:223
+msgid ""
+"Note however that this class attribute does I<not> inherit like a "
+"L<Class::Data::Inheritable> or similar attribute - calling"
+msgstr ""
+
+#. type: verbatim
+#: MooseX.pod:226
+#, no-wrap
+msgid ""
+"  $subclass->Cache($cache);\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:228
+msgid ""
+"will set it for the superclass as well. Additionally, class data is usually "
+"The Wrong Thing To Do in a strongly OO program since it makes testing a lot "
+"harder - consider carefully whether you'd be better off with an object "
+"that's passed around instead."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:233
+msgid "L<MooseX::Daemonize>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:235
+msgid ""
+"This is a role that provides a number of methods useful for creating a "
+"daemon, including methods for starting and stopping, managing a PID file, "
+"and signal handling."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:239
+msgid "L<MooseX::Role::Parameterized>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:241
+msgid ""
+"If you find yourself wanting a role that customizes itself for each "
+"consumer, this is the tool for you. With this module, you can create a role "
+"that accepts parameters and generates attributes, methods, etc. on a "
+"customized basis for each consumer."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:246
+msgid "L<MooseX::POE>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:248
+msgid ""
+"This is a small wrapper that ties together a Moose class with "
+"C<POE::Session>, and gives you an C<event> sugar function to declare event "
+"handlers."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:252
+msgid "L<MooseX::FollowPBP>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:254
+msgid ""
+"Automatically names all accessors I<Perl Best Practices>-style, \"get_size\" "
+"and \"set_size\"."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:257
+msgid "L<MooseX::SemiAffordanceAccessor>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:259
+msgid ""
+"Automatically names all accessors with an explicit set and implicit get, "
+"\"size\" and \"set_size\"."
+msgstr ""
+
+#. type: =head2
+#: MooseX.pod:262
+msgid "L<MooseX::NonMoose>"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:264
+msgid ""
+"MooseX::NonMoose allows for easily subclassing non-Moose classes with Moose, "
+"taking care of the annoying details connected with doing this, such as "
+"setting up proper inheritance from Moose::Object and installing (and "
+"inlining, at make_immutable time) a constructor that makes sure things like "
+"BUILD methods are called."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:270
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:272
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: MooseX.pod:274
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:276
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: MooseX.pod:278
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
