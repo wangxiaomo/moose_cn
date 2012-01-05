@@ -1,0 +1,416 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2012-01-05 17:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: =head1
+#: Delegation.pod:9
+msgid "NAME"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:11
+msgid "Moose::Manual::Delegation - Attribute delegation"
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:13
+msgid "VERSION"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:15
+msgid "version 2.0401"
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:17
+msgid "WHAT IS DELEGATION?"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:19
+msgid ""
+"Delegation is a feature that lets you create \"proxy\" methods that do "
+"nothing more than call some other method on an attribute. This lets you "
+"simplify a complex set of \"has-a\" relationships and present a single "
+"unified API from one class."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:24
+msgid ""
+"With delegation, consumers of a class don't need to know about all the "
+"objects it contains, reducing the amount of API they need to learn."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:27
+msgid ""
+"Delegations are defined as a mapping between one or more methods provided by "
+"the \"real\" class (the delegatee), and a set of corresponding methods in "
+"the delegating class. The delegating class can re-use the method names "
+"provided by the delegatee or provide its own names."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:33
+msgid ""
+"Delegation is also a great way to wrap an existing class, especially a "
+"non-Moose class or one that is somehow hard (or impossible) to subclass."
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:37
+msgid "DEFINING A MAPPING"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:39
+msgid ""
+"Moose offers a number of options for defining a delegation's mapping, "
+"ranging from simple to complex."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:42
+msgid "The simplest form is to simply specify a list of methods:"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:44 Delegation.pod:62
+#, no-wrap
+msgid ""
+"  package Website;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:46 Delegation.pod:64
+#, no-wrap
+msgid ""
+"  use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:48
+#, no-wrap
+msgid ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => [qw( host path )],\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:54
+msgid ""
+"With this definition, we can call C<< $website->host >> and it \"just "
+"works\". Under the hood, Moose will call C<< $website->uri->host >> for "
+"you. Note that C<$website> is not automatically passed to the C<host> "
+"method; the invocant is C<< $website->uri >>."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:59
+msgid ""
+"We can also define a mapping as a hash reference. This allows you to rename "
+"methods as part of the mapping:"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:66
+#, no-wrap
+msgid ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => {\n"
+"          hostname => 'host',\n"
+"          path     => 'path',\n"
+"      },\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:75
+msgid ""
+"In this example, we've created a C<< $website->hostname >> method, rather "
+"than using C<URI.pm>'s name, C<host>."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:78
+msgid ""
+"These two mapping forms are the ones you will use most often. The remaining "
+"methods are a bit more complex."
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:81
+#, no-wrap
+msgid ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => qr/^(?:host|path|query.*)/,\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:87
+msgid ""
+"This is similar to the array version, except it uses the regex to match "
+"against all the methods provided by the delegatee. In order for this to "
+"work, you must provide an C<isa> parameter for the attribute, and it must be "
+"a class. Moose uses this to introspect the delegatee class and determine "
+"what methods it provides."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:93
+msgid "You can use a role name as the value of C<handles>:"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:95
+#, no-wrap
+msgid ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => 'HasURI',\n"
+"  );\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:101
+msgid ""
+"Moose will introspect the role to determine what methods it provides and "
+"create a mapping for each of those methods."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:104
+msgid ""
+"Finally, you can also provide a sub reference to I<generate> a mapping. You "
+"probably won't need this version often (if ever). See the L<Moose> docs for "
+"more details on exactly how this works."
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:108
+msgid "NATIVE DELEGATION"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:110
+msgid ""
+"Native delegations allow you to delegate to standard Perl data structures as "
+"if they were objects."
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:113
+#, no-wrap
+msgid ""
+"  has 'queue' => (\n"
+"      traits  => ['Array'],\n"
+"      isa     => 'ArrayRef[Item]',\n"
+"      default => sub { [ ] },\n"
+"      handles => {\n"
+"          add_item  => 'push',\n"
+"          next_item => 'shift',\n"
+"      },\n"
+"  )\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:123
+msgid ""
+"The C<Array> trait in the C<traits> parameter tells Moose that you would "
+"like to use the set of Array helpers. Moose will then create C<add_item> and "
+"C<next_item> methods that \"just work\". Behind the scenes C<add_item> is "
+"something like"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:128
+#, no-wrap
+msgid ""
+"  sub add_item {\n"
+"      my ($self, @items) = @_;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:131
+#, no-wrap
+msgid ""
+"      for my $item (@items) {\n"
+"          $Item_TC->validate($item);\n"
+"      }\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:135
+#, no-wrap
+msgid ""
+"      push @{ $self->queue }, @items;\n"
+"  }\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:138
+msgid "Moose includes the following traits for native delegation:"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:142
+msgid "* L<Array|Moose::Meta::Attribute::Native::Trait::Array>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:144
+msgid "* L<Bool|Moose::Meta::Attribute::Native::Trait::Bool>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:146
+msgid "* L<Code|Moose::Meta::Attribute::Native::Trait::Code>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:148
+msgid "* L<Counter|Moose::Meta::Attribute::Native::Trait::Counter>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:150
+msgid "* L<Hash|Moose::Meta::Attribute::Native::Trait::Hash>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:152
+msgid "* L<Number|Moose::Meta::Attribute::Native::Trait::Number>"
+msgstr ""
+
+#. type: =item
+#: Delegation.pod:154
+msgid "* L<String|Moose::Meta::Attribute::Native::Trait::String>"
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:158
+msgid "CURRYING"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:160
+msgid ""
+"Currying allows you to create a method with some pre-set parameters. You can "
+"create a curried delegation method:"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:163
+#, no-wrap
+msgid ""
+"    package Spider;\n"
+"    use Moose;\n"
+"\n"
+msgstr ""
+
+#. type: verbatim
+#: Delegation.pod:166
+#, no-wrap
+msgid ""
+"    has request => (\n"
+"        is      => 'ro'\n"
+"        isa     => 'HTTP::Request',\n"
+"        handles => {\n"
+"            set_user_agent => [ header => 'UserAgent' ],\n"
+"        },\n"
+"    )\n"
+"\n"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:174
+msgid ""
+"With this definition, calling C<< $spider->set_user_agent('MyClient') >> "
+"will call C<< $spider->request->header('UserAgent', 'MyClient') >> behind "
+"the scenes."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:178
+msgid ""
+"Note that with currying, the currying always starts with the first parameter "
+"to a method (C<$_[0]>). Any arguments you pass to the delegation come after "
+"the curried arguments."
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:182
+msgid "MISSING ATTRIBUTES"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:184
+msgid ""
+"It is perfectly valid to delegate methods to an attribute which is not "
+"required or can be undefined. When a delegated method is called, Moose will "
+"throw a runtime error if the attribute does not contain an object."
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:189
+msgid "AUTHOR"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:191
+msgid ""
+"Moose is maintained by the Moose Cabal, along with the help of many "
+"contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
+msgstr ""
+
+#. type: =head1
+#: Delegation.pod:193
+msgid "COPYRIGHT AND LICENSE"
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:195
+msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
+msgstr ""
+
+#. type: textblock
+#: Delegation.pod:197
+msgid ""
+"This is free software; you can redistribute it and/or modify it under the "
+"same terms as the Perl 5 programming language system itself."
+msgstr ""
