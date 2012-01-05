@@ -515,11 +515,14 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      method login (Str $password) { ... }\n"
+"  }\n"
+"\n"
 
 #. type: =head2
 #: MooseX.pod:173
 msgid "L<MooseX::Types>"
-msgstr ""
+msgstr "L<MooseX::Types>"
 
 #. type: textblock
 #: MooseX.pod:175
@@ -527,6 +530,8 @@ msgid ""
 "This extension helps you build a type library for your application. It also "
 "lets you predeclare type names and use them as barewords."
 msgstr ""
+"这个模块可以帮助你为你的程序构建类型系统。它也可以让你预先声明类型的名称，"
+"并使用它们作为 barewords 。"
 
 #. type: verbatim
 #: MooseX.pod:178
@@ -536,6 +541,9 @@ msgid ""
 "  use MooseX::Types::Moose 'Int';\n"
 "\n"
 msgstr ""
+"  use MooseX::Types -declare => ['PositiveInt'];\n"
+"  use MooseX::Types::Moose 'Int';\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:181
@@ -547,6 +555,11 @@ msgid ""
 "      message { \"Int is not larger than 0\" };\n"
 "\n"
 msgstr ""
+"  subtype PositiveInt,\n"
+"      as Int,\n"
+"      where { $_ > 0 },\n"
+"      message { \"Int is not larger then 0\" };\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:186
@@ -555,11 +568,12 @@ msgid ""
 "Moose's type registry, so multiple applications can use the same bareword "
 "names, even if the type definitions differ."
 msgstr ""
+"TODO"
 
 #. type: =head2
 #: MooseX.pod:190
 msgid "L<MooseX::Types::Structured>"
-msgstr ""
+msgstr "L<MooseX::Types::Structured>"
 
 #. type: textblock
 #: MooseX.pod:192
