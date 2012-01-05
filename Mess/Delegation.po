@@ -19,27 +19,27 @@ msgstr ""
 #. type: =head1
 #: Delegation.pod:9
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. type: textblock
 #: Delegation.pod:11
 msgid "Moose::Manual::Delegation - Attribute delegation"
-msgstr ""
+msgstr "Moose::Manual::Delegation - Moose 属性委托"
 
 #. type: =head1
 #: Delegation.pod:13
 msgid "VERSION"
-msgstr ""
+msgstr "VERSION"
 
 #. type: textblock
 #: Delegation.pod:15
 msgid "version 2.0401"
-msgstr ""
+msgstr "version 2.0401"
 
 #. type: =head1
 #: Delegation.pod:17
 msgid "WHAT IS DELEGATION?"
-msgstr ""
+msgstr "什么是属性委托？"
 
 #. type: textblock
 #: Delegation.pod:19
@@ -49,6 +49,8 @@ msgid ""
 "simplify a complex set of \"has-a\" relationships and present a single "
 "unified API from one class."
 msgstr ""
+"属性委托是 Moose 的一大特性，它可以让你通过\"中介\"的方式来操作属性，这将"
+"简化你之后大量的工作。"
 
 #. type: textblock
 #: Delegation.pod:24
@@ -56,6 +58,8 @@ msgid ""
 "With delegation, consumers of a class don't need to know about all the "
 "objects it contains, reducing the amount of API they need to learn."
 msgstr ""
+"通过这一特性，你将不需要过多的知道关于类的细节，也减少了需要学习的 API 的"
+"数量，这在一定程度上，降低了开发的成本。"
 
 #. type: textblock
 #: Delegation.pod:27
@@ -65,6 +69,7 @@ msgid ""
 "the delegating class. The delegating class can re-use the method names "
 "provided by the delegatee or provide its own names."
 msgstr ""
+"委托是为多个方法定义的一个映射，是从真实存在的方法到委托方法的映射。"
 
 #. type: textblock
 #: Delegation.pod:33
@@ -72,23 +77,25 @@ msgid ""
 "Delegation is also a great way to wrap an existing class, especially a "
 "non-Moose class or one that is somehow hard (or impossible) to subclass."
 msgstr ""
+"委托也是一种很重要的方式去封装一个类，特别是一个非 Moose 类，或者是一个难以"
+"继承的类。"
 
 #. type: =head1
 #: Delegation.pod:37
 msgid "DEFINING A MAPPING"
-msgstr ""
+msgstr "定义一个映射"
 
 #. type: textblock
 #: Delegation.pod:39
 msgid ""
 "Moose offers a number of options for defining a delegation's mapping, "
 "ranging from simple to complex."
-msgstr ""
+msgstr "Moose 提供了一系列从简单到复杂的方法来定义委托。"
 
 #. type: textblock
 #: Delegation.pod:42
 msgid "The simplest form is to simply specify a list of methods:"
-msgstr ""
+msgstr "最简单的方式就是显示的列出所要委托的方法："
 
 #. type: verbatim
 #: Delegation.pod:44 Delegation.pod:62
@@ -97,6 +104,8 @@ msgid ""
 "  package Website;\n"
 "\n"
 msgstr ""
+"  package Website;\n"
+"\n"
 
 #. type: verbatim
 #: Delegation.pod:46 Delegation.pod:64
@@ -105,6 +114,8 @@ msgid ""
 "  use Moose;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: Delegation.pod:48
@@ -117,6 +128,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => [qw( host path )],\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:54
@@ -126,6 +143,8 @@ msgid ""
 "you. Note that C<$website> is not automatically passed to the C<host> "
 "method; the invocant is C<< $website->uri >>."
 msgstr ""
+"通过这个定义，我们便可以成功调用 C<< $website->host >>，而实际上，却是在调用"
+"C<< $website->uri->host >>。"
 
 #. type: textblock
 #: Delegation.pod:59
@@ -133,6 +152,7 @@ msgid ""
 "We can also define a mapping as a hash reference. This allows you to rename "
 "methods as part of the mapping:"
 msgstr ""
+"我们也可以定义一个映射到哈希引用，这允许你为某些方法加上别名。"
 
 #. type: verbatim
 #: Delegation.pod:66
@@ -148,6 +168,15 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => {\n"
+"          hostname => 'host',\n"
+"          path     => 'path',\n"
+"      },\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:75
@@ -155,6 +184,8 @@ msgid ""
 "In this example, we've created a C<< $website->hostname >> method, rather "
 "than using C<URI.pm>'s name, C<host>."
 msgstr ""
+"在这个例子中，我们创建了 C<< $website->hostname >> 方法，而不是用 C<URI.pm>"
+"模块中的 C<host>。"
 
 #. type: textblock
 #: Delegation.pod:78
@@ -162,6 +193,7 @@ msgid ""
 "These two mapping forms are the ones you will use most often. The remaining "
 "methods are a bit more complex."
 msgstr ""
+"这两种委托形式你以后将经常用到。剩下的方式会有些复杂。"
 
 #. type: verbatim
 #: Delegation.pod:81
@@ -174,6 +206,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => qr/^(?:host|path|query.*/,\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:87
@@ -184,11 +222,14 @@ msgid ""
 "a class. Moose uses this to introspect the delegatee class and determine "
 "what methods it provides."
 msgstr ""
+"这和列表方式定义委托类似，只不过这里用正则表达式来匹配相应的方法。为了使它正确"
+"运行，你必须通过 C<isa> 参数来指明属性类型，之后，Moose 会通过内部的自省机制来"
+"找到相应的方法。"
 
 #. type: textblock
 #: Delegation.pod:93
 msgid "You can use a role name as the value of C<handles>:"
-msgstr ""
+msgstr "你也可以用一个角色名当作 C<handles> 的结果："
 
 #. type: verbatim
 #: Delegation.pod:95
@@ -201,6 +242,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'uri' => (\n"
+"      is      => 'ro',\n"
+"      isa     => 'URI',\n"
+"      handles => 'HasURI',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:101
@@ -208,6 +255,7 @@ msgid ""
 "Moose will introspect the role to determine what methods it provides and "
 "create a mapping for each of those methods."
 msgstr ""
+"Moose 会根据你所提供的角色来决定调用哪个方法。"
 
 #. type: textblock
 #: Delegation.pod:104
@@ -216,11 +264,13 @@ msgid ""
 "probably won't need this version often (if ever). See the L<Moose> docs for "
 "more details on exactly how this works."
 msgstr ""
+"当然，你也可以通过提供一个函数引用来I<生成>相应的映射。查阅 L<Moose> 来得到"
+"更多的信息。"
 
 #. type: =head1
 #: Delegation.pod:108
 msgid "NATIVE DELEGATION"
-msgstr ""
+msgstr "本地委托"
 
 #. type: textblock
 #: Delegation.pod:110
@@ -228,6 +278,7 @@ msgid ""
 "Native delegations allow you to delegate to standard Perl data structures as "
 "if they were objects."
 msgstr ""
+"本地委托允许你委托一些标准的 Perl 数据结构。"
 
 #. type: verbatim
 #: Delegation.pod:113
@@ -244,6 +295,16 @@ msgid ""
 "  )\n"
 "\n"
 msgstr ""
+"  has 'queue' => (\n"
+"      traits  => ['Array'],\n"
+"      isa     => 'ArrayRef[Item]',\n"
+"      default => sub { [ ] },\n"
+"      handles => {\n"
+"          add_item  => 'push',\n"
+"          next_item => 'shift',\n"
+"      },\n"
+"  )\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:123
@@ -253,6 +314,8 @@ msgid ""
 "C<next_item> methods that \"just work\". Behind the scenes C<add_item> is "
 "something like"
 msgstr ""
+"C<traits> 里的 C<Array> 表明你想要 Moose 为你设置数组的 helper。Moose 将会为你"
+"创建 C<add_item> 和 C<next_item> 方法来保证\"正常的工作\"。内部的实现如下："
 
 #. type: verbatim
 #: Delegation.pod:128
@@ -262,6 +325,9 @@ msgid ""
 "      my ($self, @items) = @_;\n"
 "\n"
 msgstr ""
+"  sub add_item {\n"
+"      my ($self, @items) = @_;\n"
+"\n"
 
 #. type: verbatim
 #: Delegation.pod:131
@@ -272,6 +338,10 @@ msgid ""
 "      }\n"
 "\n"
 msgstr ""
+"      for my $item (@items) {\n"
+"          $Item_TC->validate($item);\n"
+"      }\n"
+"\n"
 
 #. type: verbatim
 #: Delegation.pod:135
@@ -281,58 +351,61 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      push @{ $self->queue }, @items;\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:138
 msgid "Moose includes the following traits for native delegation:"
-msgstr ""
+msgstr "Moose 将为本地委托包含如下的 traits："
 
 #. type: =item
 #: Delegation.pod:142
 msgid "* L<Array|Moose::Meta::Attribute::Native::Trait::Array>"
-msgstr ""
+msgstr "* L<Array|Moose::Meta::Attribute::Native::Trait::Array>"
 
 #. type: =item
 #: Delegation.pod:144
 msgid "* L<Bool|Moose::Meta::Attribute::Native::Trait::Bool>"
-msgstr ""
+msgstr "* L<Bool|Moose::Meta::Attribute::Native::Trait::Bool>"
 
 #. type: =item
 #: Delegation.pod:146
 msgid "* L<Code|Moose::Meta::Attribute::Native::Trait::Code>"
-msgstr ""
+msgstr "* L<Code|Moose::Meta::Attribute::Native::Trait::Code>"
 
 #. type: =item
 #: Delegation.pod:148
 msgid "* L<Counter|Moose::Meta::Attribute::Native::Trait::Counter>"
-msgstr ""
+msgstr "* L<Counter|Moose::Meta::Attribute::Native::Trait::Counter>"
 
 #. type: =item
 #: Delegation.pod:150
 msgid "* L<Hash|Moose::Meta::Attribute::Native::Trait::Hash>"
-msgstr ""
+msgstr "* L<Hash|Moose::Meta::Attribute::Native::Trait::Hash>"
 
 #. type: =item
 #: Delegation.pod:152
 msgid "* L<Number|Moose::Meta::Attribute::Native::Trait::Number>"
-msgstr ""
+msgstr "* L<Number|Moose::Meta::Attribute::Native::Trait::Number>"
 
 #. type: =item
 #: Delegation.pod:154
 msgid "* L<String|Moose::Meta::Attribute::Native::Trait::String>"
-msgstr ""
+msgstr "* L<String|Moose::Meta::Attribute::Native::Trait::String>"
 
 #. type: =head1
 #: Delegation.pod:158
 msgid "CURRYING"
-msgstr ""
+msgstr "局部套用"
 
 #. type: textblock
 #: Delegation.pod:160
 msgid ""
 "Currying allows you to create a method with some pre-set parameters. You can "
 "create a curried delegation method:"
-msgstr ""
+msgstr "局部套用允许你创建一个预设参数的方法。创建方法如下："
 
 #. type: verbatim
 #: Delegation.pod:163
@@ -342,6 +415,9 @@ msgid ""
 "    use Moose;\n"
 "\n"
 msgstr ""
+"    package Spider;\n"
+"    use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: Delegation.pod:166
@@ -356,6 +432,14 @@ msgid ""
 "    )\n"
 "\n"
 msgstr ""
+"   has request => (\n"
+"       is      => 'ro',\n"
+"       isa     => 'HTTP::Request',\n"
+"       handles => {\n"
+"           set_user_agent => [ header => 'UserAgent' ],\n"
+"       },\n"
+"   )\n"
+"\n"
 
 #. type: textblock
 #: Delegation.pod:174
@@ -364,6 +448,8 @@ msgid ""
 "will call C<< $spider->request->header('UserAgent', 'MyClient') >> behind "
 "the scenes."
 msgstr ""
+"通过如此定义，调用 C<< $spider->set_user_agent('MyClient') >> 将会调用"
+"C<< $spider->request->header('UserAgent', 'MyClient') >>。"
 
 #. type: textblock
 #: Delegation.pod:178
@@ -372,11 +458,12 @@ msgid ""
 "to a method (C<$_[0]>). Any arguments you pass to the delegation come after "
 "the curried arguments."
 msgstr ""
+"局部套用将传递 C<$_[0]> 作为第一个参数，传递给委托的参数将是局部套用的参数。"
 
 #. type: =head1
 #: Delegation.pod:182
 msgid "MISSING ATTRIBUTES"
-msgstr ""
+msgstr "缺失相应委托"
 
 #. type: textblock
 #: Delegation.pod:184
@@ -384,12 +471,12 @@ msgid ""
 "It is perfectly valid to delegate methods to an attribute which is not "
 "required or can be undefined. When a delegated method is called, Moose will "
 "throw a runtime error if the attribute does not contain an object."
-msgstr ""
+msgstr "如果调用一个不存在的委托，Moose 将会抛出异常。"
 
 #. type: =head1
 #: Delegation.pod:189
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: Delegation.pod:191
@@ -397,16 +484,19 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请查看 L<Moose/CABAL> 和"
+"L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: Delegation.pod:193
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: Delegation.pod:195
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: Delegation.pod:197
@@ -414,3 +504,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"

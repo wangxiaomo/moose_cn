@@ -19,27 +19,27 @@ msgstr ""
 #. type: =head1
 #: MooseX.pod:9
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. type: textblock
 #: MooseX.pod:11
 msgid "Moose::Manual::MooseX - Recommended Moose extensions"
-msgstr ""
+msgstr "Moose::Manual::MooseX - Moose 推荐拓展"
 
 #. type: =head1
 #: MooseX.pod:13
 msgid "VERSION"
-msgstr ""
+msgstr "VERSION"
 
 #. type: textblock
 #: MooseX.pod:15
 msgid "version 2.0401"
-msgstr ""
+msgstr "version 2.0401"
 
 #. type: =head1
 #: MooseX.pod:17
 msgid "MooseX?"
-msgstr ""
+msgstr "Moose 拓展？"
 
 #. type: textblock
 #: MooseX.pod:19
@@ -48,6 +48,8 @@ msgid ""
 "so powerful. You can use the MOP API to do things your own way, add new "
 "features, and generally customize your Moose."
 msgstr ""
+"拓展 Moose 是很容易的，而这也是使得 Moose 如此强大的原因。你可以通过 MOP API "
+"来添加新功能，或是定制 Moose。"
 
 #. type: textblock
 #: MooseX.pod:23
@@ -56,6 +58,8 @@ msgid ""
 "meta-model. You can start learning about this with the L<Moose::Manual::MOP> "
 "docs. There are also several extension recipes in the L<Moose::Cookbook>."
 msgstr ""
+"编写拓展需要对 meta-model 有很好的理解，你可以通过 L<Moose::Manual::Mop> 来了解 "
+"meta-model，在 L<Moose::Cookbook> 中你可以看到一些关于拓展的例子。"
 
 #. type: textblock
 #: MooseX.pod:28
@@ -64,16 +68,18 @@ msgid ""
 "manual. Fortunately, lots of people have already written extensions and put "
 "them on CPAN for you."
 msgstr ""
+"解释如何编写拓展这已经超出了本文档的内容。幸运的是，已经有很多人写了很多模块放在 "
+"CPAN 上来帮助我们拓展 Moose。"
 
 #. type: textblock
 #: MooseX.pod:32
 msgid "This document covers a few of the ones we like best."
-msgstr ""
+msgstr "这篇文档包含几个我们经常使用的模块。"
 
 #. type: =head1
 #: MooseX.pod:34
 msgid "L<MooseX::AttributeHelpers>"
-msgstr ""
+msgstr "L<MooseX::AttributeHelpers>"
 
 #. type: textblock
 #: MooseX.pod:36
@@ -81,11 +87,12 @@ msgid ""
 "The functionality of this MooseX module has been moved into Moose core.  See "
 "L<Moose::Meta::Attribute::Native>."
 msgstr ""
+"此模块功能已经包含在 Moose core 中，具体请参看 L<Moose::Meta::Attribute::Native>。"
 
 #. type: =head1
 #: MooseX.pod:39
 msgid "L<Moose::Autobox>"
-msgstr ""
+msgstr "L<Moose::Autobox>"
 
 #. type: textblock
 #: MooseX.pod:41
@@ -102,6 +109,8 @@ msgid ""
 "  use Moose::Autobox;\n"
 "\n"
 msgstr ""
+"  use Moose::Autobox;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:47
@@ -110,6 +119,8 @@ msgid ""
 "  $somebody_elses_object->orders->push($order);\n"
 "\n"
 msgstr ""
+"  $somebody_elses_object->orders->push($order);\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:49
@@ -117,11 +128,13 @@ msgid ""
 "Lexically scoped and not to everybody's taste, but very handy for sugaring "
 "up other people's APIs and your own code."
 msgstr ""
+"也许并不是所有的人都喜欢这个模块，但是这个模块提供了大量的语法糖，对于那些"
+"使用 API 来拓展的人来说是非常方便的。"
 
 #. type: =head1
 #: MooseX.pod:52
 msgid "L<MooseX::StrictConstructor>"
-msgstr ""
+msgstr "L<MooseX::StrictConstructor>"
 
 #. type: textblock
 #: MooseX.pod:54
@@ -130,6 +143,9 @@ msgid ""
 "you load L<MooseX::StrictConstructor>, your class will throw an error if it "
 "sees something it doesn't recognize;"
 msgstr ""
+"默认情况下，Moose 允许你添加代码到类的构造函数中。如果你加载了 "
+"L<MooseX::StrictConstructor> 模块话，只要有 Moose 无法识别的代码，Moose 就会"
+"抛出异常。"
 
 #. type: verbatim
 #: MooseX.pod:58 MooseX.pod:85 MooseX.pod:214
@@ -138,6 +154,8 @@ msgid ""
 "  package User;\n"
 "\n"
 msgstr ""
+"  package User;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:60
@@ -147,6 +165,9 @@ msgid ""
 "  use MooseX::StrictConstructor;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  use MooseX::StrictConstructor;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:63
@@ -156,14 +177,19 @@ msgid ""
 "  has 'email';\n"
 "\n"
 msgstr ""
+"  has 'name';\n"
+"  has 'email';\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:66
 #, no-wrap
 msgid ""
-"  User->new( name => 'Bob', emali => 'bob@example.com' );\n"
+"  User->new( name => 'Bob', email => 'bob@example.com' );\n"
 "\n"
 msgstr ""
+"  User->new( name => 'Bob', email => 'bob@example.com' );\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:68
@@ -172,11 +198,13 @@ msgid ""
 "runtime error. With plain old Moose, the \"emali\" attribute would be "
 "silently ignored."
 msgstr ""
+"加载 L<MooseX::StrictConstructor> 后，错字（\"emali\"）将会引发异常，而"
+"默认情况下，这个错误是会被忽略的。"
 
 #. type: =head1
 #: MooseX.pod:72
 msgid "L<MooseX::Params::Validate>"
-msgstr ""
+msgstr "L<MooseX::Params::Validate>"
 
 #. type: textblock
 #: MooseX.pod:74
@@ -186,6 +214,8 @@ msgid ""
 "production by some of the more insane members of the community, are still "
 "marked alpha just in case backwards incompatible changes need to be made."
 msgstr ""
+"我们对 L<MooseX::Method::Signatures> 和 L<MooseX::Declare> 模块有很高的期望。"
+"然而在实际应用中仍然为测试版本。"
 
 #. type: textblock
 #: MooseX.pod:80
@@ -194,6 +224,9 @@ msgid ""
 "clunky (but also faster and simpler) L<MooseX::Params::Validate>. This "
 "module lets you apply Moose types and coercions to any method arguments."
 msgstr ""
+"如果你不愿意为此冒险，我们推荐你使用略显笨重（但是更快、更简单）的 "
+"L<MooseX::Params::Validate> 模块。这会让你使用 Moose 的类型和类型约束来进行"
+"参数检验。"
 
 #. type: verbatim
 #: MooseX.pod:87
@@ -203,6 +236,9 @@ msgid ""
 "  use MooseX::Params::Validate;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  use MooseX::Params::Validate;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:90
@@ -215,6 +251,12 @@ msgid ""
 "} );\n"
 "\n"
 msgstr ""
+"  sub login {\n"
+"      my $self = shift;\n"
+"      my ($password)\n"
+"          = validated_list( \\@_, password => { isa => 'Str', required => 1 "
+"} );\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:95
@@ -224,11 +266,14 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      ...\n"
+"  }\n"
+"\n"
 
 #. type: =head1
 #: MooseX.pod:98
 msgid "L<MooseX::Getopt>"
-msgstr ""
+msgstr "L<MooseX::Getopt>"
 
 #. type: textblock
 #: MooseX.pod:100
@@ -237,11 +282,13 @@ msgid ""
 "is a constructor that takes the command line options and uses them to "
 "populate attributes."
 msgstr ""
+"这个模块是一个在类中添加 C<new_with_options> 方法的角色。这个方法用命令行参数"
+"来构造。"
 
 #. type: textblock
 #: MooseX.pod:104
 msgid "This makes writing a command-line application as a module trivially simple:"
-msgstr ""
+msgstr "这使得你编写一个基于命令行的程序变的非常的简单："
 
 #. type: verbatim
 #: MooseX.pod:107
@@ -250,6 +297,8 @@ msgid ""
 "  package App::Foo;\n"
 "\n"
 msgstr ""
+"  package App::Foo;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:109
@@ -259,6 +308,9 @@ msgid ""
 "  with 'MooseX::Getopt';\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  with 'MooseX::Getopt';\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:112
@@ -271,6 +323,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'input' => (\n"
+"      is       => 'ro',\n"
+"      isa      => 'Str',\n"
+"      required => 1\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:118
@@ -283,6 +341,12 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'output' => (\n"
+"      is       => 'ro',\n"
+"      isa      => 'Str',\n"
+"      required => 1\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:124
@@ -291,11 +355,13 @@ msgid ""
 "  sub run { ... }\n"
 "\n"
 msgstr ""
+"  sub run { ... }\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:126
 msgid "Then in the script that gets run we have:"
-msgstr ""
+msgstr "在脚本中我们写如下代码："
 
 #. type: verbatim
 #: MooseX.pod:128
@@ -304,6 +370,8 @@ msgid ""
 "  use App::Foo;\n"
 "\n"
 msgstr ""
+"  use App::Foo;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:130
@@ -312,11 +380,13 @@ msgid ""
 "  App::Foo->new_with_options->run;\n"
 "\n"
 msgstr ""
+"  App::Foo->new_with_options->run;\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:132
 msgid "From the command line, someone can execute the script:"
-msgstr ""
+msgstr "在命令行下，我们可以这样运行脚本："
 
 #. type: verbatim
 #: MooseX.pod:134
@@ -325,11 +395,13 @@ msgid ""
 "  foo@example> foo --input /path/to/input --output /path/to/output\n"
 "\n"
 msgstr ""
+"  foo@example> foo --input /path/to/input --output /path/to/output\n"
+"\n"
 
 #. type: =head1
 #: MooseX.pod:136
 msgid "L<MooseX::Singleton>"
-msgstr ""
+msgstr "L<MooseX::Singleton>"
 
 #. type: textblock
 #: MooseX.pod:138
@@ -337,6 +409,7 @@ msgid ""
 "To be honest, using a singleton is just a way to have a magic global "
 "variable in languages that don't actually have global variables."
 msgstr ""
+"老实说，单态是在不方便设置全局变量的语言中使用的一种技巧。"
 
 #. type: textblock
 #: MooseX.pod:141
@@ -346,6 +419,8 @@ msgid ""
 "existing class that I<isn't> a singleton but should be, using "
 "L<MooseX::Singleton> is the easiest way to convert it."
 msgstr ""
+"在 Perl 中，你可以很方便的使用全局变量。另外，你也可以通过 "
+"L<MooseX::Singleton> 来定义单态。"
 
 #. type: verbatim
 #: MooseX.pod:146
@@ -354,6 +429,8 @@ msgid ""
 "  package Config;\n"
 "\n"
 msgstr ""
+"  package Config;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:148
@@ -362,6 +439,8 @@ msgid ""
 "  use MooseX::Singleton; # instead of Moose\n"
 "\n"
 msgstr ""
+"  use MooseX::Singleton; # instead of Moose\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:150
@@ -370,16 +449,18 @@ msgid ""
 "  has 'cache_dir' => ( ... );\n"
 "\n"
 msgstr ""
+"  has 'cache_dir' => ( ... );\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:152
 msgid "It's that simple."
-msgstr ""
+msgstr "就是那么简单。"
 
 #. type: =head1
 #: MooseX.pod:154
 msgid "EXTENSIONS TO CONSIDER"
-msgstr ""
+msgstr "可供考虑的拓展"
 
 #. type: textblock
 #: MooseX.pod:156
@@ -388,11 +469,13 @@ msgid ""
 "extensions that you might find useful, but we're not quite ready to endorse "
 "just yet."
 msgstr ""
+"在 CPAN 上有很多关于 Moose 的拓展。之后我们会大概介绍一些模块，但是使用与否"
+"需要慎重考虑。"
 
 #. type: =head2
 #: MooseX.pod:160
 msgid "L<MooseX::Declare>"
-msgstr ""
+msgstr "L<MooseX::Declare>"
 
 #. type: textblock
 #: MooseX.pod:162
@@ -400,6 +483,7 @@ msgid ""
 "Extends Perl with Moose-based keywords using C<Devel::Declare>. Very cool, "
 "but still new and experimental."
 msgstr ""
+"基于 Perl 中的 C<Devel::Declare> 模块，非常酷，但是还在实验阶段。"
 
 #. type: verbatim
 #: MooseX.pod:165
@@ -408,6 +492,8 @@ msgid ""
 "  class User {\n"
 "\n"
 msgstr ""
+"  class User {\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:167
@@ -417,6 +503,9 @@ msgid ""
 "      has 'email' => ( ... );\n"
 "\n"
 msgstr ""
+"      has 'name'  => ( ... );\n"
+"      has 'email' => ( ... );\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:170
