@@ -19,29 +19,29 @@ msgstr ""
 #. type: =head1
 #: Roles.pod:9
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. type: textblock
 #: Roles.pod:11
 msgid ""
 "Moose::Manual::Roles - Roles, an alternative to deep hierarchies and base "
 "classes"
-msgstr ""
+msgstr "Moose::Manual::Roles - Roles，基类与深层次结构的替代"
 
 #. type: =head1
 #: Roles.pod:13
 msgid "VERSION"
-msgstr ""
+msgstr "VERSION"
 
 #. type: textblock
 #: Roles.pod:15
 msgid "version 2.0401"
-msgstr ""
+msgstr "version 2.0401"
 
 #. type: =head1
 #: Roles.pod:17
 msgid "WHAT IS A ROLE?"
-msgstr ""
+msgstr "什么是角色？"
 
 #. type: textblock
 #: Roles.pod:19
@@ -52,6 +52,8 @@ msgid ""
 "and a role cannot be instantiated. We sometimes say that roles are "
 "I<consumed>, either by classes or other roles."
 msgstr ""
+"角色封装了一些可以在类之间共享的东西。角色不是类，因此你不能继承一个角色，"
+"或者说角色不能被继承。我们经常说，角色是被类或其他角色所消耗的。"
 
 #. type: textblock
 #: Roles.pod:25
@@ -63,11 +65,14 @@ msgid ""
 "defined in the class itself. A subclass of the consuming class will inherit "
 "all of these methods and attributes."
 msgstr ""
+"角色是类的I<组成>。在实际应用中，所有在角色中定义的属性、方法、方法修饰符等内容"
+"会被直接添加到消耗该角色的类中。继承该类的类也会同样的消耗该角色，具有该角色的"
+"相应内容。"
 
 #. type: textblock
 #: Roles.pod:32
 msgid "Moose roles are similar to mixins or interfaces in other languages."
-msgstr ""
+msgstr "Moose 中的角色有点类似其他面向对象语言中的接口这个概念。"
 
 #. type: textblock
 #: Roles.pod:34
@@ -77,6 +82,9 @@ msgid ""
 "role that consisted only of a list of required methods, in which case the "
 "role would be very much like a Java interface."
 msgstr ""
+"除了定义自己的方法和属性，角色也可以要求消耗该角色的类所必须重载的方法。你可以"
+"有一个角色，里面包含一些所必须的方法，然后让消耗它的类去重载定义，类似 Java 的"
+"interface 一样。"
 
 #. type: textblock
 #: Roles.pod:40
@@ -88,12 +96,12 @@ msgstr ""
 #. type: =head1
 #: Roles.pod:43
 msgid "A SIMPLE ROLE"
-msgstr ""
+msgstr "一个简单的角色"
 
 #. type: textblock
 #: Roles.pod:45
 msgid "Creating a role looks a lot like creating a Moose class:"
-msgstr ""
+msgstr "创建角色和创建一个 Moose 类很像："
 
 #. type: verbatim
 #: Roles.pod:47 Roles.pod:122 Roles.pod:191 Roles.pod:311
@@ -102,6 +110,8 @@ msgid ""
 "  package Breakable;\n"
 "\n"
 msgstr ""
+"  package Breakable;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:49 Roles.pod:124 Roles.pod:193 Roles.pod:261 Roles.pod:313
@@ -110,6 +120,8 @@ msgid ""
 "  use Moose::Role;\n"
 "\n"
 msgstr ""
+"  use Moose::Role;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:51 Roles.pod:128
@@ -121,6 +133,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'is_broken' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Bool',\n"
+"  );\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:56 Roles.pod:158
@@ -130,6 +147,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  sub break {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:59
@@ -138,6 +158,8 @@ msgid ""
 "      print \"I broke\\n\";\n"
 "\n"
 msgstr ""
+"      print \"I broke\\n\";\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:61
@@ -147,6 +169,9 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      $self->is_broken(1);\n"
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:64
@@ -155,6 +180,8 @@ msgid ""
 "definition with Moose. However, this is not a class, and it cannot be "
 "instantiated."
 msgstr ""
+"除了对 L<Moose::Role> 的使用，其他的代码基本上和定义 Moose 类一样。然而，"
+"它却不是一个类，而且不能被实例化。"
 
 #. type: textblock
 #: Roles.pod:68
@@ -162,6 +189,7 @@ msgid ""
 "Instead, its attributes and methods will be composed into classes which use "
 "the role:"
 msgstr ""
+"角色中的属性和方法会作为消耗该角色的类中的组成存在。"
 
 #. type: verbatim
 #: Roles.pod:71 Roles.pod:197
@@ -170,6 +198,8 @@ msgid ""
 "  package Car;\n"
 "\n"
 msgstr ""
+"  package Car;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:73 Roles.pod:104 Roles.pod:149 Roles.pod:199 Roles.pod:221 Roles.pod:251 Roles.pod:272
@@ -178,6 +208,8 @@ msgid ""
 "  use Moose;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:75 Roles.pod:106 Roles.pod:151 Roles.pod:206
@@ -186,6 +218,8 @@ msgid ""
 "  with 'Breakable';\n"
 "\n"
 msgstr ""
+"  with 'Breakable';\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:77 Roles.pod:153
@@ -197,6 +231,11 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'engine' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Engine',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:82
@@ -205,6 +244,8 @@ msgid ""
 "C<Car> class has an C<is_broken> attribute and a C<break> method. The C<Car> "
 "class also C<does('Breakable')>:"
 msgstr ""
+"C<with> 函数会声明该类消耗某角色。在这之后，C<Car> 类中就有了 C<is_broken> 属性"
+"和 C<break> 方法，这个类也可以执行 C<does('Breakable')>："
 
 #. type: verbatim
 #: Roles.pod:86
@@ -213,6 +254,8 @@ msgid ""
 "  my $car = Car->new( engine => Engine->new );\n"
 "\n"
 msgstr ""
+"  my $car = Car->new( engine => Engine->new );\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:88
@@ -223,6 +266,10 @@ msgid ""
 "  print $car->is_broken ? 'Busted' : 'Still working';\n"
 "\n"
 msgstr ""
+"  print $car->is_broken ? 'Busted' : 'Still working';\n"
+"  $car->break;\n"
+"  print $car->is_broken ? 'Busted' : 'Still working';\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:92
@@ -231,11 +278,13 @@ msgid ""
 "  $car->does('Breakable'); # true\n"
 "\n"
 msgstr ""
+"  $car->does('Breakable'); # true\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:94
 msgid "This prints:"
-msgstr ""
+msgstr "这段代码会输出："
 
 #. type: verbatim
 #: Roles.pod:96
@@ -246,11 +295,15 @@ msgid ""
 "  Busted\n"
 "\n"
 msgstr ""
+"  Still working\n"
+"  I broke\n"
+"  Busted\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:100
 msgid "We could use this same role in a C<Bone> class:"
-msgstr ""
+msgstr "我们也可以在 C<Bone> 类中消耗该角色。"
 
 #. type: verbatim
 #: Roles.pod:102
@@ -259,6 +312,8 @@ msgid ""
 "  package Bone;\n"
 "\n"
 msgstr ""
+"  package Bone;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:108
@@ -270,16 +325,21 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'marrow' => (\n"
+"      is  => 'ro',\n"
+"      isa => 'Marrow',\n"
+"  );\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:113
 msgid "See also L<Moose::Cookbook::Roles::Recipe1> for an example."
-msgstr ""
+msgstr "你也可以在 L<Moose::Cookbook::Roles::Recipe1> 中查看更多的例子。"
 
 #. type: =head1
 #: Roles.pod:115
 msgid "REQUIRED METHODS"
-msgstr ""
+msgstr "使用角色定义必须的方法"
 
 #. type: textblock
 #: Roles.pod:117
@@ -288,6 +348,8 @@ msgid ""
 "one or more methods. Using our C<Breakable> example, let's make it require "
 "that consuming classes implement their own C<break> methods:"
 msgstr ""
+"正如前面提到的，角色可以定义消耗该角色的类中所必须的重载的方法。配合上面的代"
+"码，现在让我们定义一个必须重载的方法 C<break> ："
 
 #. type: verbatim
 #: Roles.pod:126
@@ -296,6 +358,7 @@ msgid ""
 "  requires 'break';\n"
 "\n"
 msgstr ""
+"  requires 'break';\n"
 
 #. type: verbatim
 #: Roles.pod:133
@@ -305,6 +368,9 @@ msgid ""
 "      my $self = shift;\n"
 "\n"
 msgstr ""
+"  after 'break' => sub {\n"
+"      my $self = shift;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:136
@@ -314,6 +380,9 @@ msgid ""
 "  };\n"
 "\n"
 msgstr ""
+"      $self->is_broken(1);\n"
+"  };\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:139
@@ -321,6 +390,7 @@ msgid ""
 "If we try to consume this role in a class that does not have a C<break> "
 "method, we will get an exception."
 msgstr ""
+"如果一个类消耗该角色，但是没有重载 C<break> 方法，我们就会得到一个异常。"
 
 #. type: textblock
 #: Roles.pod:142
@@ -330,6 +400,8 @@ msgid ""
 "make sure that the C<is_broken> attribute is always set to true when "
 "C<break> is called."
 msgstr ""
+"我们为 C<break> 方法添加了一个方法修饰符。这是因为我们希望消耗该角色的类"
+"重载的 C<break> 方法被调用时，确保 C<is_broken> 被设置为 true。"
 
 #. type: verbatim
 #: Roles.pod:147
@@ -338,6 +410,8 @@ msgid ""
 "  package Car\n"
 "\n"
 msgstr ""
+"  package Car\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:161
@@ -349,11 +423,16 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"      if ( $self->is_moving ) {\n"
+"          $self->stop;\n"
+"      }\n"
+"  }\n"
+"\n"
 
 #. type: =head2
 #: Roles.pod:166
 msgid "Roles Versus Abstract Base Classes"
-msgstr ""
+msgstr "角色与抽象类"
 
 #. type: textblock
 #: Roles.pod:168
@@ -361,6 +440,7 @@ msgid ""
 "If you are familiar with the concept of abstract base classes in other "
 "languages, you may be tempted to use roles in the same way."
 msgstr ""
+"如果你对其他语言中抽象类比较熟悉的话，你也可以类似的学习使用 Moose 中的角色。"
 
 #. type: textblock
 #: Roles.pod:171
@@ -368,6 +448,7 @@ msgid ""
 "You I<can> define an \"interface-only\" role, one that contains I<just> a "
 "list of required methods."
 msgstr ""
+"你I<可以>定义一个 \"interface-only\" 的角色，I<只>包含必须被重载的方法。"
 
 #. type: textblock
 #: Roles.pod:174
@@ -377,6 +458,8 @@ msgid ""
 "cannot delay the method requirement check so that they can be implemented by "
 "future subclasses."
 msgstr ""
+"消耗该角色的类必须定义角色中的所有方法，无论该方法是被重载所得或是从父类继承"
+"过来。"
 
 #. type: textblock
 #: Roles.pod:179
@@ -385,11 +468,12 @@ msgid ""
 "to the mix would not achieve anything. We recommend that you simply consume "
 "the interface role in each class which implements that interface."
 msgstr ""
+"我们推荐你定义所必须的方法在一个角色中，然后由其他类来消耗它。"
 
 #. type: =head2
 #: Roles.pod:184
 msgid "Required Attributes"
-msgstr ""
+msgstr "使用角色定义必须的属性"
 
 #. type: textblock
 #: Roles.pod:186
@@ -399,6 +483,7 @@ msgid ""
 "happens at runtime. This means that you must define the attribute I<before> "
 "consuming the role, or else the role will not see the generated accessor."
 msgstr ""
+"角色的属性必须在类消耗前定义好，否则 Moose 将不会生成相应的属性访问器。"
 
 #. type: verbatim
 #: Roles.pod:195
@@ -407,6 +492,8 @@ msgid ""
 "  requires 'stress';\n"
 "\n"
 msgstr ""
+"  requires 'stress';\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:201
@@ -418,11 +505,16 @@ msgid ""
 "  );\n"
 "\n"
 msgstr ""
+"  has 'stress' => (\n"
+"      is  => 'rw',\n"
+"      isa => 'Int',\n"
+"  );\n"
+"\n"
 
 #. type: =head1
 #: Roles.pod:208
 msgid "USING METHOD MODIFIERS"
-msgstr ""
+msgstr "在角色中使用方法修饰符"
 
 #. type: textblock
 #: Roles.pod:210
@@ -431,6 +523,8 @@ msgid ""
 "will combine method modifiers and required methods. We already saw one "
 "example with our C<Breakable> example."
 msgstr ""
+"角色与方法修饰符配合起来是十分强大的。一般情况下，角色中都会或多或少的使用"
+"方法修饰符，正如之前 C<Breakable> 例子中所见到的一样。"
 
 #. type: textblock
 #: Roles.pod:214
@@ -440,6 +534,8 @@ msgid ""
 "which modify the same method, those modifiers will be applied in the same "
 "order as the roles are used:"
 msgstr ""
+"方法修饰符的使用增加了角色的复杂度。当一个类消耗了多个角色，并且某个方法有"
+"多个修饰符时，这些修饰符会按照角色的消耗顺序来进行："
 
 #. type: verbatim
 #: Roles.pod:219
@@ -448,6 +544,8 @@ msgid ""
 "  package MovieCar;\n"
 "\n"
 msgstr ""
+"  package MovieCar;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:223
@@ -456,6 +554,8 @@ msgid ""
 "  extends 'Car';\n"
 "\n"
 msgstr ""
+"  extends 'Car';\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:225
@@ -464,6 +564,8 @@ msgid ""
 "  with 'Breakable', 'ExplodesOnBreakage';\n"
 "\n"
 msgstr ""
+"  with 'Breakable', 'ExplodesOnBreakage';\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:227
@@ -473,11 +575,14 @@ msgid ""
 "other. The modifier from C<Breakable> will run first, then the one from "
 "C<ExplodesOnBreakage>."
 msgstr ""
+"假设 C<ExplodesOnBreakage> 角色中也定义了一个 C<break> 方法的 C<after> 修饰符，"
+"那么 C<Breakable> 角色中的修饰符会最先运行，之后才是 C<ExplodesOnBreakage> 角色"
+"中的修饰符运行。"
 
 #. type: =head1
 #: Roles.pod:232
 msgid "METHOD CONFLICTS"
-msgstr ""
+msgstr "冲突解决"
 
 #. type: textblock
 #: Roles.pod:234
@@ -486,6 +591,8 @@ msgid ""
 "name, we will have a conflict. In that case, the composing class is required "
 "to provide its I<own> method of the same name."
 msgstr ""
+"如果一个类消耗多个角色，并且角色中有一些重复名字的方法，这样便会有冲突了。"
+"这种情况下，该类必须定义一个I<属于自己>的同名方法。"
 
 #. type: verbatim
 #: Roles.pod:238
@@ -494,14 +601,18 @@ msgid ""
 "  package Breakdancer;\n"
 "\n"
 msgstr ""
+"  package Breakdancer;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:240
 #, no-wrap
 msgid ""
-"  use Moose::Role\n"
+"  use Moose::Role;\n"
 "\n"
 msgstr ""
+"  use Moose::Role;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:242
@@ -510,6 +621,8 @@ msgid ""
 "  sub break {\n"
 "\n"
 msgstr ""
+"  sub break {\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:244
@@ -518,6 +631,8 @@ msgid ""
 "  }\n"
 "\n"
 msgstr ""
+"  }\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:246
@@ -525,6 +640,8 @@ msgid ""
 "If we compose both C<Breakable> and C<Breakdancer> in a class, we must "
 "provide our own C<break> method:"
 msgstr ""
+"如果某类消耗 C<Breakable> 和 C<Breakdancer> 角色，我们则必须定义属于自己的"
+"C<break> 方法："
 
 #. type: verbatim
 #: Roles.pod:249 Roles.pod:270
@@ -533,6 +650,8 @@ msgid ""
 "  package FragileDancer;\n"
 "\n"
 msgstr ""
+"  package FragileDancer;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:253
@@ -541,6 +660,8 @@ msgid ""
 "  with 'Breakable', 'Breakdancer';\n"
 "\n"
 msgstr ""
+"  with 'Breakable', 'Breakdancer';\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:255
@@ -549,11 +670,13 @@ msgid ""
 "  sub break { ... }\n"
 "\n"
 msgstr ""
+"  sub break { ... }\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:257
 msgid "A role can be a collection of other roles:"
-msgstr ""
+msgstr "一个角色也可以是多个角色的集合："
 
 #. type: verbatim
 #: Roles.pod:259
@@ -562,6 +685,8 @@ msgid ""
 "  package Break::Bundle;\n"
 "\n"
 msgstr ""
+"  package Break::Bundle;\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:263
@@ -570,11 +695,13 @@ msgid ""
 "  with ('Breakable', 'Breakdancer');\n"
 "\n"
 msgstr ""
+"  with ('Breakable', 'Breakdancer');\n"
+"\n"
 
 #. type: =head1
 #: Roles.pod:265
 msgid "METHOD EXCLUSION AND ALIASING"
-msgstr ""
+msgstr "角色中的方法排除和别名"
 
 #. type: textblock
 #: Roles.pod:267
@@ -582,6 +709,8 @@ msgid ""
 "If we want our C<FragileDancer> class to be able to call the methods from "
 "both its roles, we can alias the methods:"
 msgstr ""
+"如果我们想要 C<FragileDancer> 类能分别调用各角色中的同名方法，我们可以给这些"
+"方法起别名："
 
 #. type: verbatim
 #: Roles.pod:274
@@ -591,6 +720,9 @@ msgid ""
 "       'Breakdancer' => { -alias => { break => 'break_dance' } };\n"
 "\n"
 msgstr ""
+"  with 'Breakable'   => { -alias => { break => 'break_bone' } },\n"
+"       'Breakdancer' => { -alias => { break => 'break_dance' } };\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:277
@@ -598,6 +730,8 @@ msgid ""
 "However, aliasing a method simply makes a I<copy> of the method with the new "
 "name. We also need to exclude the original name:"
 msgstr ""
+"但是，别名只是简单的I<复制>得到一个新的方法。所以，我们也需要排除掉原角色中的"
+"方法："
 
 #. type: verbatim
 #: Roles.pod:280
@@ -613,6 +747,15 @@ msgid ""
 "      };\n"
 "\n"
 msgstr ""
+"  with 'Breakable' => {\n"
+"      -alias    => { break => 'break_bone' },\n"
+"      -excludes => 'break',\n"
+"      },\n"
+"      'Breakdancer' => {\n"
+"      -alias    => { break => 'break_dance' },\n"
+"      -excludes => 'break',\n"
+"      };\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:289
@@ -621,6 +764,8 @@ msgid ""
 "the C<FragileDancer> class, so we don't have a conflict. This means that "
 "C<FragileDancer> does not need to implement its own C<break> method."
 msgstr ""
+"排除掉角色中的 C<break> 方法会帮我们免除同名带来的冲突。这也就是说我们不需要在"
+"C<FragileDancer> 类中定义自己的 C<break> 方法了。"
 
 #. type: textblock
 #: Roles.pod:294
@@ -642,12 +787,12 @@ msgstr ""
 #. type: textblock
 #: Roles.pod:303
 msgid "Also see L<Moose::Cookbook::Roles::Recipe2> for an example."
-msgstr ""
+msgstr "当然，你也可以在 L<Moose::Cookbook::Roles::Recipe2> 中查看更多的例子。"
 
 #. type: =head1
 #: Roles.pod:305
 msgid "ROLE EXCLUSION"
-msgstr ""
+msgstr "角色排除"
 
 #. type: textblock
 #: Roles.pod:307
@@ -655,6 +800,8 @@ msgid ""
 "A role can say that it cannot be combined with some other role. This should "
 "be used with great caution, since it limits the re-usability of the role."
 msgstr ""
+"角色也可以指明消耗该角色的类不允许同时消耗的角色。这应该小心使用，因为它限制了"
+"角色的重用。"
 
 #. type: verbatim
 #: Roles.pod:315
@@ -663,11 +810,13 @@ msgid ""
 "  excludes 'BreakDancer';\n"
 "\n"
 msgstr ""
+"  excludes 'BreakDancer';\n"
+"\n"
 
 #. type: =head1
 #: Roles.pod:317
 msgid "ADDING A ROLE TO AN OBJECT INSTANCE"
-msgstr ""
+msgstr "添加角色到实例中"
 
 #. type: textblock
 #: Roles.pod:319
@@ -678,6 +827,7 @@ msgid ""
 "dynamically change objects based on a user's configuration, as a plugin "
 "system."
 msgstr ""
+"你也许想添加角色到实例中，而不是添加到类中。比如在以下环境中：调试、编写插件等。"
 
 #. type: textblock
 #: Roles.pod:324
@@ -685,6 +835,7 @@ msgid ""
 "The best way to do this is to use the C<apply_all_roles()> function from "
 "L<Moose::Util>:"
 msgstr ""
+"你可以通过 L<Moose::Util> 模块中的 C<apply_all_roles()> 方法来实现。"
 
 #. type: verbatim
 #: Roles.pod:327
@@ -693,6 +844,8 @@ msgid ""
 "  use Moose::Util qw( apply_all_roles );\n"
 "\n"
 msgstr ""
+"  use Moose::Util qw( apply_all_roles );\n"
+"\n"
 
 #. type: verbatim
 #: Roles.pod:329
@@ -702,6 +855,9 @@ msgid ""
 "  apply_all_roles( $car, 'Breakable' );\n"
 "\n"
 msgstr ""
+"  my $car = Car->new;\n"
+"  apply_all_roles( $car, 'Breakable' );\n"
+"\n"
 
 #. type: textblock
 #: Roles.pod:332
@@ -711,11 +867,13 @@ msgid ""
 "to apply roles to an object. This is what Moose uses internally when you "
 "call C<with>."
 msgstr ""
+"这个方法可以一次为一个实例添加多个角色。我们建议你使用此函数为实例添加角色，"
+"当然，这也是 Moose 内部实现 C<with> 的原理。"
 
 #. type: =head1
 #: Roles.pod:337
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: Roles.pod:339
@@ -723,16 +881,19 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL> 和"
+"L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: Roles.pod:341
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: Roles.pod:343
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: Roles.pod:345
@@ -740,3 +901,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"
