@@ -568,7 +568,8 @@ msgid ""
 "Moose's type registry, so multiple applications can use the same bareword "
 "names, even if the type definitions differ."
 msgstr ""
-"TODO"
+"那些 bareword 注册在 Moose 的类型系统中。所以你可以在多个程序中使用相同的 "
+"bareword。"
 
 #. type: =head2
 #: MooseX.pod:190
@@ -581,6 +582,7 @@ msgid ""
 "This extension builds on top of L<MooseX::Types> to let you declare complex "
 "data structure types."
 msgstr ""
+"这个模块是在 L<MooseX::Types> 的基础上创建，用来方便你声明较复杂的结构类型。"
 
 #. type: verbatim
 #: MooseX.pod:195
@@ -591,6 +593,10 @@ msgid ""
 "  use MooseX::Types::Structured qw(Dict Tuple Optional);\n"
 "\n"
 msgstr ""
+"  use MooseX::Types -declare => [ qw( Name Color ) ];\n"
+"  use MooseX::Types::Moose qw(Str Int);\n"
+"  use MooseX::Types::Structured qw(Dict Tuple Optional);\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:199
@@ -600,6 +606,9 @@ msgid ""
 "      => as Dict[ first => Str, middle => Optional[Str], last => Str ];\n"
 "\n"
 msgstr ""
+"  subtype Name\n"
+"      => as Dict[ first => Str, middle => Optional[Str], last => Str ];\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:202
@@ -609,6 +618,9 @@ msgid ""
 "      => as Tuple[ Int, Int, Int, Optional[Int] ];\n"
 "\n"
 msgstr ""
+"  subtype Color\n"
+"      => as Tuple[ Int, Int, Int, Optional[Int] ];\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:205
@@ -620,7 +632,7 @@ msgstr ""
 #. type: =head2
 #: MooseX.pod:208
 msgid "L<MooseX::ClassAttribute>"
-msgstr ""
+msgstr "L<MooseX::ClassAttribute>"
 
 #. type: textblock
 #: MooseX.pod:210
@@ -628,6 +640,7 @@ msgid ""
 "This extension provides class attributes for Moose classes. The declared "
 "class attributes are introspectable just like regular Moose attributes."
 msgstr ""
+"这个拓展允许你声明类属性。"
 
 #. type: verbatim
 #: MooseX.pod:216
@@ -637,6 +650,9 @@ msgid ""
 "  use MooseX::ClassAttribute;\n"
 "\n"
 msgstr ""
+"  use Moose;\n"
+"  use MooseX::ClassAttribute;\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:219
@@ -645,6 +661,8 @@ msgid ""
 "  has 'name' => ( ... );\n"
 "\n"
 msgstr ""
+"  has 'name' => ( ... );\n"
+"\n"
 
 #. type: verbatim
 #: MooseX.pod:221
@@ -653,6 +671,8 @@ msgid ""
 "  class_has 'Cache' => ( ... );\n"
 "\n"
 msgstr ""
+"  class_has 'Cache' => ( ... );\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:223
@@ -660,6 +680,8 @@ msgid ""
 "Note however that this class attribute does I<not> inherit like a "
 "L<Class::Data::Inheritable> or similar attribute - calling"
 msgstr ""
+"需要注意的是这个类I<不>继承类似 L<Class::Data::Inheritable> 类似的"
+"属性。调用"
 
 #. type: verbatim
 #: MooseX.pod:226
@@ -668,6 +690,8 @@ msgid ""
 "  $subclass->Cache($cache);\n"
 "\n"
 msgstr ""
+"  $subclass->Cache($cache);\n"
+"\n"
 
 #. type: textblock
 #: MooseX.pod:228
@@ -677,11 +701,12 @@ msgid ""
 "harder - consider carefully whether you'd be better off with an object "
 "that's passed around instead."
 msgstr ""
+"将会设置它以及它的超类。"
 
 #. type: =head2
 #: MooseX.pod:233
 msgid "L<MooseX::Daemonize>"
-msgstr ""
+msgstr "L<MooseX::Daemonize>"
 
 #. type: textblock
 #: MooseX.pod:235
@@ -690,11 +715,12 @@ msgid ""
 "daemon, including methods for starting and stopping, managing a PID file, "
 "and signal handling."
 msgstr ""
+"这个模块是提供大量关于 daemon 以及相应的启动关闭管理的角色。"
 
 #. type: =head2
 #: MooseX.pod:239
 msgid "L<MooseX::Role::Parameterized>"
-msgstr ""
+msgstr "L<MooseX::Role::Parameterized>"
 
 #. type: textblock
 #: MooseX.pod:241
@@ -704,11 +730,13 @@ msgid ""
 "that accepts parameters and generates attributes, methods, etc. on a "
 "customized basis for each consumer."
 msgstr ""
+"这个模块可以帮助你定制一个非常具体的角色，控制消耗该角色的类需要有什么要的参数"
+"、属性、方法等。"
 
 #. type: =head2
 #: MooseX.pod:246
 msgid "L<MooseX::POE>"
-msgstr ""
+msgstr "L<MooseX::POE>"
 
 #. type: textblock
 #: MooseX.pod:248
@@ -717,11 +745,13 @@ msgid ""
 "C<POE::Session>, and gives you an C<event> sugar function to declare event "
 "handlers."
 msgstr ""
+"这是对 C<POE::Session> 的一个简单的封装，并且包含一些对于 C<event> 操作的语"
+"法糖。"
 
 #. type: =head2
 #: MooseX.pod:252
 msgid "L<MooseX::FollowPBP>"
-msgstr ""
+msgstr "L<MooseX::FollowPBP>"
 
 #. type: textblock
 #: MooseX.pod:254
@@ -729,11 +759,12 @@ msgid ""
 "Automatically names all accessors I<Perl Best Practices>-style, \"get_size\" "
 "and \"set_size\"."
 msgstr ""
+"这个模块可以自动的为你的访问器以 I<Perl Best Practices> 的风格命名。"
 
 #. type: =head2
 #: MooseX.pod:257
 msgid "L<MooseX::SemiAffordanceAccessor>"
-msgstr ""
+msgstr "L<MooseX::SemiAffordanceAccessor>"
 
 #. type: textblock
 #: MooseX.pod:259
@@ -741,11 +772,13 @@ msgid ""
 "Automatically names all accessors with an explicit set and implicit get, "
 "\"size\" and \"set_size\"."
 msgstr ""
+"这个模块可以自动的为你的访问器设置明确的 set 方法（\"set_size\"）和隐含的 "
+" get 方法（\"size\"）。"
 
 #. type: =head2
 #: MooseX.pod:262
 msgid "L<MooseX::NonMoose>"
-msgstr ""
+msgstr "L<MooseX::NonMoose>"
 
 #. type: textblock
 #: MooseX.pod:264
@@ -756,11 +789,12 @@ msgid ""
 "inlining, at make_immutable time) a constructor that makes sure things like "
 "BUILD methods are called."
 msgstr ""
+"MooseX::NonMoose 模块允许你较简单的继承非 Moose 类。"
 
 #. type: =head1
 #: MooseX.pod:270
 msgid "AUTHOR"
-msgstr ""
+msgstr "作者"
 
 #. type: textblock
 #: MooseX.pod:272
@@ -768,16 +802,19 @@ msgid ""
 "Moose is maintained by the Moose Cabal, along with the help of many "
 "contributors. See L<Moose/CABAL> and L<Moose/CONTRIBUTORS> for details."
 msgstr ""
+"Moose 是由许多志愿者共同努力的结果。具体的请参看 L<Moose/CABAL> 和"
+"L<Moose/CONTRIBUTORS>"
+"译者：xiaomo(wxm4ever@gmail.com)"
 
 #. type: =head1
 #: MooseX.pod:274
 msgid "COPYRIGHT AND LICENSE"
-msgstr ""
+msgstr "版权和许可"
 
 #. type: textblock
 #: MooseX.pod:276
 msgid "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
-msgstr ""
+msgstr "This software is copyright (c) 2011 by Infinity Interactive, Inc.."
 
 #. type: textblock
 #: MooseX.pod:278
@@ -785,3 +822,5 @@ msgid ""
 "This is free software; you can redistribute it and/or modify it under the "
 "same terms as the Perl 5 programming language system itself."
 msgstr ""
+"这是自由软件，您可以重新分配或根据 Perl 5 的编程语言系统本身相关的条款进行"
+"修改。"
