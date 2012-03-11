@@ -1,0 +1,293 @@
+
+----
+'''NAME'''
+
+Moose::Manual::Concepts - Moose 关于面向对象的一些概念
+
+
+----
+'''VERSION'''
+
+version 2.0401
+
+
+----
+'''Moose 与 Perl 旧式面向对象的比较'''
+
+以前你可能没有仔细的研究过 package 和 class 、 attributes 和 methods、 constructors 和 methods 等的区别。在 Moose 中，这些都是有各自的概念的，尽管它们都是基于普通的 Perl 实现的。
+
+元对象协议(MOP)为面向对象中常用的概念提供了良好的自省功能，而 Moose 则提供语法糖。Moose 也引进了一些新的概念，比如角色（roles）,方法修饰符（method modifiers）和委托属性（declarative delegation）。
+
+知道如何用 Moose 来表示这些概念，并且和旧式的 Perl 实现进行对比，这是一个比较推荐的学习方式。
+
+
+'''''Class'''''
+
+当你在 package 里使用 "use Moose"，这表明你在定义一个类。一个简单的类包括属性和方法。当然它也可以包含角色、方法修饰符等等。
+
+一个类''有''零个或零个以上的'''属性'''。
+
+一个类''有''零个或零个以上的'''方法'''。
+
+一个类''有''零个或零个以上的父类。它继承它所有的父类。
+
+一个类''有''零个或零个以上的'''方法修饰符'''。这些修饰符可以作用于自己的方法或者是从父类继承过来的方法。
+
+一个类''能''充当零个或零个以上的'''角色'''。
+
+一个类''有''一个'''构造函数'''和一个'''析构函数'''。Moose 为你默认提供。
+
+'''构造函数'''接受相应的命名参数并用它们来初始化'''对象的实例'''。
+
+一个类''有''一个'''元类'''，同时也就有'''元类属性'''，'''元类方法'''，'''元类角色'''。这个元类''描述''着这个类。
+
+一个类通常是一个类别的或相似类别的名字，如"People"、"Users"。
+
+  package Person;
+
+  use Moose;
+  # now it's a Moose class!
+
+
+'''''Attribute'''''
+
+属性是来定义它的类的属性。它''总有''一个名称，它''可能''还具有一些其他属性。
+
+这些属性可以包含读/写标志，'''类型'''信息，访问器方法，'''委托方法'''，默认值等等。
+
+属性不是方法。而是要创建各种存取方法的原因。至少，一个正常的属性将有一个读者的访问方法。许多属性有其他方法，如一个写者的方法，一个清空方法，一个测试方法（如这个属性被设置了吗？）等等。
+
+属性也可以定义'''委托属性'''，这会根据委托属性的映射关系来产生额外的方法。
+
+默认情况下，Moose 在类的实例中以哈希表的方式存储属性，但是这个过程对程序员是''不可见''的。最好通过明确定义的存取方法来访问这些"不透明"的属性。
+
+属性是类的成员。比如，People 有 first name 和 last name， User 有 password 和上次登录的datetime。
+
+  has 'first_name' => (
+      is  => 'rw',
+      isa => 'Str',
+  );
+
+
+'''''Method'''''
+
+在类中定义的子函数就是类的方法。
+
+方法对应的行为，就是你的对象要做的事情。比如，一个 User 可以登录。
+
+  sub login { ... }
+
+
+'''''Role'''''
+
+角色是用来定义类所扮演的角色。比如，Machine 类和 Bone 类都具有不易碎等特性。所以，角色就是用来定义一些跨多个不相关的类的共同特性的。
+
+一个角色''有''零个或零个以上的'''属性'''。
+
+一个角色''有''零个或零个以上的'''方法'''。
+
+一个角色''有''零个或零个以上的'''方法修饰符'''。
+
+一个角色''有''零个或零个以上的'''所需方法'''（required methods）。
+
+所需方法不是在角色中详细定义的。所需方法是所要充当该角色的类所必须重载的方法。
+
+一个角色''有''零个或零个以上的'''排除角色'''（excluded roles）。
+
+排除角色是表明充当该角色的类不能同时充当的角色。
+
+当一个类充当一个角色时，角色的属性和方法成为类的属性和方法。（这里不好翻译）。
+
+角色就好像其他面向对象的语言中的接口这一概念。
+
+  package Breakable;
+
+  use Moose::Role;
+
+  requires 'break';
+
+  has 'is_broken' => (
+      is  => 'rw',
+      isa => 'Bool',
+  );
+
+  after 'break' => sub {
+      my $self = shift;
+
+      $self->is_broken(1);
+  };
+
+
+'''''Method modifiers'''''
+
+'''方法修饰符'''是在一个特定的函数被执行时的一个钩子。比如，你可以这样定义一个方法修饰符，"在执行"login()"前，先执行这段代码"。常用的修饰符有"before"，"after"，"around"，"augment"。你可以对一个方法绑定多个方法修饰符。
+
+方法修饰符经常用来重载父类中的方法。方法修饰符经常出现在角色中。
+
+本质上，方法修饰符就是普通的 Perl 程序在命名方法之前或之后调用。
+
+  before 'login' => sub {
+      my $self = shift;
+      my $pw   = shift;
+
+      warn "Called login() with $pw\n";
+  };
+
+
+'''''Type'''''
+
+Moose 有一个（微型）的类型系统。这允许你为属性定义类型。Moose 根据 Perl 的变量类型有内置类型，如 "Str"，"Num"，"Bool"，"Hash''''''Ref"，等等。
+
+此外，在你应用程序中的每一个类的名称也可以是一种类型。
+
+当然，你也可以定义有自己的约束的类型。如，你可以定义正数 "Pos''''''Int" 类型。
+
+
+'''''Delegation'''''
+
+Moose 可以定义委托属性。委托属性会根据相应的映射来调用正确的方法。
+
+
+'''''Constructor'''''
+
+构造函数为类构建'''实例'''。在旧式的 Perl 语言中，这通常通过调用 "new()" 来返回一个 "bless" 后的引用。
+
+在 Moose 中，"new()"已经为你做好了所有的事情。你从来不需要自己定义相应的构造函数。
+
+有些时候你想在实例初始化的时候做一些事情，你可以通过定义 "BUILD()" 方法来实现，Moose 会在构建实例的时候自动为你调用。
+
+
+'''''Destructor'''''
+
+当你的对象实例超出范围的时候，这个方法将会自动执行。你可以指定这个方法在结束时做什么，不过这通常是不必要的。
+
+在旧式的 Perl 中，这个是 "DESTORY()" 方法，但在 Moose 中，这个是 "DEMOLISH()" 方法。
+
+
+'''''Object instance'''''
+
+对象的实例由'''构造函数'''创建。如，Person 或者 User，由它们的'''constructor'''来构建的。
+
+实例有类的属性。如，person 有 first name 和 last name。
+
+在旧式的 Perl 5 中，这通常通过被绑定的哈希引用来表示。在 Moose 中，你不需要知道实例的结构具体是什么样子（虽然也是通过哈希引用来实现的）。
+
+
+'''''总结'''''
+
+*Class
+旧式 Perl OO 中，类是一个没有自省机制以及各种符号表的包。
+
+在 Moose 中，有良好的自省机制和定义格式。
+
+*Attributes
+旧式 Perl OO 中，需要手写存取方法，定义一堆符号表，或者使用一些辅助模块如 "Class::Accessor"。
+
+在 Moose 中，这些都是声明好的定义，并且与方法不同。
+
+*Method
+这个与旧式的 Perl OO 大致相同。
+
+*Roles
+旧式 Perl OO 中，通过"Class::Trait"、"Class::Role"、或者"mixin.pm"来实现？
+
+在 Moose 中，它是 Moose 核心功能之一。
+
+*Method Modifiers
+旧式 Perl OO 中，可能能通过高深的符号表来实现，而且你可能从来都没见过类似的实现（至少在 Perl 5 以前没有见过）。
+
+*Type
+旧式 Perl OO 中，通过在"new()"或者相应的访问函数中手动检查类型。
+
+在 Moose 中，你声明变量类型，然后通过变量名来使用它们。
+
+*Delegation
+旧式 Perl OO 中，通过"Class:Delegation"或"Class::Delegator"，不过实现起来会比想象中还难。
+
+在 Moose 中，通过简单的声明就可以。
+
+*Constructor
+旧式 Perl OO 中，通过调用负责"bless"引用的"new()"方法来实现。
+
+在 Moose 中，已经默认为你实现。
+
+*Destructor
+旧式 Perl OO 中，通过定义"DESTORY()"方法来实现。
+
+在 Moose 中，通过定义"DEMOLISH()"来实现。
+
+*Object Instance
+旧式 Perl OO 中，实例是一个已绑定的哈希引用。
+
+在 Moose 中，这是一个有着一堆属性和方法的不透明的东西，不过你可以很方便的使用。
+
+*Immutabilization
+Moose 所谓的"immutabilization"的功能，指让你的类不可改变，之后由 Moose 来为你生成一些复杂难辨别的代码，以加快速度。
+
+
+
+----
+'''什么是元类？'''
+
+元类是用来描述类的类。在 Moose 中，每一个你定义的类都有一个"meta()"方法。"meta()"方法返回Moose::Meta::Class实例，其中有一个自省API可以告诉你它代表的类。
+
+  my $meta = User->meta();
+
+  for my $attribute ( $meta->get_all_attributes ) {
+      print $attribute->name(), "\n";
+
+      if ( $attribute->has_type_constraint ) {
+          print "  type: ", $attribute->type_constraint->name, "\n";
+      }
+  }
+
+  for my $method ( $meta->get_all_methods ) {
+      print $method->name, "\n";
+  }
+
+基本上每个我们之前所提到的概念都有元类，所以有Moose::Meta::Class，Moose::Meta::Attribute，Moose::Meta::Method，Moose::Meta::Role，Moose::Meta::Type''''''Constraint，Moose::Meta::Instance，等等。
+
+
+----
+'''BUT I NEED TO DO IT MY WAY!'''
+
+Moose 最伟大的事情就是当你挖掘 Moose 的本质时，发现有些事情不是按你所想的进行，那么你可以通过扩展元类来修改。
+
+许多这样的代码很短但是很令人惊讶，而且一旦你做过一次，你将永远不需要重复去做了，只需要简单的加载你的拓展就可以了。
+
+  package My''''''Way::User;
+
+  use Moose;
+  use Moose''''''X::Strict''''''Constructor
+  use Moose''''''X::My''''''Way;
+
+  has ...;
+
+
+----
+'''接下来做什么？'''
+
+已经把 Moose 介绍给你了，接下来就该花时间来学习如何使用了。
+
+如果你想要知道 Moose 是如何把你的代码用旧式 Perl 5 OO 来实现的，你可以查看Moose::Manual::Unsweetened。这会帮助你快速的了解"the Moose way"的。
+
+你也可以直接跳到Moose::Manual::Classes来查看剩余的Moose::Manual。
+
+在那之后，我们推荐你继续看Moose::Cookbook。这样之后，相信你会很熟悉 Moose 的工作原理以及一些相关面向对象的特性。
+
+在那之后，如果你仍然感兴趣的话，继续看 the Meta and Extending 介绍，这对扩展 Moose 的人来说很有帮助。
+
+
+----
+'''作者'''
+
+Moose 是由许多志愿者共同努力的结果。具体的请参看 "CABAL" in Moose和"CONTRIBUTORS" in Moose。译者:xiaomo(wxm4ever@gmail.com)
+
+
+----
+'''版权和许可'''
+
+This software is copyright (c) 2011 by Infinity Interactive, Inc..
+
+这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相同的条款进行修改。
+

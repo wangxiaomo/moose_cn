@@ -1,0 +1,294 @@
+
+----
+'''NAME'''
+
+Moose::Manual::Method''''''Modifiers - Moose 方法修饰符
+
+
+----
+'''VERSION'''
+
+version 2.0401
+
+
+----
+'''什么是方法修饰符？'''
+
+Moose 提供一种叫做"方法修饰符"的特殊功能。你可以把它理解成 "hooks" 或者是 "advice"。
+
+理解方法修饰符最简单的方法莫过于通过以下几个简单的例子：
+
+  package Example;
+
+  use Moose;
+
+  sub foo {
+      print "    foo\n";
+  }
+
+  before 'foo' => sub { print "about to call foo\n"; };
+  after 'foo'  => sub { print "just called foo\n"; };
+
+  around 'foo' => sub {
+      my $orig = shift;
+      my $self = shift;
+
+      print "  I'm around foo\n";
+
+      $self->$orig(@_);
+
+      print "  I'm still around foo\n";
+  };
+
+现在如果我们调用 "Example->new->foo"，我们会得到如下的结果：
+
+  about to call foo
+    I'm around foo
+      foo
+    I'm still around foo
+  just called foo
+
+你或许早已料到 "before"，"after"，"around" 会发生什么。
+
+而且你也看出来了，before 发生在 around 前，after 则最后发生。
+
+当添加多个类似的方法修饰符时，before 和 around 的修饰符会先运行最先添加的，而 after 修饰符则后运行先添加的。
+
+   before 2
+    before 1
+     around 2
+      around 1
+       primary
+      around 1
+     around 2
+    after 1
+   after 2
+
+
+----
+'''为什么要用方法修饰符？'''
+
+方法修饰符有很多用途。它们经常用与 roles 配合使用。关于 roles 的详情，请参阅Moose::Manual::Roles。
+
+本文档剩余的部分会给出你一些优美的例子来学习方法修饰符是如何工作的，尽管它们不是用一种最自然的方式给出。
+
+
+----
+'''BEFORE, AFTER, AROUND'''
+
+方法修饰符可以在不修改之前代码的基础上增加某些行为方法。
+
+
+'''''BEFORE 和 AFTER 修饰符'''''
+
+方法修饰符也可以为 Moose 库方法服务，比如属性访问器。
+
+  has 'size' => ( is => 'rw' );
+
+  before 'size' => sub {
+      my $self = shift;
+
+     if (@_) {
+         Carp::cluck('Someone is setting size');
+     }
+  };
+
+BEFORE 修饰符另一个用途就是在方法调用前做一些检测判断的工作。
+
+  before 'size' => sub {
+      my $self = shift;
+
+      die 'Cannot set size while the person is growing'
+          if @_ && $self->is_growing;
+  };
+
+上面这种方法方便我们进行一些类型约束以外的逻辑检查。这对我们定义大量的逻辑规则时非常有用。
+
+原理类似， AFTER 修饰符可以方便我们在操作完成时做出一些记录工作。
+
+注意，BEFORE 和 AFTER 修饰符的返回值都会被忽略。
+
+
+'''''AROUND 修饰符'''''
+
+AROUND 修饰符是一个比 BEFORE 和 AFTER 修饰符更加强大的修饰符。它可以修改传递给原始方法的参数，甚至你可以决定是否调用原始方法，你也可以决定方法的返回值。
+
+AROUND 方法修饰符接受到第一个参数是被调用的原始方法，''下一个''参数是对象，剩余的参数为调用原始方法的参数。
+
+  around 'size' => sub {
+      my $orig = shift;
+      my $self = shift;
+
+      return $self->$orig()
+          unless @_;
+
+      my $size = shift;
+      $size = $size / 2
+          if $self->likes_small_things();
+
+      return $self->$orig($size);
+  };
+
+
+'''''一次性封装多个方法修饰符'''''
+
+"before"，"after"，和 "around" 方法修饰符可以一次性为多个属性定义。最简单的方法就是通过列表来实现：
+
+  before [qw(foo bar baz)] => sub {
+      warn "something is being called!";
+  };
+
+这段代码会为 "foo"，"bar"，"baz" 添加 "before" 修饰符。属性列表可以通过列表的方式声明，也可以通过数组引用来声明。有些情况下也可以通过如下方法实现：
+
+  for my $func (qw(foo bar baz)) {
+      before $func => sub {
+          warn "$func was called!";
+      };
+  }
+
+
+'''''通过正则表达式来选择要封装的方法'''''
+
+你可以通过正则表达式来指明要封装的方法，比如：
+
+  after qr/^command_/ => sub {
+      warn "got a command";
+  };
+
+这段代码会通过 "get_method_list" in Class::MOP::Class 来返回符合正则的函数列表，然后会给它们添加相应的方法修饰符。
+
+使用正则表达式来指定要封装的方法确实是一个比较强大的途径，但是它也是有一些危险的。Moose 内部的 "meta"，"new"，"BUILD"，"DESTROY"，"AUTOLOAD" 等方法是不允许这么操作的，所以我们在操作的时候应该尽可能的避开它们。
+
+
+----
+'''INNER 和 AUGMENT'''
+
+augment 和 inner 是个相互配合的过程。
+
+在父类中调用 "inner()" 时，会相应的调用子类的 "augment" 修饰符。
+
+  package Document;
+
+  use Moose;
+
+  sub as_xml {
+      my $self = shift;
+
+      my $xml = "<document>\n";
+      $xml .= inner();
+      $xml .= "</document>\n";
+
+      return $xml;
+  }
+
+通过 "inner()" 方法，然后我们在多个子类中使用 augment 的方法来增强实现：
+
+  package Report;
+
+  use Moose;
+
+  extends 'Document';
+
+  augment 'as_xml' => sub {
+      my $self = shift;
+
+      my $xml = "  <report>\n";
+      $xml .= inner();
+      $xml .= "  </report>\n";
+
+      return $xml;
+  };
+
+当我们调用 Report 类的 "as_xml" 方法时，我们会得到如下结果：
+
+  <document>
+    <report>
+    </report>
+  </document>
+
+因为我们在 "Report" 中也调用了 "inner()" 方法，所以我们可以继续进行子类的拓展。
+
+  package Report::Income''''''And''''''Expenses;
+
+  use Moose;
+
+  extends 'Report';
+
+  augment 'as_xml' => sub {
+      my $self = shift;
+
+      my $xml = '    <income>' . $self->income . '</income>';
+      $xml .= "\n";
+      $xml .= '    <expenses>' . $self->expenses . '</expenses>';
+      $xml .= "\n";
+
+      $xml .= inner() || q{};
+
+      return $xml;
+  };
+
+现在我们的 report 有如下内容：
+
+  <document>
+    <report>
+      <income>$10</income>
+      <expenses>$8</expenses>
+    </report>
+  </document>
+
+通过 "augment" 和 "inner()" 方法我们便可以得到一个有父类向子类逐渐调用的一个过程。
+
+需要注意的是我们在 "Report::Income''''''And''''''Expenses" 中又调用了一次 "inner()"。如果对象是一个 "Report::Income''''''And''''''Expenses" 实例，那么 "inner()" 调用会返回false，所以在书写过程中最好保持调用 "inner()" 的好习惯，这样会方便后续的子类拓展。
+
+
+----
+'''OVERRIDE 和 SUPER'''
+
+Moose 提供了一些语法糖来方便你重载 Perl 内置函数。如果你想重载父类的一个方法，你可以通过 "override" 来实现：
+
+  package Employee;
+
+  use Moose;
+
+  extends 'Person';
+
+  has 'job_title' => ( is => 'rw' );
+
+  override 'display_name' => sub {
+      my $self = shift;
+
+      return super() . q{, } . $self->title();
+  };
+
+这里 "super()" 方法相当与调用 "$self->SUPER::display_name"。区别是这种方法传入父类的参数总是和相应的方法修饰符的参数相同，并且不能更改。
+
+而调用 "super()" 方法时参数是被忽略的。所有对 "@_" 的操作都在 "super()" 之前进行。
+
+
+----
+'''分号'''
+
+因为这些方法修饰符都是通过 Perl 来实现的，所以你需要在语句的结尾写分号来标明结束。
+
+  after 'foo' => sub { };
+
+
+----
+'''注意事项'''
+
+方法修饰符在多继承时会有些问题。所以建议您在应用时多加测试，观察结果是否与预期相同。另外，roles 可以帮助解决多继承这个问题。
+
+
+----
+'''作者'''
+
+Moose 是由许多志愿者共同努力的结果。具体的请参看 "CABAL" in Moose和"CONTRIBUTORS" in Moose。译者：xiaomo(wxm4ever@gmail.com)
+
+
+----
+'''版权和许可'''
+
+This software is copyright (c) 2011 by Infinity Interactive, Inc..
+
+这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相同的条款进行修改。
+
