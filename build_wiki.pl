@@ -84,7 +84,8 @@ sub get_sider_html {
             $html = $html . "<li><a href=\"$item\" target=\"main\">$item</a></li>";
         }
     }
-    return $html .= "</ul>";
+    $html .= "</ul>";
+    return $html;
 }
 
 sub make_sider_html {
