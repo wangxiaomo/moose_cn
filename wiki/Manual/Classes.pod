@@ -1,0 +1,109 @@
+NAME
+    Moose::Manual::Classes - 用 Moose 来构建类
+
+VERSION
+    version 2.0401
+
+使用 Moose
+    用 Moose 来构建类是非常简单的，你只需要简单的 "use Moose":
+
+      package Person;
+
+      use Moose;
+
+    通过 Moose 构造一个类就是这么简单。
+
+    整个过程在实验上还是很麻烦的，不过就让我们跳过它吧。
+
+    当你加载 Moose 的时候，大量的 Moose 语法糖便引入到你定义的类中，比如"extends"，"has"，"with"
+    等等。这些语法糖可以方便的帮助你创建你的类。比如，你可以这样定义一个属性 ...
+
+      package Person;
+
+      use Moose;
+
+      has 'ssn' => ( is => 'rw' );
+
+    在 Moose::Manual::Attributes 中我们会详细的介绍类的属性如何在 Moose 中表示。
+
+    另外，加载 Moose 也会打开 "strict" 和 "warnings" 信息。
+
+    加载 Moose 之后你的类便成为 Moose::Object 的子类。Moose::Object
+    有默认的构造函数、析构函数和一些辅助方法，具体的信息你可以在 Moose::Manual::Construction中找到。
+
+    为了方便，Moose 根据你新定义的类，产生了一种新的变量类型。关于 Moose 类型这方面的内容，你可以在
+    Moose::Manual::Types 中找到。
+
+    Moose 同样也会为你的类创建一个 Moose::Meta::Class 。这个元类会在你的实例调用"meta" 方法时返回。具体示例请见
+    "Person->meta"。
+
+    产生元类为你提供了良好的自省 API 。它也被 Moose 用来实现一些功能，如添加一个属性，声明父类等。事实上，所有 Moose
+    提供的语法糖都是基于对元类的操作来完成的。
+
+子类
+    Moose 提供一个简单的语法糖 "extends" 来方便你声明当前类的父类。
+
+      package User;
+
+      use Moose;
+
+      extends 'Person';
+
+      has 'username' => ( is => 'rw' );
+
+    需要注意的是，每次当你调用 "extends" 时，Moose 会*重置*其父类。当你需要多继承的时候，请一次性的提供其要继承的父类，如
+    "extends 'Foo', 'Bar'" 。
+
+    你可以用 Moose 来继承一个非 Moose 类。当你这么做的时候，父类的构造函数会自动执行，就像自动调用了 "new"
+    似的。这种情况下，你将不得不自己考虑好各个属性的初始化。与此许多 Moose 中非常神奇方便的方法你也不能使用了。
+
+    如果你想要继承非 Moose 类，你可以去 CPAN 查看 MooseX::NonMoose 来了解更多信息。
+
+清理 Moose 带来的垃圾
+    当你使用 Moose 构建类的时候，Moose 会为你引入大量的语法糖函数。我们建议在你的程序中移除这些多余的不必要的方法。
+
+    有很多方法来清理 Moose 带来的垃圾。我们推荐使用 namespace::autoclean。这个模块不仅会清理 Moose
+    带来的垃圾，也会清理其他来源的垃圾的。
+
+      package Person;
+
+      use namespace::autoclean;
+
+      use Moose;
+
+    如果你不想使用额外的模块的话，你可以在类的结尾处使用 "no Moose" 。
+
+      package Person;
+
+      use Moose;
+
+      has 'ssn' => ( is => 'rw' );
+
+      no Moose;
+
+更快些
+    Moose 有一个功能叫做 "immutabilization"，这个功能可以使你的类在运行的时候更快。当你把一个类
+    immutable，也就是告诉 Moose 你今后将不再改变这个类。
+
+    这样的话，Moose 会为你生成一段特殊的代码，比如"inline" constructor。
+
+    要使类 immutable，你只需要通过元类来调用 "make_immutable" 方法。
+
+      __PACKAGE__->meta->make_immutable;
+
+  Immutabilization 和 "new()"
+    如果你重载了 "new()" 方法，那么 immutabilization 将不能加速你的代码。你应该通过"BUILD()"
+    方法来实现重载的部分，因为 "BUILD()" 方法是在inline constructor之后调用的。
+
+    如果你非要自己提供一个不同的 "new()" 方法的话，你必须自己提供一个 immutabilization的方法，而且需要继承 Moose
+    的元类，当然，这些内容已经超出本手册的范围了。
+
+作者
+    Moose 是由许多志愿者共同努力的结果。具体的请参看 "CABAL" in Moose 和"CONTRIBUTORS" in
+    Moose译者：xiaomo(wxm4ever@gmail.com)
+
+版权和许可
+    This software is copyright (c) 2011 by Infinity Interactive, Inc..
+
+    这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相关的条款进行修改。
+

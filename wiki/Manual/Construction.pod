@@ -1,0 +1,116 @@
+NAME
+    Moose::Manual::Construction - Moose 构造与析构
+
+VERSION
+    version 2.0401
+
+什么是构造器？
+    不要再为你的类定义 "new()" 方法了！。
+
+    当你 "use Moose" 之后，你的类就成为了 Moose::Object 的子类。Moose::Object为你提供了 "new()"
+    方法。如果你按照 Moose::Manual::BestPractices 推荐那样，并且使你的类 immutable
+    的话，那你已经得到了一个内置的 "new()" 方法了。
+
+对象的构造和属性
+    Moose 允许你在初始化实例时通过哈希表或者哈希引用等方式来传递参数（实际上，是根据 "init_arg"
+    的设置来进行）。你不需要再烦恼具体是怎么实现的了，Moose已经为你做好了。
+
+对象构造中的 HOOKS
+    Moose 允许你在构造过程中使用 hook。你可以通过 hook
+    来验证一个对象的状态，做日志，自定义参数不匹配时的行为，或者允许非哈希引用作为参数传递等等。你可以通过"BUILD" 或 "BUILDARGS"
+    来设置 hook。
+
+    If these methods exist in your class, Moose will arrange for them to be
+    called as part of the object construction process.
+
+  BUILDARGS
+    "BUILDARGS" 方法在对象构造*之前*被调用，它接受 "new()"
+    传递进来的所有参数，并且返回一个哈希引用。这个哈希引用最终用来构建对象。
+
+    一个最常见的用法就是 "BUILDARGS" 实现非哈希引用的参数传递。比如我们想
+    "Person"类可以通过社保号来直接引用对象,"<Person-"new($ssn)>>。
+
+    没有 "BUILDARGS" 方法处理的话，Moose 处理的时候可能就不会如你所愿了。因为默认的Moose 是不能那样处理参数的，所以我们用
+    "BUILDARGS" 来处理这种参数传递。
+
+      around BUILDARGS => sub {
+          my $orig  = shift;
+          my $class = shift;
+
+          if ( @_ == 1 && !ref $_[0] ) {
+              return $class->$orig( ssn => $_[0] );
+          }
+          else {
+              return $class->$orig(@_);
+          }
+      };
+
+    这里 "<$class-"$orig>>是调用 Moose 内部的 "BUILDARGS"。
+
+  BUILD
+    "BUILD"
+    方法是在对象创建完*之后*被调用的。很多情况下我们需要使用它。最普遍的就是检测对象的状态时。虽然我们可以通过使用类型的单个属性来验证，不过我们无
+    法验证一个整体的对象的状态。
+
+      sub BUILD {
+          my $self = shift;
+
+          if ( $self->country_of_residence eq 'USA' ) {
+              die 'All US residents must have an SSN'\m      }
+      }
+
+    另一个用法就是可以追踪对象构造过程。
+
+      sub BUILD {
+          my $self = shift;
+
+          debug( 'Made a new person - SSN = ', $self->ssn, );
+      }
+
+    在对象构造的时候，我们可以从日志中看到对象构造的记录，并且还可以在对象里面添加一些附加的信息。
+
+      sub BUILD {
+          my $self = shift;
+          my $args = shift;
+
+          $self->add_friend(
+              My::User->new(
+                  user_id => $args->{user_id},
+              )
+          );
+      }
+
+   BUILD 和 父类
+    Moose 的继承层次结构上与旧式的 Perl 5 OO 不同。你不应该写 "<$self-"SUPER::BUILD>>，或是把
+    "BUILD"方法应用于方法修饰符
+
+    Moose 调用 "BUILD" 方法的顺序是先父类后子类。这似乎颠覆了传统的对象调用方法顺序，不过不要感到惊讶，Moose 就是这么干的。
+
+    这个顺序还是很有意义的，这是一种日益专业化的方法。而且，Perl 6 也是这么做的。
+
+对象的析构
+    Moose 通过 "DEMOLISH" 方法来提供对象析构时的 hook。和 "BUILD" 相似，你永远不应该使用
+    "<$self-"SUPER::DEMOLISH>>。它的调用顺序也是先调用父类后子类。
+
+    每个 "DEMOLISH" 方法被调用时只接受到一个参数。
+
+    多数情况下，你不会用到该方法。
+
+  析构过程中的错误处理
+    对象销毁时与 Perl 的全局变量 $@ 和 "$ " 在这时候会非常混乱。
+
+    Moose 总是在销毁对象时本地化 "$ "。如果你这时候调用 "exit"，exit 代码将会被保存起来，即便对象销毁正在做系统调用。
+
+    Moose 同样会针对 "eval" 来保存 $@。如果你在 "DEMOLISH" 中使用 die，Moose会重复抛出错误。
+
+    如果你不喜欢这样的处理方式，你不得不去写自己的 "DESTROY" 方法来取代内置的。
+
+作者
+    Moose 是由许多志愿者共同努力的结果。具体的请参看 "CABAL" in Moose 和"CONTRIBUTORS" in
+    Moose译者：xiaomo(wxm4ever@gmail.com)
+
+版权和许可
+    This software is copyright (c) 2011 by Infinity Interactive, Inc..
+
+    这是自由软件，您可以重新分配或者根据 Perl 5 的编程语言系统本身相关的条款进行修改。
+

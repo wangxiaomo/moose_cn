@@ -1,0 +1,269 @@
+NAME
+    Moose::Manual::Roles - Roles，基类与深层次结构的替代
+
+VERSION
+    version 2.0401
+
+什么是角色？
+    角色封装了一些可以在类之间共享的东西。角色不是类，因此你不能继承一个角色，或者说角色不能被继承。我们经常说，角色是被类或其他角色所消耗的。
+
+    角色是类的*组成*。在实际应用中，所有在角色中定义的属性、方法、方法修饰符等内容会被直接添加到消耗该角色的类中。继承该类的类也会同样的消耗该角色
+    ，具有该角色的相应内容。
+
+    Moose 中的角色有点类似其他面向对象语言中的接口这个概念。
+
+    除了定义自己的方法和属性，角色也可以要求消耗该角色的类所必须重载的方法。你可以有一个角色，里面包含一些所必须的方法，然后让消耗它的类去重载定义，
+    类似 Java 的interface 一样。
+
+    Note that attribute accessors also count as methods for the purposes of
+    satisfying the requirements of a role.
+
+一个简单的角色
+    创建角色和创建一个 Moose 类很像：
+
+      package Breakable;
+
+      use Moose::Role;
+
+      has 'is_broken' => (
+          is  => 'rw',
+          isa => 'Bool',
+      );
+
+      sub break {
+          my $self = shift;
+
+          print "I broke\n";
+
+          $self->is_broken(1);
+      }
+
+    除了对 Moose::Role 的使用，其他的代码基本上和定义 Moose 类一样。然而，它却不是一个类，而且不能被实例化。
+
+    角色中的属性和方法会作为消耗该角色的类中的组成存在。
+
+      package Car;
+
+      use Moose;
+
+      with 'Breakable';
+
+      has 'engine' => (
+          is  => 'ro',
+          isa => 'Engine',
+      );
+
+    "with" 函数会声明该类消耗某角色。在这之后，"Car" 类中就有了 "is_broken" 属性和 "break" 方法，这个类也可以执行
+    "does('Breakable')"：
+
+      my $car = Car->new( engine => Engine->new );
+
+      print $car->is_broken ? 'Busted' : 'Still working';
+      $car->break;
+      print $car->is_broken ? 'Busted' : 'Still working';
+
+      $car->does('Breakable'); # true
+
+    这段代码会输出：
+
+      Still working
+      I broke
+      Busted
+
+    我们也可以在 "Bone" 类中消耗该角色。
+
+      package Bone;
+
+      use Moose;
+
+      with 'Breakable';
+
+      has 'marrow' => (
+          is  => 'ro',
+          isa => 'Marrow',
+      );
+
+    你也可以在 Moose::Cookbook::Roles::Recipe1 中查看更多的例子。
+
+使用角色定义必须的方法
+    正如前面提到的，角色可以定义消耗该角色的类中所必须的重载的方法。配合上面的代码，现在让我们定义一个必须重载的方法 "break" ：
+
+      package Breakable;
+
+      use Moose::Role;
+
+      requires 'break';
+      has 'is_broken' => (
+          is  => 'rw',
+          isa => 'Bool',
+      );
+
+      after 'break' => sub {
+          my $self = shift;
+
+          $self->is_broken(1);
+      };
+
+    如果一个类消耗该角色，但是没有重载 "break" 方法，我们就会得到一个异常。
+
+    我们为 "break" 方法添加了一个方法修饰符。这是因为我们希望消耗该角色的类重载的 "break" 方法被调用时，确保
+    "is_broken" 被设置为 true。
+
+      package Car
+
+      use Moose;
+
+      with 'Breakable';
+
+      has 'engine' => (
+          is  => 'ro',
+          isa => 'Engine',
+      );
+
+      sub break {
+          my $self = shift;
+
+          if ( $self->is_moving ) {
+              $self->stop;
+          }
+      }
+
+  角色与抽象类
+    如果你对其他语言中抽象类比较熟悉的话，你也可以类似的学习使用 Moose 中的角色。
+
+    你*可以*定义一个 "interface-only" 的角色，*只*包含必须被重载的方法。
+
+    消耗该角色的类必须定义角色中的所有方法，无论该方法是被重载所得或是从父类继承过来。
+
+    我们推荐你定义所必须的方法在一个角色中，然后由其他类来消耗它。
+
+  使用角色定义必须的属性
+    角色的属性必须在类消耗前定义好，否则 Moose 将不会生成相应的属性访问器。
+
+      package Breakable;
+
+      use Moose::Role;
+
+      requires 'stress';
+
+      package Car;
+
+      use Moose;
+
+      has 'stress' => (
+          is  => 'rw',
+          isa => 'Int',
+      );
+
+      with 'Breakable';
+
+在角色中使用方法修饰符
+    角色与方法修饰符配合起来是十分强大的。一般情况下，角色中都会或多或少的使用方法修饰符，正如之前 "Breakable" 例子中所见到的一样。
+
+    方法修饰符的使用增加了角色的复杂度。当一个类消耗了多个角色，并且某个方法有多个修饰符时，这些修饰符会按照角色的消耗顺序来进行：
+
+      package MovieCar;
+
+      use Moose;
+
+      extends 'Car';
+
+      with 'Breakable', 'ExplodesOnBreakage';
+
+    假设 "ExplodesOnBreakage" 角色中也定义了一个 "break" 方法的 "after" 修饰符，那么 "Breakable"
+    角色中的修饰符会最先运行，之后才是 "ExplodesOnBreakage" 角色中的修饰符运行。
+
+冲突解决
+    如果一个类消耗多个角色，并且角色中有一些重复名字的方法，这样便会有冲突了。这种情况下，该类必须定义一个*属于自己*的同名方法。
+
+      package Breakdancer;
+
+      use Moose::Role
+
+      sub break {
+
+      }
+
+    如果某类消耗 "Breakable" 和 "Breakdancer" 角色，我们则必须定义属于自己的"break" 方法：
+
+      package FragileDancer;
+
+      use Moose;
+
+      with 'Breakable', 'Breakdancer';
+
+      sub break { ... }
+
+    一个角色也可以是多个角色的集合：
+
+      package Break::Bundle;
+
+      use Moose::Role;
+
+      with ('Breakable', 'Breakdancer');
+
+角色中的方法排除和别名
+    如果我们想要 "FragileDancer" 类能分别调用各角色中的同名方法，我们可以给这些方法起别名：
+
+      package FragileDancer;
+
+      use Moose;
+
+      with 'Breakable'   => { -alias => { break => 'break_bone' } },
+           'Breakdancer' => { -alias => { break => 'break_dance' } };
+
+    但是，别名只是简单的*复制*得到一个新的方法。所以，我们也需要排除掉原角色中的方法：
+
+      with 'Breakable' => {
+          -alias    => { break => 'break_bone' },
+          -excludes => 'break',
+          },
+          'Breakdancer' => {
+          -alias    => { break => 'break_dance' },
+          -excludes => 'break',
+          };
+
+    排除掉角色中的 "break" 方法会帮我们免除同名带来的冲突。这也就是说我们不需要在"FragileDancer" 类中定义自己的
+    "break" 方法了。
+
+    This is useful, but it's worth noting that this breaks the contract
+    implicit in consuming a role. Our "FragileDancer" class does both the
+    "Breakable" and "BreakDancer", but does not provide a "break" method. If
+    some API expects an object that does one of those roles, it probably
+    expects it to implement that method.
+
+    In some use cases we might alias and exclude methods from roles, but
+    then provide a method of the same name in the class itself.
+
+    当然，你也可以在 Moose::Cookbook::Roles::Recipe2 中查看更多的例子。
+
+角色排除
+    角色也可以指明消耗该角色的类不允许同时消耗的角色。这应该小心使用，因为它限制了角色的重用。
+
+      package Breakable;
+
+      use Moose::Role;
+
+      excludes 'BreakDancer';
+
+添加角色到实例中
+    你也许想添加角色到实例中，而不是添加到类中。比如在以下环境中：调试、编写插件等。
+
+    你可以通过 Moose::Util 模块中的 "apply_all_roles()" 方法来实现。
+
+      use Moose::Util qw( apply_all_roles );
+
+      my $car = Car->new;
+      apply_all_roles( $car, 'Breakable' );
+
+    这个方法可以一次为一个实例添加多个角色。我们建议你使用此函数为实例添加角色，当然，这也是 Moose 内部实现 "with" 的原理。
+
+作者
+    Moose 是由许多志愿者共同努力的结果。具体的请参看 "CABAL" in Moose 和"CONTRIBUTORS" in
+    Moose译者：xiaomo(wxm4ever@gmail.com)
+
+版权和许可
+    This software is copyright (c) 2011 by Infinity Interactive, Inc..
+
+    这是自由软件，您可以重新分配或根据 Perl 5 的编程语言系统本身相关的条款进行修改。
+
